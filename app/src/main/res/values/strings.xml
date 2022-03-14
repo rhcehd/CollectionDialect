@@ -3,4 +3,5 @@
     <string name="main_title">대한민국 방언\n음성데이터 수집\n\nCollecting Korean dialect voice data</string>
     <string name="menu_title">대한민국 방언 음성 데이터 수집</string>
     <string name="region_question">당신이 거주하는 지역은\n어디입니까?</string>
+    <string name="content">목차</string>
 </resources>

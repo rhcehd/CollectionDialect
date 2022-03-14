@@ -15,4 +15,20 @@
         android:id="@+id/regionSelectionFragment"
         android:name="com.example.collectingdialect.ui.content.RegionSelectionFragment"
         android:label="RegionSelectionFragment" />
+    <fragment
+        android:id="@+id/collectingFragment"
+        android:name="com.example.collectingdialect.ui.collecting.freetalk.CollectingFragment"
+        android:label="CollectingFragment" />
+    <fragment
+        android:id="@+id/collectingFreeTalkFragment"
+        android:name="com.example.collectingdialect.ui.collecting.freetalk.CollectingFreeTalkFragment"
+        android:label="CollectingFreeTalkFragment" />
+    <fragment
+        android:id="@+id/collectingInterviewFragment"
+        android:name="com.example.collectingdialect.ui.collecting.interview.CollectingInterviewFragment"
+        android:label="CollectingInterviewFragment" />
+    <fragment
+        android:id="@+id/collectingThingNameFragment"
+        android:name="com.example.collectingdialect.ui.collecting.thingname.CollectingThingNameFragment"
+        android:label="CollectingThingNameFragment" />
 </navigation>

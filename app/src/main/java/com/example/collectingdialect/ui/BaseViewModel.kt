@@ -1,10 +1,29 @@
 package com.example.collectingdialect.ui
 
+import android.widget.ArrayAdapter
+import androidx.databinding.BindingAdapter
 import androidx.databinding.Observable
 import androidx.databinding.PropertyChangeRegistry
 import androidx.lifecycle.ViewModel
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.MaterialAutoCompleteTextView
 
 open class BaseViewModel: ViewModel(), Observable {
+    companion object {
+        @JvmStatic
+        @BindingAdapter("custom:list")
+        fun setList(view: MaterialAutoCompleteTextView, list: ArrayList<String>) {
+            val adapter = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, list)
+            view.setAdapter(adapter)
+        }
+
+        @JvmStatic
+        @BindingAdapter("custom:adapter")
+        fun setAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<*>) {
+            view.adapter = adapter
+        }
+    }
+
     private val propertyChangeRegistry = PropertyChangeRegistry()
     override fun addOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
         propertyChangeRegistry.add(callback)
