@@ -1,4 +1,4 @@
-package com.example.collectingdialect.ui.collecting.thingname
+package com.example.collectingdialect.ui.collecting.objectname
 
 import android.os.Bundle
 import android.view.View
@@ -8,9 +8,9 @@ import androidx.fragment.app.viewModels
 import com.example.collectingdialect.R
 import com.example.collectingdialect.databinding.FragmentCollectingThingNameBinding
 
-class CollectingThingNameFragment: Fragment(R.layout.fragment_collecting_thing_name) {
+class CollectingObjectNameFragment: Fragment(R.layout.fragment_collecting_object_name) {
     private var binding: FragmentCollectingThingNameBinding? = null
-    private val viewModel: CollectingThingNameViewModel by viewModels()
+    private val viewModel: CollectingObjectNameViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

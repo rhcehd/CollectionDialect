@@ -29,6 +29,6 @@
         android:label="CollectingInterviewFragment" />
     <fragment
         android:id="@+id/collectingThingNameFragment"
-        android:name="com.example.collectingdialect.ui.collecting.thingname.CollectingThingNameFragment"
+        android:name="com.example.collectingdialect.ui.collecting.objectname.CollectingObjectNameFragment"
         android:label="CollectingThingNameFragment" />
 </navigation>
