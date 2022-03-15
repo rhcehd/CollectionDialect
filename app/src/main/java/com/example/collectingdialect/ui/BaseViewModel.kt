@@ -32,4 +32,8 @@ open class BaseViewModel: ViewModel(), Observable {
     override fun removeOnPropertyChangedCallback(callback: Observable.OnPropertyChangedCallback?) {
         propertyChangeRegistry.remove(callback)
     }
+
+    fun notifyChange(id: Int) {
+        propertyChangeRegistry.notifyChange(this, id)
+    }
 }

@@ -19,6 +19,7 @@ class ContentListAdapter(private val viewModelRequester: () -> ContentViewModel)
 
     override fun onBindViewHolder(holder: ContentListViewHolder, position: Int) {
         holder.binding.data = contentList[position]
+        holder.binding.position = position
     }
 
     override fun getItemCount(): Int = contentList.size
