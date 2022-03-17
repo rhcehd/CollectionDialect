@@ -34,6 +34,10 @@ open class BaseViewModel: ViewModel(), Observable {
         propertyChangeRegistry.remove(callback)
     }
 
+    fun notifyChange(id: Int) {
+        propertyChangeRegistry.notifyChange(this, id)
+    }
+
     open fun onClickPreviousButton(view: View) {
 
     }

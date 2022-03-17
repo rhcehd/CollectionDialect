@@ -3,10 +3,12 @@
     <data>
         <variable name="viewModel" type="com.example.collectingdialect.ui.content.ContentViewModel" />
         <variable name="data" type="String"/>
+        <variable name="position" type="int" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{(view) -> viewModel.onClickListItem(view, position)}">
 
         <TextView
             android:layout_width="match_parent"
