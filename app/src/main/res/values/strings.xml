@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">CollectingDialect</string>
-    <string name="main_title">대한민국 방언\n음성데이터 수집\n\nCollecting Korean dialect voice data</string>
+    <string name="main_title">대한민국 방언\n음성 데이터 수집</string>
+    <string name="main_subtitle">Collecting Korean dialect voice Data</string>
     <string name="menu_title">대한민국 방언 음성 데이터 수집</string>
-    <string name="region_question">당신이 거주하는 지역은\n어디입니까?</string>
+    <string name="region_question">당신이 거주하는\n지역은 어디입니까?</string>
     <string name="content">목차</string>
     <string name="interview_question_1">질문1. 건강 유지를 위해 가장 중요하게 생각하는 것은 무엇인가요?</string>
     <string name="interview_question_2">질문2. 노인 복지를 위해 가장 중요하게 생각해야 하는 것은 무엇인가요?</string>
@@ -13,4 +14,10 @@
     <string name="interview">인터뷰</string>
     <string name="interview_question_title">1. 다음 질문에 자유롭게 답해주세요</string>
     <string name="object_name_title">사물 이름 말하기</string>
+    <string name="unit1_button_text_1">UNIT 01</string>
+    <string name="unit1_button_text_2">강원도, 경상도 방언 데이터</string>
+    <string name="script_title">스크립트\n(정형발화)</string>
+    <string name="script_instruction">• 다음 그림을 보고 상황을 말해 보세요 •</string>
+    <string name="interview_title">인터뷰\n(비정형발화)</string>
+    <string name="interview_instruction">• 다음 질문에 자유롭게 답해 주세요 •</string>
 </resources>

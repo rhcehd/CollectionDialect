@@ -1,4 +1,4 @@
-package com.example.collectingdialect.ui.collecting.objectname
+package com.example.collectingdialect.ui.collecting.script
 
 import android.os.Bundle
 import android.view.View
@@ -6,11 +6,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.collectingdialect.R
-import com.example.collectingdialect.databinding.FragmentCollectingThingNameBinding
+import com.example.collectingdialect.databinding.FragmentCollectingScriptBinding
 
-class CollectingObjectNameFragment: Fragment(R.layout.fragment_collecting_object_name) {
-    private var binding: FragmentCollectingThingNameBinding? = null
-    private val viewModel: CollectingObjectNameViewModel by viewModels()
+class CollectingScriptFragment: Fragment(R.layout.fragment_collecting_script) {
+    private var binding: FragmentCollectingScriptBinding? = null
+    private val viewModel: CollectingScriptViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
