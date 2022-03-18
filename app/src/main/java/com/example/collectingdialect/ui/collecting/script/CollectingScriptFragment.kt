@@ -1,4 +1,4 @@
-package com.example.collectingdialect.ui.collecting.freetalk
+package com.example.collectingdialect.ui.collecting.script
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -11,11 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.collectingdialect.R
-import com.example.collectingdialect.databinding.FragmentCollectingFreeTalkBinding
+import com.example.collectingdialect.databinding.FragmentCollectingScriptBinding
 
-class CollectingFreeTalkFragment: Fragment(R.layout.fragment_collecting_free_talk) {
-    private var binding: FragmentCollectingFreeTalkBinding? = null
-    private val viewModel: CollectingFreeTalkViewModel by viewModels()
+class CollectingScriptFragment: Fragment(R.layout.fragment_collecting_script) {
+    private var binding: FragmentCollectingScriptBinding? = null
+    private val viewModel: CollectingScriptViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,

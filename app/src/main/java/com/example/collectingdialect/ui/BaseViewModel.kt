@@ -1,5 +1,6 @@
 package com.example.collectingdialect.ui
 
+import android.view.View
 import android.widget.ArrayAdapter
 import androidx.databinding.BindingAdapter
 import androidx.databinding.Observable
@@ -35,5 +36,13 @@ open class BaseViewModel: ViewModel(), Observable {
 
     fun notifyChange(id: Int) {
         propertyChangeRegistry.notifyChange(this, id)
+    }
+
+    open fun onClickPreviousButton(view: View) {
+
+    }
+
+    open fun onClickNextButton(view:View) {
+
     }
 }

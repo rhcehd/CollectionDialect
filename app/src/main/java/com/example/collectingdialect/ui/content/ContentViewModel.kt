@@ -6,20 +6,20 @@ import com.example.collectingdialect.R
 import com.example.collectingdialect.ui.BaseViewModel
 
 class ContentViewModel: BaseViewModel() {
-    val adapter = ContentListAdapter {this}
+    fun onClickScript(view: View) {
+        view.findNavController().navigate(R.id.collectingScriptFragment)
+    }
 
-    fun onClickListItem(view: View, position: Int) {
-        val navController = view.findNavController()
-        when(position) {
-            0 -> {
-                navController.navigate(R.id.collectingFreeTalkFragment)
-            }
-            1 -> {
-                navController.navigate(R.id.collectingInterviewFragment)
-            }
-            2 -> {
-                navController.navigate(R.id.collectingObjectNameFragment)
-            }
-        }
+    fun onClickInterview(view: View) {
+        view.findNavController().navigate(R.id.collectingInterviewFragment)
+    }
+
+    override fun onClickNextButton(view: View) {
+        super.onClickNextButton(view)
+    }
+
+    override fun onClickPreviousButton(view: View) {
+        super.onClickPreviousButton(view)
+        view.findNavController().popBackStack()
     }
 }
