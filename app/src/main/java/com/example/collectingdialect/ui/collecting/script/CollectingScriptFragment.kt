@@ -31,7 +31,7 @@ class CollectingScriptFragment: Fragment(R.layout.fragment_collecting_script) {
             binding = DataBindingUtil.bind(view)
             binding?.viewModel = viewModel
 
-            var drawable: Drawable?
+            /*var drawable: Drawable?
             val imageList = arrayListOf<Drawable>()
             drawable = ResourcesCompat.getDrawable(resources, R.drawable.flat_tire, null)
             if(drawable != null) {
@@ -50,7 +50,7 @@ class CollectingScriptFragment: Fragment(R.layout.fragment_collecting_script) {
             binding?.freeTalkImage?.let {
                 Glide.with(this).load(imageList[0]).into(it)
                 viewModel.position.set(0)
-            }
+            }*/
         }
     }
 }
