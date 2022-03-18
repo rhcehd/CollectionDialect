@@ -2,7 +2,9 @@ package com.example.collectingdialect.ui.collecting.script
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -15,13 +17,21 @@ class CollectingScriptFragment: Fragment(R.layout.fragment_collecting_script) {
     private var binding: FragmentCollectingScriptBinding? = null
     private val viewModel: CollectingScriptViewModel by viewModels()
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return binding?.root ?: super.onCreateView(inflater, container, savedInstanceState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if(binding == null) {
             binding = DataBindingUtil.bind(view)
             binding?.viewModel = viewModel
 
-            var drawable: Drawable?
+            /*var drawable: Drawable?
             val imageList = arrayListOf<Drawable>()
             drawable = ResourcesCompat.getDrawable(resources, R.drawable.flat_tire, null)
             if(drawable != null) {
@@ -40,7 +50,7 @@ class CollectingScriptFragment: Fragment(R.layout.fragment_collecting_script) {
             binding?.freeTalkImage?.let {
                 Glide.with(this).load(imageList[0]).into(it)
                 viewModel.position.set(0)
-            }
+            }*/
         }
     }
 }
