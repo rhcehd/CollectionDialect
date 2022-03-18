@@ -2,7 +2,9 @@ package com.example.collectingdialect.ui.collecting.freetalk
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -14,6 +16,14 @@ import com.example.collectingdialect.databinding.FragmentCollectingFreeTalkBindi
 class CollectingFreeTalkFragment: Fragment(R.layout.fragment_collecting_free_talk) {
     private var binding: FragmentCollectingFreeTalkBinding? = null
     private val viewModel: CollectingFreeTalkViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return binding?.root ?: super.onCreateView(inflater, container, savedInstanceState)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

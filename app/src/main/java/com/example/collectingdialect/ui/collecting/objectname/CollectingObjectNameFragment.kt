@@ -2,7 +2,9 @@ package com.example.collectingdialect.ui.collecting.objectname
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -14,6 +16,14 @@ import com.example.collectingdialect.databinding.FragmentCollectingObjectNameBin
 class CollectingObjectNameFragment: Fragment(R.layout.fragment_collecting_object_name) {
     private var binding: FragmentCollectingObjectNameBinding? = null
     private val viewModel: CollectingObjectNameViewModel by viewModels()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return binding?.root ?: super.onCreateView(inflater, container, savedInstanceState)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

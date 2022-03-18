@@ -10,7 +10,7 @@
     <string name="interview_question_4">질문4. 인생 선배로써 해주고 싶은 말은 무엇인가요?</string>
     <string name="interview_question_5">질문5. 스스로 생각하는 노인의 정의는 무엇인가요?</string>
     <string name="collecting_title">Unit 1\n강원도, 경상도 방언 데이터</string>
-    <string name="interview">인터뷰</string>
+    <string name="interview">인터뷰(비정형발화)</string>
     <string name="interview_question_title">1. 다음 질문에 자유롭게 답해주세요</string>
-    <string name="object_name_title">사물 이름 말하기</string>
+    <string name="object_name_title">스크립트(정형발화)</string>
 </resources>

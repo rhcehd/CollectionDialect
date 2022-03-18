@@ -14,75 +14,94 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <TextView
-            android:id="@+id/interview_title_text"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/interview_title_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/collecting_title_layout"
-            app:layout_constraintBottom_toTopOf="@id/question_title_text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/interview"/>
+            app:layout_constraintBottom_toTopOf="@id/question_layout"
+            android:paddingVertical="30dp">
+            <TextView
+                android:id="@+id/interview_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/interview"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <TextView
-            android:id="@+id/question_title_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/interview_title_text"
-            app:layout_constraintBottom_toTopOf="@id/question_1_text"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/interview_question_title"/>
-
-        <TextView
-            android:id="@+id/question_1_text"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/question_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/question_title_text"
-            app:layout_constraintBottom_toTopOf="@id/question_2_text"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/interview_question_1"
-            android:textColor='@{viewModel.question1Selected ? Color.BLUE : viewModel.question1Completed ? Color.GREEN : Color.BLACK}'
-            android:onClick="@{viewModel::onClickQuestion1}"/>
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/interview_title_layout"
+            app:layout_constraintBottom_toTopOf="@id/collecting_layout">
 
-        <TextView
-            android:id="@+id/question_2_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/question_1_text"
-            app:layout_constraintBottom_toTopOf="@id/question_3_text"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/interview_question_2"
-            android:onClick="@{viewModel::onClickQuestion2}"/>
+            <TextView
+                android:id="@+id/question_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/interview_question_title"/>
 
-        <TextView
-            android:id="@+id/question_3_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/question_2_text"
-            app:layout_constraintBottom_toTopOf="@id/question_4_text"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/interview_question_3"
-            android:onClick="@{viewModel::onClickQuestion3}"/>
+            <TextView
+                android:id="@+id/question_1_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/question_title_text"
+                app:layout_constraintBottom_toTopOf="@id/question_2_text"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/interview_question_1"
+                android:textColor='@{viewModel.question1Selected ? Color.BLUE : viewModel.question1Completed ? Color.GREEN : Color.BLACK}'
+                android:onClick="@{viewModel::onClickQuestion1}"/>
 
-        <TextView
-            android:id="@+id/question_4_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/question_3_text"
-            app:layout_constraintBottom_toTopOf="@id/question_5_text"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/interview_question_4"
-            android:onClick="@{viewModel::onClickQuestion4}"/>
+            <TextView
+                android:id="@+id/question_2_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/question_1_text"
+                app:layout_constraintBottom_toTopOf="@id/question_3_text"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/interview_question_2"
+                android:textColor='@{viewModel.question2Selected ? Color.BLUE : viewModel.question1Completed ? Color.GREEN : Color.BLACK}'
+                android:onClick="@{viewModel::onClickQuestion2}"/>
 
-        <TextView
-            android:id="@+id/question_5_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/question_4_text"
-            app:layout_constraintBottom_toTopOf="@id/collecting_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/interview_question_5"
-            android:onClick="@{viewModel::onClickQuestion5}"/>
+            <TextView
+                android:id="@+id/question_3_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/question_2_text"
+                app:layout_constraintBottom_toTopOf="@id/question_4_text"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/interview_question_3"
+                android:textColor='@{viewModel.question3Selected ? Color.BLUE : viewModel.question1Completed ? Color.GREEN : Color.BLACK}'
+                android:onClick="@{viewModel::onClickQuestion3}"/>
+
+            <TextView
+                android:id="@+id/question_4_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/question_3_text"
+                app:layout_constraintBottom_toTopOf="@id/question_5_text"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/interview_question_4"
+                android:textColor='@{viewModel.question4Selected ? Color.BLUE : viewModel.question1Completed ? Color.GREEN : Color.BLACK}'
+                android:onClick="@{viewModel::onClickQuestion4}"/>
+
+            <TextView
+                android:id="@+id/question_5_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/interview_question_5"
+                android:textColor='@{viewModel.question5Selected ? Color.BLUE : viewModel.question1Completed ? Color.GREEN : Color.BLACK}'
+                android:onClick="@{viewModel::onClickQuestion5}"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <include
             android:id="@+id/collecting_layout"

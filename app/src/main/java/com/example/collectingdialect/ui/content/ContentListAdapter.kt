@@ -8,7 +8,7 @@ import com.example.collectingdialect.R
 import com.example.collectingdialect.databinding.ItemContentListBinding
 
 class ContentListAdapter(private val viewModelRequester: () -> ContentViewModel): RecyclerView.Adapter<ContentListViewHolder>() {
-    private val contentList: ArrayList<String> = arrayListOf("(1) 그림 설명하기", "(2) 인터뷰", "(3) 사물 이름 말하기")
+    private val contentList: ArrayList<String> = arrayListOf("(1) 스크립트(정형발화)", "(2) 인터뷰(비정형발화)")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContentListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
