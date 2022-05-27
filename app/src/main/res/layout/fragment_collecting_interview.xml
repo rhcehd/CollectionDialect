@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
     <data>
         <variable name="viewModel" type="com.example.collectingdialect.ui.collecting.interview.CollectingInterviewViewModel" />
         <import type="android.graphics.Color"/>
@@ -16,9 +17,9 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/interview_title_layout"
-            android:layout_width="270dp"
-            android:layout_height="120dp"
-            app:layout_constraintVertical_bias="0.1"
+            android:layout_width="@dimen/title_layout_width"
+            android:layout_height="@dimen/title_layout_height"
+            app:layout_constraintVertical_bias="@dimen/title_layout_vertical_bias"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -46,7 +47,7 @@
                 android:fontFamily="@font/a_gothic_17"
                 android:textAlignment="center"
                 android:textColor="#1f9eff"
-                android:textSize="35sp"/>
+                android:textSize="@dimen/title_layout_text_size"/>
 
             <View
                 android:id="@+id/main_title_line_bottom"
@@ -62,8 +63,8 @@
 
         <View
             android:id="@+id/interview_unit_text"
-            android:layout_width="300dp"
-            android:layout_height="25dp"
+            android:layout_width="@dimen/unit_text_width"
+            android:layout_height="@dimen/unit_text_height"
             app:layout_constraintTop_toBottomOf="@id/interview_title_layout"
             app:layout_constraintBottom_toTopOf="@id/question_instruction_text"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,7 +79,10 @@
             app:layout_constraintBottom_toTopOf="@id/question_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/interview_instruction"/>
+            android:text="@string/interview_instruction"
+            android:fontFamily="@font/a_gothic_13"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/instruction_text_size"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/question_layout"
@@ -102,8 +106,8 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/recode_button_1"
-                android:layout_width="@dimen/button_size_small"
-                android:layout_height="@dimen/button_size_small"
+                android:layout_width="@dimen/round_button_size_small"
+                android:layout_height="@dimen/round_button_size_small"
                 app:layout_constraintTop_toTopOf="@id/question_1"
                 app:layout_constraintBottom_toBottomOf="@id/question_1"
                 app:layout_constraintStart_toEndOf="@id/question_1"
@@ -123,8 +127,8 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/recode_button_2"
-                android:layout_width="@dimen/button_size_small"
-                android:layout_height="@dimen/button_size_small"
+                android:layout_width="@dimen/round_button_size_small"
+                android:layout_height="@dimen/round_button_size_small"
                 app:layout_constraintTop_toTopOf="@id/question_2"
                 app:layout_constraintBottom_toBottomOf="@id/question_2"
                 app:layout_constraintStart_toEndOf="@id/question_2"
@@ -144,8 +148,8 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/recode_button_3"
-                android:layout_width="@dimen/button_size_small"
-                android:layout_height="@dimen/button_size_small"
+                android:layout_width="@dimen/round_button_size_small"
+                android:layout_height="@dimen/round_button_size_small"
                 app:layout_constraintTop_toTopOf="@id/question_3"
                 app:layout_constraintBottom_toBottomOf="@id/question_3"
                 app:layout_constraintStart_toEndOf="@id/question_3"
@@ -165,8 +169,8 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/recode_button_4"
-                android:layout_width="@dimen/button_size_small"
-                android:layout_height="@dimen/button_size_small"
+                android:layout_width="@dimen/round_button_size_small"
+                android:layout_height="@dimen/round_button_size_small"
                 app:layout_constraintTop_toTopOf="@id/question_4"
                 app:layout_constraintBottom_toBottomOf="@id/question_4"
                 app:layout_constraintStart_toEndOf="@id/question_4"
@@ -186,8 +190,8 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/recode_button_5"
-                android:layout_width="@dimen/button_size_small"
-                android:layout_height="@dimen/button_size_small"
+                android:layout_width="@dimen/round_button_size_small"
+                android:layout_height="@dimen/round_button_size_small"
                 app:layout_constraintTop_toTopOf="@id/question_5"
                 app:layout_constraintBottom_toBottomOf="@id/question_5"
                 app:layout_constraintStart_toEndOf="@id/question_5"
@@ -198,8 +202,8 @@
 
         <View
             android:id="@+id/sound_wave_image"
-            android:layout_width="300dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/sound_wave_image_width"
+            android:layout_height="@dimen/sound_wave_image_height"
             app:layout_constraintTop_toBottomOf="@id/question_layout"
             app:layout_constraintBottom_toTopOf="@id/button_layout"
             app:layout_constraintStart_toStartOf="parent"
@@ -212,7 +216,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintHeight_percent="0.15"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            bind:viewModel="@{viewModel}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

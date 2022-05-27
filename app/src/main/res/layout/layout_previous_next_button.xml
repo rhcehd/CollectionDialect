@@ -17,8 +17,8 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/previous_button"
-            android:layout_width="@dimen/button_size_small"
-            android:layout_height="@dimen/button_size_small"
+            android:layout_width="@dimen/round_button_size_small"
+            android:layout_height="@dimen/round_button_size_small"
             app:layout_constraintHorizontal_bias="0.8"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -29,8 +29,8 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/next_button"
-            android:layout_width="@dimen/button_size_small"
-            android:layout_height="@dimen/button_size_small"
+            android:layout_width="@dimen/round_button_size_small"
+            android:layout_height="@dimen/round_button_size_small"
             app:layout_constraintHorizontal_bias="0.2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

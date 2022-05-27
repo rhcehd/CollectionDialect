@@ -1,11 +1,9 @@
 package com.example.collectingdialect.ui.main
 
 import android.view.View
-import androidx.lifecycle.ViewModel
 import androidx.navigation.findNavController
 import com.example.collectingdialect.R
 import com.example.collectingdialect.ui.BaseViewModel
-import com.example.collectingdialect.ui.MainActivity.Companion.showToast
 
 class MainViewModel: BaseViewModel() {
 
@@ -15,6 +13,6 @@ class MainViewModel: BaseViewModel() {
     }
 
     fun onClickUnit2(view: View) {
-        showToast("onClick Unit2")
+        //showToast("onClick Unit2")
     }
 }

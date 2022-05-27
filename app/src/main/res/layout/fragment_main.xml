@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+q<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
@@ -79,8 +79,9 @@
             android:id="@+id/menu_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintVertical_bias="0.15"
             app:layout_constraintTop_toBottomOf="@id/main_title_layout"
-            app:layout_constraintBottom_toTopOf="@id/button_unit_1"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@string/menu_title"
@@ -90,27 +91,26 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_unit_1"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintWidth_percent="0.8"
-            app:layout_constraintHeight_percent="0.1"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
             app:layout_constraintBottom_toTopOf="@id/button_unit_2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/menu_title"
+            android:layout_marginVertical="20dp"
             android:background="@drawable/button_unit_1"
             android:onClick="@{viewModel::onClickUnit1}"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_unit_2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
             app:layout_constraintWidth_percent="0.8"
             app:layout_constraintHeight_percent="0.1"
             app:layout_constraintTop_toBottomOf="@id/button_unit_1"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginVertical="20dp"
             android:background="@drawable/button_unit_2"
             android:onClick="@{viewModel::onClickUnit2}"/>
 

@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="button_size_small">40dp</dimen>
-    <dimen name="button_size_large">60dp</dimen>
+    <dimen name="round_button_size_small">40dp</dimen>
+    <dimen name="round_button_size_large">65dp</dimen>
     <dimen name="interview_question_vertical_margin">5dp</dimen>
+    <dimen name="title_layout_width">280dp</dimen>
+    <dimen name="title_layout_height">120dp</dimen>
+    <dimen name="title_layout_text_size">30sp</dimen>
+    <dimen name="unit_text_width">300dp</dimen>
+    <dimen name="unit_text_height">25dp</dimen>
+    <dimen name="instruction_text_size">16sp</dimen>
+    <dimen name="sound_wave_image_width">300dp</dimen>
+    <dimen name="sound_wave_image_height">50dp</dimen>
+    <dimen name="button_width">300dp</dimen>
+    <dimen name="button_height">70dp</dimen>
+    <item name="title_layout_vertical_bias" type="dimen" format="float">0.1</item>
 </resources>

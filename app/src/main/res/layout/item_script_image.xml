@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:script="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="data" type="int" />
     </data>
@@ -8,9 +8,9 @@
         android:layout_height="match_parent">
 
         <ImageView
-
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            script:image="@{data}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -12,21 +12,24 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/background_dark"
+            android:src="@drawable/background_light"
+            android:foreground="#44000000"
             android:scaleType="centerCrop"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/content_title_layout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/title_layout_width"
+            android:layout_height="@dimen/title_layout_height"
             app:layout_constraintHeight_percent="0.23"
-            app:layout_constraintVertical_bias="0.15"
+            app:layout_constraintVertical_bias="@dimen/title_layout_vertical_bias"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
             <View
                 android:id="@+id/main_title_line_top"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="5dp"
                 app:layout_constraintWidth_percent="0.65"
                 app:layout_constraintTop_toTopOf="parent"
@@ -46,11 +49,11 @@
                 android:fontFamily="@font/a_gothic_17"
                 android:textAlignment="center"
                 android:textColor="@android:color/white"
-                android:textSize="35sp"/>
+                android:textSize="@dimen/title_layout_text_size"/>
 
             <View
                 android:id="@+id/main_title_line_bottom"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="5dp"
                 app:layout_constraintWidth_percent="0.65"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -62,10 +65,8 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_script"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintWidth_percent="0.8"
-            app:layout_constraintHeight_percent="0.1"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
             app:layout_constraintTop_toBottomOf="@id/content_title_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -75,8 +76,8 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_interview"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="@dimen/button_width"
+            android:layout_height="@dimen/button_height"
             app:layout_constraintWidth_percent="0.8"
             app:layout_constraintHeight_percent="0.1"
             app:layout_constraintTop_toBottomOf="@id/button_script"
