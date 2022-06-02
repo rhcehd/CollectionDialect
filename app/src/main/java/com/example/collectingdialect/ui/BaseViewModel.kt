@@ -14,12 +14,6 @@ import com.google.android.material.textfield.MaterialAutoCompleteTextView
 
 open class BaseViewModel: ViewModel(), Observable {
     companion object {
-        @JvmStatic
-        @BindingAdapter("custom:list")
-        fun setList(view: MaterialAutoCompleteTextView, list: ArrayList<String>) {
-            val adapter = ArrayAdapter(view.context, R.layout.item_region_dropdown, R.id.region_text, list)
-            view.setAdapter(adapter)
-        }
 
         @JvmStatic
         @BindingAdapter("custom:adapter")
@@ -45,13 +39,5 @@ open class BaseViewModel: ViewModel(), Observable {
 
     fun notifyChange(id: Int) {
         propertyChangeRegistry.notifyChange(this, id)
-    }
-
-    open fun onClickPreviousButton(view: View) {
-
-    }
-
-    open fun onClickNextButton(view:View) {
-
     }
 }

@@ -1,4 +1,4 @@
-q<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
@@ -6,114 +6,113 @@ q<?xml version="1.0" encoding="utf-8"?>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#252229">
 
-        <ImageView
-            android:id="@+id/main_background"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintVertical_weight="0.6"
-            android:src="@drawable/background_main"
-            android:scaleType="centerCrop" />
+        <TextView
+            android:id="@+id/main_title_english"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/main_title_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/main_margin_start"
+            android:text="@string/main_title_english"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/main_title_layout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.23"
-            app:layout_constraintVertical_bias="0.44"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <View
-                android:id="@+id/main_title_line_top"
-                android:layout_width="0dp"
-                android:layout_height="5dp"
-                app:layout_constraintWidth_percent="0.65"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:background="@android:color/white"/>
-
-            <TextView
-                android:id="@+id/main_title_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/main_subtitle_text"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/main_title"
-                android:fontFamily="@font/a_gothic_17"
-                android:textAlignment="center"
-                android:textColor="@android:color/white"
-                android:textSize="35sp"/>
-
-            <TextView
-                android:id="@+id/main_subtitle_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/main_title_text"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/main_subtitle"
-                android:fontFamily="@font/a_gothic_17"
-                android:textAlignment="center"
-                android:textColor="@android:color/white"
-                android:textSize="20sp"/>
-
-            <View
-                android:id="@+id/main_title_line_bottom"
-                android:layout_width="0dp"
-                android:layout_height="5dp"
-                app:layout_constraintWidth_percent="0.65"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:background="@android:color/white"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/menu_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintVertical_bias="0.15"
+            app:layout_constraintTop_toBottomOf="@id/main_title_english"
+            app:layout_constraintBottom_toTopOf="@id/sub_title"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/main_margin_start">
+            <TextView
+                android:id="@+id/main_title_part1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/main_title_part2"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/main_title_1"
+                android:textColor="@color/white"
+                android:textSize="40sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/main_title_part2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/main_title_part1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="@string/main_title_2"
+                android:textColor="@color/white"
+                android:textSize="40sp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <TextView
+            android:id="@+id/sub_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/main_title_layout"
+            app:layout_constraintBottom_toTopOf="@id/start_button"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="@dimen/main_margin_start"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="20dp"
+            android:background="@drawable/background_subtitle"
+            android:text="@string/subtitle"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/background_decor_layout"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/menu_title"
-            android:fontFamily="@font/a_gothic_13"
-            android:textColor="@android:color/white"
-            android:textSize="19sp"/>
+            android:background="@drawable/background_round_top_corner"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_unit_1"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
-            app:layout_constraintBottom_toTopOf="@id/button_unit_2"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/start_button"
+            android:layout_width="350dp"
+            android:layout_height="170dp"
+            android:background="@drawable/background_button_start"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/menu_title"
-            android:layout_marginVertical="20dp"
-            android:background="@drawable/button_unit_1"
-            android:onClick="@{viewModel::onClickUnit1}"/>
+            android:layout_marginBottom="80dp"
+            android:onClick="@{viewModel::onClickStartButton}">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_unit_2"
-            android:layout_width="@dimen/button_width"
-            android:layout_height="@dimen/button_height"
-            app:layout_constraintWidth_percent="0.8"
-            app:layout_constraintHeight_percent="0.1"
-            app:layout_constraintTop_toBottomOf="@id/button_unit_1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginVertical="20dp"
-            android:background="@drawable/button_unit_2"
-            android:onClick="@{viewModel::onClickUnit2}"/>
+            <TextView
+                android:id="@+id/button_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintVertical_bias="0.35"
+                android:text="@string/button_start_title"
+                android:textColor="@color/white"
+                android:textSize="50sp"
+                android:textStyle="bold"/>
 
+            <TextView
+                android:id="@+id/button_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/button_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/button_start_subtitle"
+                android:textColor="@color/white"
+                android:textSize="30sp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

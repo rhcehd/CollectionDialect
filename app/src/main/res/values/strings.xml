@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">CollectingDialect</string>
-    <string name="main_title">대한민국 방언\n음성 데이터 수집</string>
-    <string name="main_subtitle">Collecting Korean dialect voice Data</string>
+    <string name="subtitle">대한민국 방언\n음성 데이터</string>
+    <string name="main_title_english">Collecting Korean dialect\nvoice Data</string>
     <string name="menu_title">대한민국 방언 음성 데이터 수집</string>
     <string name="region_question">당신이 거주하는\n지역은 어디입니까?</string>
     <string name="content">목차</string>
@@ -16,8 +16,19 @@
     <string name="object_name_title">사물 이름 말하기</string>
     <string name="unit1_button_text_1">UNIT 01</string>
     <string name="unit1_button_text_2">강원도, 경상도 방언 데이터</string>
-    <string name="script_title">스크립트\n(정형발화)</string>
+    <string name="script_title">01\n어휘 발화 (스크립트)</string>
     <string name="script_instruction">• 다음 그림을 보고 상황을 말해 보세요 •</string>
     <string name="interview_title">인터뷰\n(비정형발화)</string>
     <string name="interview_instruction">• 다음 질문에 자유롭게 답해 주세요 •</string>
+    <string name="main_title_1">대한민국 방언</string>
+    <string name="main_title_2">음성 데이터 수집</string>
+    <string name="button_start_title">시작하기</string>
+    <string name="button_start_subtitle">START</string>
+    <string name="content_title">목차</string>
+    <string name="content_title_english">CONTENTS</string>
+    <string name="unit1">UNIT 01.</string>
+    <string name="guide_script">다음 문장을 따라해 주세요</string>
+    <string name="unit2">UNIT 02.</string>
+    <string name="conversation_title">02\n수집자와의 2인 대화</string>
+    <string name="virtual_partner_title">03\n가상 상대와의 대화</string>
 </resources>

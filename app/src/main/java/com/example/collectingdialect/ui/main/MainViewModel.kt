@@ -7,12 +7,7 @@ import com.example.collectingdialect.ui.BaseViewModel
 
 class MainViewModel: BaseViewModel() {
 
-    fun onClickUnit1(view: View) {
-        //showToast("onClick Unit1")
+    fun onClickStartButton(view: View) {
         view.findNavController().navigate(R.id.regionSelectionFragment)
-    }
-
-    fun onClickUnit2(view: View) {
-        //showToast("onClick Unit2")
     }
 }

@@ -1,97 +1,159 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable name="viewModel" type="com.example.collectingdialect.ui.content.RegionSelectionViewModel" />
         <import type="android.text.InputType"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#FDFDFD">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:foreground="#88000000"
-            android:src="@drawable/background_region_select"
-            android:scaleType="centerCrop"/>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/region_select_title_layout"
-            android:layout_width="@dimen/title_layout_width"
-            android:layout_height="@dimen/title_layout_height"
-            app:layout_constraintVertical_bias="@dimen/title_layout_vertical_bias"
+            android:id="@+id/region_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/region_no_select"
+            region="@{viewModel.region}"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/select_area_layout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="@id/region_image"
+            app:layout_constraintBottom_toBottomOf="@id/region_image"
+            app:layout_constraintStart_toStartOf="@id/region_image"
+            app:layout_constraintEnd_toEndOf="@id/region_image">
 
             <View
-                android:id="@+id/main_title_line_top"
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                app:layout_constraintWidth_percent="0.65"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:background="@android:color/white"/>
-
-            <TextView
-                android:id="@+id/region_select_title_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/select_area_gangwon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:text="@string/region_question"
-                android:fontFamily="@font/a_gothic_17"
-                android:textAlignment="center"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/title_layout_text_size"/>
+                app:layout_constraintWidth_percent="0.1"
+                app:layout_constraintHeight_percent="0.07"
+                app:layout_constraintVertical_bias="0.25"
+                app:layout_constraintHorizontal_bias="0.54"
+                android:onClick="@{viewModel::onClickSelectAreaGangwon}"/>
 
             <View
-                android:id="@+id/main_title_line_bottom"
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                app:layout_constraintWidth_percent="0.65"
+                android:id="@+id/select_area_chungnam"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:background="@android:color/white"/>
+                app:layout_constraintWidth_percent="0.1"
+                app:layout_constraintHeight_percent="0.07"
+                app:layout_constraintVertical_bias="0.42"
+                app:layout_constraintHorizontal_bias="0.176"
+                android:onClick="@{viewModel::onClickSelectAreaChungnam}"/>
+
+            <View
+                android:id="@+id/select_area_chungbuk"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_percent="0.1"
+                app:layout_constraintHeight_percent="0.07"
+                app:layout_constraintVertical_bias="0.385"
+                app:layout_constraintHorizontal_bias="0.375"
+                android:onClick="@{viewModel::onClickSelectAreaChungbuk}"/>
+
+            <View
+                android:id="@+id/select_area_gyeongnam"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_percent="0.1"
+                app:layout_constraintHeight_percent="0.07"
+                app:layout_constraintVertical_bias="0.567"
+                app:layout_constraintHorizontal_bias="0.543"
+                android:onClick="@{viewModel::onClickSelectAreaGyeongnam}"/>
+
+            <View
+                android:id="@+id/select_area_gyeongbuk"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_percent="0.1"
+                app:layout_constraintHeight_percent="0.07"
+                app:layout_constraintVertical_bias="0.425"
+                app:layout_constraintHorizontal_bias="0.615"
+                android:onClick="@{viewModel::onClickSelectAreaGyeongbuk}"/>
+
+            <View
+                android:id="@+id/select_area_jeonnam"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_percent="0.1"
+                app:layout_constraintHeight_percent="0.07"
+                app:layout_constraintVertical_bias="0.615"
+                app:layout_constraintHorizontal_bias="0.185"
+                android:onClick="@{viewModel::onClickSelectAreaJeonnam}"/>
+
+            <View
+                android:id="@+id/select_area_jeonbuk"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_percent="0.1"
+                app:layout_constraintHeight_percent="0.07"
+                app:layout_constraintVertical_bias="0.52"
+                app:layout_constraintHorizontal_bias="0.23"
+                android:onClick="@{viewModel::onClickSelectAreaJeonbuk}"/>
+
+            <View
+                android:id="@+id/select_area_jeju"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintWidth_percent="0.1"
+                app:layout_constraintHeight_percent="0.07"
+                app:layout_constraintVertical_bias="0.765"
+                app:layout_constraintHorizontal_bias="0.133"
+                android:onClick="@{viewModel::onClickSelectAreaJeju}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/button_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/region_select_title_layout"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginVertical="40dp"
-            app:endIconDrawable="@drawable/ic_baseline_arrow_drop_down"
-            app:endIconTint="#1f9eff"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-
-            <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                android:layout_width="320dp"
-                android:layout_height="60dp"
-                android:background="@drawable/background_dropdown"
-                android:inputType="@{InputType.TYPE_NULL}"
-                custom:list="@{viewModel.dummyList}" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <include
-            android:id="@+id/button_layout"
-            layout="@layout/layout_previous_next_button"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.15"
-            app:layout_constraintBottom_toBottomOf="parent"
-            bind:viewModel="@{viewModel}"/>
-
+            app:layout_constraintTop_toTopOf="@id/region_image"
+            app:layout_constraintEnd_toEndOf="@id/region_image"
+            android:layout_margin="10dp"
+            android:text="지역선택"
+            android:onClick="@{viewModel::onClickNext}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

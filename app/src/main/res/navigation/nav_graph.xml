@@ -16,11 +16,35 @@
         android:name="com.example.collectingdialect.ui.content.RegionSelectionFragment"
         android:label="RegionSelectionFragment" />
     <fragment
-        android:id="@+id/collectingScriptFragment"
-        android:name="com.example.collectingdialect.ui.collecting.script.CollectingScriptFragment"
-        android:label="CollectingScriptFragment" />
+        android:id="@+id/scriptFragment"
+        android:name="com.example.collectingdialect.ui.collecting.structured.script.ScriptFragment"
+        android:label="scriptFragment" />
     <fragment
         android:id="@+id/collectingInterviewFragment"
-        android:name="com.example.collectingdialect.ui.collecting.interview.CollectingInterviewFragment"
+        android:name="com.example.collectingdialect.ui.collecting.unstructured.CollectingInterviewFragment"
         android:label="CollectingInterviewFragment" />
+    <fragment
+        android:id="@+id/structuredContentFragment"
+        android:name="com.example.collectingdialect.ui.collecting.structured.script.ScriptSubjectFragment"
+        android:label="StructuredContentFragment" />
+    <fragment
+        android:id="@+id/unstructuredContentFragment"
+        android:name="com.example.collectingdialect.ui.collecting.unstructured.content.UnstructuredContentFragment"
+        android:label="UnstructuredContentFragment" />
+    <fragment
+        android:id="@+id/conversationFragment"
+        android:name="com.example.collectingdialect.ui.collecting.unstructured.conversation.ConversationFragment"
+        android:label="ConversationFragment" />
+    <fragment
+        android:id="@+id/virtualPartnerFragment"
+        android:name="com.example.collectingdialect.ui.collecting.unstructured.virtual.VirtualPartnerFragment"
+        android:label="VirtualPartnerFragment" />
+    <fragment
+        android:id="@+id/conversationSubjectFragment"
+        android:name="com.example.collectingdialect.ui.collecting.unstructured.conversation.ConversationSubjectFragment"
+        android:label="ConversationSubjectFragment" />
+    <fragment
+        android:id="@+id/virtualPartnerSubjectFragment"
+        android:name="com.example.collectingdialect.ui.collecting.unstructured.virtual.VirtualPartnerSubjectFragment"
+        android:label="VirtualPartnerSubjectFragment" />
 </navigation>
