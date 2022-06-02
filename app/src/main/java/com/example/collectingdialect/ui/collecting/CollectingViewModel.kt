@@ -4,6 +4,8 @@ import android.content.Context
 import android.media.*
 import android.os.Build
 import android.view.View
+import androidx.databinding.Bindable
+import com.example.collectingdialect.BR
 import com.example.collectingdialect.R
 import com.example.collectingdialect.data.RecordTimeUpdater
 import com.example.collectingdialect.ui.BaseViewModel
@@ -20,6 +22,7 @@ open class CollectingViewModel: BaseViewModel() {
         set(value) {
             field = value
             mediaPlayer = null
+            initializeMediaPlayer()
         }
     var isRecording: Boolean = false
 
@@ -28,6 +31,15 @@ open class CollectingViewModel: BaseViewModel() {
             field = value
             fileName = "test_script_${currentSubject}_$dialectScriptIndex"
         }*/
+
+    var isRecordExist = false
+        @Bindable get
+        set(value) {
+            if(field != value) {
+                field = value
+                notifyChange(BR.recordExist)
+            }
+        }
 
     init {
         val context = MainActivity.contextRequester?.invoke()
@@ -48,6 +60,25 @@ open class CollectingViewModel: BaseViewModel() {
             setAudioSource(MediaRecorder.AudioSource.MIC)
             setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
             setAudioEncoder(MediaRecorder.AudioEncoder.HE_AAC)
+        }
+    }
+
+    private fun initializeMediaPlayer() {
+        mediaPlayer = MediaPlayer().apply {
+            isRecordExist = try {
+                val file = File(mediaDirectory, "$fileName.mp4")
+                setDataSource(file.absolutePath)
+                prepare()
+                true
+                //start()
+            } catch (e: Exception) {
+                /*if(e is IOException) {
+                            showToast("녹음되지 않은 항목입니다")
+                        } else {
+                            showToast("파일을 재생할 수 없습니다")
+                        }*/
+                false
+            }
         }
     }
 
@@ -81,7 +112,7 @@ open class CollectingViewModel: BaseViewModel() {
     }
 
     open fun onClickPlayButton(view: View) {
-        if(mediaPlayer == null) {
+        /*if(mediaPlayer == null) {
             mediaPlayer = MediaPlayer().apply {
                 try {
                     val file = File(mediaDirectory, "$fileName.mp4")
@@ -98,6 +129,12 @@ open class CollectingViewModel: BaseViewModel() {
             }
         } else {
             mediaPlayer?.start() ?: showToast("파일을 재생할 수 없습니다")
+        }*/
+
+        try {
+            mediaPlayer?.start() ?: showToast("파일을 재생할 수 없습니다")
+        } catch (e: Exception) {
+            showToast("파일을 재생할 수 없습니다")
         }
     }
 

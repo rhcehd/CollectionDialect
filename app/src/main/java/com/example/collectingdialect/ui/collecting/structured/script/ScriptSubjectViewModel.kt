@@ -2,11 +2,21 @@ package com.example.collectingdialect.ui.collecting.structured.script
 
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.databinding.Bindable
 import androidx.navigation.findNavController
+import com.example.collectingdialect.BR
 import com.example.collectingdialect.R
 import com.example.collectingdialect.ui.collecting.SubjectViewModel
 
 class ScriptSubjectViewModel: SubjectViewModel() {
+    var regionText: String = ""
+        @Bindable get
+        set(value) {
+            if(field != value) {
+                field = value
+                notifyChange(BR.regionText)
+            }
+        }
 
     override fun onClickButton1(view: View) {
         super.onClickButton1(view)

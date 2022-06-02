@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable name="viewModel" type="com.example.collectingdialect.ui.collecting.unstructured.conversation.ConversationSubjectViewModel" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:bind="http://schemas.android.com/apk/res-auto"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#5f9595">
@@ -50,13 +49,14 @@
                 android:id="@+id/region_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/unit_text"
-                app:layout_constraintBottom_toTopOf="@id/subject_select_layout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginBottom="20dp"
-                android:text="강원 방언, 양양군"
-                android:textSize="20sp"/>
+                android:text="@{viewModel.regionText}"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toTopOf="@id/subject_select_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.498"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/unit_text" />
 
             <include
                 android:id="@+id/subject_select_layout"
@@ -65,7 +65,7 @@
                 app:layout_constraintTop_toBottomOf="@id/region_text"
                 app:layout_constraintBottom_toBottomOf="parent"
                 layout="@layout/layout_select_subject"
-                bind:viewModel="@{viewModel}"/>
+                app:viewModel="@{viewModel}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -3,6 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/CollectingDialect/app/src/main/res/layout/fragment_content.xml" value="0.16590678824721378" />
+        <entry key="..\:/CollectingDialect/app/src/main/res/layout/fragment_conversation.xml" value="0.5536458333333333" />
+        <entry key="..\:/CollectingDialect/app/src/main/res/layout/fragment_conversation_subject.xml" value="0.5536458333333333" />
+        <entry key="..\:/CollectingDialect/app/src/main/res/layout/fragment_script.xml" value="0.5536458333333333" />
+        <entry key="..\:/CollectingDialect/app/src/main/res/layout/fragment_script_subject.xml" value="0.5536458333333333" />
+        <entry key="..\:/CollectingDialect/app/src/main/res/layout/fragment_virtual_partner.xml" value="0.5536458333333333" />
+        <entry key="..\:/CollectingDialect/app/src/main/res/layout/fragment_virtual_partner_subject.xml" value="0.5536458333333333" />
+        <entry key="..\:/CollectingDialect/app/src/main/res/layout/item_record_and_play.xml" value="0.5526041666666667" />
+        <entry key="..\:/CollectingDialect/app/src/main/res/layout/layout_select_subject.xml" value="0.5536458333333333" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/drawable/background_button_start.xml" value="0.1955" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/drawable/background_dropdown.xml" value="0.187" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/drawable/background_main_gradient.xml" value="0.1955" />

@@ -41,7 +41,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_structured_speak"
-                android:layout_width="400dp"
+                android:layout_width="350dp"
                 android:layout_height="145dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

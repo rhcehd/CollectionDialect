@@ -17,6 +17,15 @@ class ScriptViewModel: CollectingViewModel() {
         }
     }
 
+    var regionText: String = ""
+        @Bindable get
+        set(value) {
+            if(field != value) {
+                field = value
+                notifyChange(com.example.collectingdialect.BR.regionText)
+            }
+        }
+
     var dialectScriptArray = arrayOf("A", "B", "C")
         @Bindable get
     var dialectScriptIndex: Int = 0

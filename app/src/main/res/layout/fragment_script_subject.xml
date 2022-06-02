@@ -55,7 +55,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="20dp"
-            android:text="강원 방언, 양양군"
+            android:text="@{viewModel.regionText}"
             android:textSize="20sp"/>
 
         <include

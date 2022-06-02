@@ -11,6 +11,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.example.collectingdialect.R
 import com.example.collectingdialect.data.RecordTimeUpdateCallback
 import com.example.collectingdialect.data.RecordTimeUpdater
+import com.example.collectingdialect.ui.content.RegionSelectionViewModel
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.navigation.NavigationView
 

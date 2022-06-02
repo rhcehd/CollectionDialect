@@ -1,19 +1,22 @@
 package com.example.collectingdialect.ui.content
 
+import android.content.Context
 import android.view.View
 import android.widget.ImageView
+import androidx.core.os.bundleOf
 import androidx.databinding.Bindable
 import androidx.databinding.BindingAdapter
 import androidx.navigation.findNavController
 import com.example.collectingdialect.BR
 import com.example.collectingdialect.R
 import com.example.collectingdialect.ui.BaseViewModel
+import com.example.collectingdialect.ui.MainActivity.Companion.showToast
 
 class RegionSelectionViewModel: BaseViewModel() {
     companion object {
         @JvmStatic
         @BindingAdapter("region")
-        fun selectRegion(view: ImageView, region: Int) {
+        fun selectRegion(view: ImageView, region: String) {
             when(region) {
                 REGION_NO_SELECT -> view.setImageResource(R.drawable.region_no_select)
                 REGION_GANGWON -> view.setImageResource(R.drawable.region_select_gangwon)
@@ -27,18 +30,19 @@ class RegionSelectionViewModel: BaseViewModel() {
             }
         }
 
-        const val REGION_NO_SELECT = 0
-        const val REGION_GANGWON = 1
-        const val REGION_CHUNGNAM = 2
-        const val REGION_CHUNGBUK = 3
-        const val REGION_GYEONGNAM = 4
-        const val REGION_GYEONGBUK = 5
-        const val REGION_JEONNAM = 6
-        const val REGION_JEONBUK = 7
-        const val REGION_JEJU = 8
+        const val KEY_REGION = "region"
+        const val REGION_NO_SELECT = "no_select"
+        const val REGION_GANGWON = "강원 방언"
+        const val REGION_CHUNGNAM = "충청(충남,대전,세종) 방언"
+        const val REGION_CHUNGBUK = "충청(충북) 방언"
+        const val REGION_GYEONGNAM = "경상(경남,부산,울산) 방언"
+        const val REGION_GYEONGBUK = "경상(경북,대구) 방언"
+        const val REGION_JEONNAM = "전라(전남,광주) 방언"
+        const val REGION_JEONBUK = "전라(전북) 방언"
+        const val REGION_JEJU = "제주 방언"
     }
 
-    var region: Int = REGION_NO_SELECT
+    var region: String = REGION_NO_SELECT
         @Bindable get
         set(value) {
             if(field != value) {
@@ -48,7 +52,13 @@ class RegionSelectionViewModel: BaseViewModel() {
         }
 
     fun onClickNext(view: View) {
-        view.findNavController().navigate(R.id.contentFragment)
+        if(region == REGION_NO_SELECT) {
+            showToast("지역을 선택해주세요")
+        } else {
+            val preference = view.context.getSharedPreferences(KEY_REGION, Context.MODE_PRIVATE)
+            preference.edit().putString(KEY_REGION, region).apply()
+            view.findNavController().navigate(R.id.contentFragment)
+        }
     }
 
     fun onClickSelectAreaGangwon(view: View) {

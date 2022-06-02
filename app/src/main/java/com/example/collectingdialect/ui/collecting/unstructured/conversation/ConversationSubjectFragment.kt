@@ -1,5 +1,6 @@
 package com.example.collectingdialect.ui.collecting.unstructured.conversation
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.collectingdialect.R
 import com.example.collectingdialect.databinding.FragmentConversationSubjectBinding
+import com.example.collectingdialect.ui.content.RegionSelectionViewModel
 
 class ConversationSubjectFragment: Fragment(R.layout.fragment_conversation_subject) {
     private val viewModel: ConversationSubjectViewModel by viewModels()
@@ -27,6 +29,9 @@ class ConversationSubjectFragment: Fragment(R.layout.fragment_conversation_subje
         if(binding == null) {
             binding = DataBindingUtil.bind(view)
             binding?.viewModel = viewModel
+            val preference = view.context.getSharedPreferences(RegionSelectionViewModel.KEY_REGION, Context.MODE_PRIVATE)
+            val regionText = preference.getString(RegionSelectionViewModel.KEY_REGION, "") ?: ""
+            viewModel.regionText = regionText
         }
     }
 }

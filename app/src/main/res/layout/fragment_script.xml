@@ -53,7 +53,7 @@
                 app:layout_constraintBottom_toTopOf="@id/guide_text"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="20dp"
-                android:text="강원 방언, 양양군"
+                android:text="@{viewModel.regionText}"
                 android:textSize="20sp"/>
 
             <TextView
@@ -132,6 +132,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:enabled="@{viewModel.recordExist ? true : false}"
                     android:onClick="@{viewModel::onClickPlayButton}"/>
 
                 <androidx.appcompat.widget.AppCompatButton
