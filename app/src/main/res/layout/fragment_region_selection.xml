@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
-        <variable name="viewModel" type="com.example.collectingdialect.ui.content.RegionSelectionViewModel" />
+        <variable name="viewModel" type="com.example.collectingdialect.ui.content.region.RegionSelectionViewModel" />
         <import type="android.text.InputType"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,6 +20,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:src="@drawable/region_no_select"
+            android:scaleType="centerInside"
             region="@{viewModel.region}"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,11 +40,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.1"
-                app:layout_constraintHeight_percent="0.07"
-                app:layout_constraintVertical_bias="0.25"
-                app:layout_constraintHorizontal_bias="0.54"
-                android:onClick="@{viewModel::onClickSelectAreaGangwon}"/>
+                app:layout_constraintVertical_bias="0.07"
+                app:layout_constraintHorizontal_bias="0.537"
+                android:onClick="@{viewModel::onClickSelectAreaGangwon}" />
 
             <View
                 android:id="@+id/select_area_chungnam"
@@ -53,11 +52,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.1"
-                app:layout_constraintHeight_percent="0.07"
-                app:layout_constraintVertical_bias="0.42"
-                app:layout_constraintHorizontal_bias="0.176"
-                android:onClick="@{viewModel::onClickSelectAreaChungnam}"/>
+                app:layout_constraintVertical_bias="0.36"
+                app:layout_constraintHorizontal_bias="0.173"
+                android:onClick="@{viewModel::onClickSelectAreaChungnam}" />
 
             <View
                 android:id="@+id/select_area_chungbuk"
@@ -67,11 +64,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.1"
-                app:layout_constraintHeight_percent="0.07"
-                app:layout_constraintVertical_bias="0.385"
+                app:layout_constraintVertical_bias="0.305"
                 app:layout_constraintHorizontal_bias="0.375"
-                android:onClick="@{viewModel::onClickSelectAreaChungbuk}"/>
+                android:onClick="@{viewModel::onClickSelectAreaChungbuk}" />
 
             <View
                 android:id="@+id/select_area_gyeongnam"
@@ -81,11 +76,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.1"
-                app:layout_constraintHeight_percent="0.07"
-                app:layout_constraintVertical_bias="0.567"
-                app:layout_constraintHorizontal_bias="0.543"
-                android:onClick="@{viewModel::onClickSelectAreaGyeongnam}"/>
+                app:layout_constraintVertical_bias="0.615"
+                app:layout_constraintHorizontal_bias="0.54"
+                android:onClick="@{viewModel::onClickSelectAreaGyeongnam}" />
 
             <View
                 android:id="@+id/select_area_gyeongbuk"
@@ -95,11 +88,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.1"
-                app:layout_constraintHeight_percent="0.07"
-                app:layout_constraintVertical_bias="0.425"
-                app:layout_constraintHorizontal_bias="0.615"
-                android:onClick="@{viewModel::onClickSelectAreaGyeongbuk}"/>
+                app:layout_constraintVertical_bias="0.37"
+                app:layout_constraintHorizontal_bias="0.61"
+                android:onClick="@{viewModel::onClickSelectAreaGyeongbuk}" />
 
             <View
                 android:id="@+id/select_area_jeonnam"
@@ -109,11 +100,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.1"
-                app:layout_constraintHeight_percent="0.07"
-                app:layout_constraintVertical_bias="0.615"
-                app:layout_constraintHorizontal_bias="0.185"
-                android:onClick="@{viewModel::onClickSelectAreaJeonnam}"/>
+                app:layout_constraintVertical_bias="0.7"
+                app:layout_constraintHorizontal_bias="0.183"
+                android:onClick="@{viewModel::onClickSelectAreaJeonnam}" />
 
             <View
                 android:id="@+id/select_area_jeonbuk"
@@ -123,11 +112,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.1"
-                app:layout_constraintHeight_percent="0.07"
-                app:layout_constraintVertical_bias="0.52"
-                app:layout_constraintHorizontal_bias="0.23"
-                android:onClick="@{viewModel::onClickSelectAreaJeonbuk}"/>
+                app:layout_constraintVertical_bias="0.53"
+                app:layout_constraintHorizontal_bias="0.225"
+                android:onClick="@{viewModel::onClickSelectAreaJeonbuk}" />
 
             <View
                 android:id="@+id/select_area_jeju"
@@ -137,11 +124,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintWidth_percent="0.1"
-                app:layout_constraintHeight_percent="0.07"
-                app:layout_constraintVertical_bias="0.765"
-                app:layout_constraintHorizontal_bias="0.133"
-                android:onClick="@{viewModel::onClickSelectAreaJeju}"/>
+                app:layout_constraintVertical_bias="0.955"
+                app:layout_constraintHorizontal_bias="0.125"
+                android:onClick="@{viewModel::onClickSelectAreaJeju}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

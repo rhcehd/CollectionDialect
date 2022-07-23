@@ -14,5 +14,8 @@
     <dimen name="button_width">300dp</dimen>
     <dimen name="button_height">70dp</dimen>
     <dimen name="main_margin_start">20dp</dimen>
+    <dimen name="region_select_area_width">40dp</dimen>
+    <dimen name="region_select_area_height">60dp</dimen>
+    <dimen name="speaker_info_text_field_margin">10dp</dimen>
     <item name="title_layout_vertical_bias" type="dimen" format="float">0.1</item>
 </resources>

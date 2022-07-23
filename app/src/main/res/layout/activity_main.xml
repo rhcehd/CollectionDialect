@@ -16,7 +16,6 @@
             android:layout_height="?attr/actionBarSize"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/fragment_container_view"
-            app:title="@string/app_name"
             app:navigationIcon="@drawable/ic_baseline_menu_24"/>
 
         <androidx.fragment.app.FragmentContainerView

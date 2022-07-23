@@ -1,30 +1,33 @@
 package com.example.collectingdialect.ui
 
-import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.Observable
 import androidx.databinding.PropertyChangeRegistry
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.collectingdialect.R
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
+import com.google.android.material.textfield.TextInputLayout
 
 open class BaseViewModel: ViewModel(), Observable {
     companion object {
-
         @JvmStatic
-        @BindingAdapter("custom:adapter")
+        @BindingAdapter("adapter")
         fun setAdapter(view: RecyclerView, adapter: RecyclerView.Adapter<*>) {
             view.adapter = adapter
         }
 
         @JvmStatic
-        @BindingAdapter("script:image")
-        fun setImage(view: ImageView, drawableResId: Int) {
-            Glide.with(view).load(drawableResId).centerCrop().into(view)
+        @BindingAdapter("error")
+        fun setError(view: TextInputLayout, error: String?) {
+            view.error = error
+        }
+
+        @JvmStatic
+        @BindingAdapter("dropdown")
+        fun setDropdown(view: MaterialAutoCompleteTextView, array: Array<String>) {
+            val adapter = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, array)
+            view.setAdapter(adapter)
         }
     }
 

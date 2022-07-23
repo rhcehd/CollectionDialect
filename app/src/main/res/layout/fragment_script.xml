@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
-        <variable name="viewModel" type="com.example.collectingdialect.ui.collecting.structured.script.ScriptViewModel" />
+        <variable name="viewModel" type="com.example.collectingdialect.ui.collecting.old.structured.script.ScriptViewModel" />
+        <import type="android.view.View"/>
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -111,6 +112,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/record_button"
                     android:background="@drawable/button_previous_selector"
+                    android:visibility="@{viewModel.dialectScriptIndex == 0 ? View.GONE : View.VISIBLE}"
                     android:onClick="@{viewModel::onClickPreviousButton}"/>
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -132,7 +134,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:enabled="@{viewModel.recordExist ? true : false}"
+                    android:text="play"
+                    android:visibility="@{viewModel.recordExist ? View.VISIBLE : View.GONE}"
                     android:onClick="@{viewModel::onClickPlayButton}"/>
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -144,6 +147,7 @@
                     app:layout_constraintStart_toEndOf="@id/record_button"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:background="@drawable/button_next_selector"
+                    android:visibility="@{viewModel.dialectScriptIndex == viewModel.dialectScriptSize - 1 ? View.GONE : View.VISIBLE}"
                     android:onClick="@{viewModel::onClickNextButton}"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,18 +1,25 @@
 package com.example.collectingdialect.ui.content
 
 import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import com.example.collectingdialect.R
+import com.example.collectingdialect.data.RecordTimeManager
 import com.example.collectingdialect.ui.BaseViewModel
+import com.example.collectingdialect.ui.MainActivity.Companion.showToast
 
 class ContentViewModel: BaseViewModel() {
-    fun onClickStructuredSpeakButton(view: View) {
-        view.findNavController().navigate(R.id.structuredContentFragment)
+    companion object {
+        const val KEY_SELECTED_CONTENT = "content"
+        const val SELECTED_CONTENT_ONE_PERSON = 1
+        const val SELECTED_CONTENT_TWO_PERSON = 2
+    }
+    fun onClickOnePersonButton(view: View) {
+        view.findNavController().navigate(R.id.speakerInfoFragment, bundleOf(KEY_SELECTED_CONTENT to SELECTED_CONTENT_ONE_PERSON))
     }
 
-    fun onClickUnstructuredSpeakButton(view: View) {
-        view.findNavController().navigate(R.id.unstructuredContentFragment)
+    fun onClickTwoPersonButton(view: View) {
+        view.findNavController().navigate(R.id.speakerInfoFragment, bundleOf(KEY_SELECTED_CONTENT to SELECTED_CONTENT_TWO_PERSON))
     }
 
 }

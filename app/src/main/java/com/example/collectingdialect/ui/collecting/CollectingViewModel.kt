@@ -1,36 +1,40 @@
 package com.example.collectingdialect.ui.collecting
 
 import android.content.Context
-import android.media.*
+import android.media.MediaPlayer
+import android.media.MediaRecorder
 import android.os.Build
 import android.view.View
 import androidx.databinding.Bindable
 import com.example.collectingdialect.BR
 import com.example.collectingdialect.R
-import com.example.collectingdialect.data.RecordTimeUpdater
+import com.example.collectingdialect.data.RecordTimeManager
 import com.example.collectingdialect.ui.BaseViewModel
 import com.example.collectingdialect.ui.MainActivity
 import com.example.collectingdialect.ui.MainActivity.Companion.showToast
+import com.example.collectingdialect.ui.login.LoginViewModel
 import java.io.File
-import java.io.IOException
 
 open class CollectingViewModel: BaseViewModel() {
+    companion object {
+        const val TYPE_SCRIPT = "script"
+        const val TYPE_CONVERSATION = "conversation"
+        const val TYPE_VIRTUAL_PARTNER ="virtual_partner"
+    }
+
     private var mediaRecorder: MediaRecorder? = null
     private var mediaPlayer: MediaPlayer? = null
     private var mediaDirectory: File? = null
+
+    var userName: String = ""
     var fileName: String = ""
         set(value) {
             field = value
-            mediaPlayer = null
             initializeMediaPlayer()
         }
     var isRecording: Boolean = false
 
     var currentSubject = ""
-        /*set(value) {
-            field = value
-            fileName = "test_script_${currentSubject}_$dialectScriptIndex"
-        }*/
 
     var isRecordExist = false
         @Bindable get
@@ -47,6 +51,7 @@ open class CollectingViewModel: BaseViewModel() {
             showToast("올바르지 않은 동작입니다. 앱을 완전히 종료 후 다시 시도해주세요")
         } else {
             mediaDirectory = context.filesDir
+            userName = context.getSharedPreferences(LoginViewModel.PREFERENCE_USER, Context.MODE_PRIVATE).getString(LoginViewModel.KEY_ID, "") ?: ""
         }
     }
 
@@ -70,27 +75,32 @@ open class CollectingViewModel: BaseViewModel() {
                 setDataSource(file.absolutePath)
                 prepare()
                 true
-                //start()
             } catch (e: Exception) {
-                /*if(e is IOException) {
-                            showToast("녹음되지 않은 항목입니다")
-                        } else {
-                            showToast("파일을 재생할 수 없습니다")
-                        }*/
                 false
             }
         }
     }
 
     open fun onClickRecordButton(view: View) {
+        onClickRecordButton(view) {}
+    }
+
+    fun onClickRecordButton(view: View, recordCallback: (() -> Unit)?) {
         if(isRecording) {
             isRecording = false
-            view.setBackgroundResource(R.drawable.start_recording)
+            if(recordCallback == null) {
+                view.setBackgroundResource(R.drawable.re_recording)
+            } else {
+                view.setBackgroundResource(R.drawable.start_recording)
+            }
+
             mediaRecorder?.apply {
                 stop()
                 reset()
                 release()
-                RecordTimeUpdater.updateRecordTime()
+                RecordTimeManager.updateRecordTime()
+                isRecordExist = true
+                recordCallback?.invoke()
             }
             this.mediaRecorder = null
         } else {
@@ -112,26 +122,8 @@ open class CollectingViewModel: BaseViewModel() {
     }
 
     open fun onClickPlayButton(view: View) {
-        /*if(mediaPlayer == null) {
-            mediaPlayer = MediaPlayer().apply {
-                try {
-                    val file = File(mediaDirectory, "$fileName.mp4")
-                    setDataSource(file.absolutePath)
-                    prepare()
-                    start()
-                } catch (e: Exception) {
-                    if(e is IOException) {
-                        showToast("녹음되지 않은 항목입니다")
-                    } else {
-                        showToast("파일을 재생할 수 없습니다")
-                    }
-                }
-            }
-        } else {
-            mediaPlayer?.start() ?: showToast("파일을 재생할 수 없습니다")
-        }*/
-
         try {
+            initializeMediaPlayer()
             mediaPlayer?.start() ?: showToast("파일을 재생할 수 없습니다")
         } catch (e: Exception) {
             showToast("파일을 재생할 수 없습니다")
@@ -140,5 +132,32 @@ open class CollectingViewModel: BaseViewModel() {
 
     open fun setSubject(subject: String) {
         currentSubject = subject
+    }
+
+    fun reRecordByFile(view: View, file: File) {
+        /*if(!isRecording) {
+            fileName = file.nameWithoutExtension
+        }*/
+        fileName = file.nameWithoutExtension
+        onClickRecordButton(view, null)
+    }
+
+    fun playByFile(view: View, file: File) {
+        fileName = file.nameWithoutExtension
+        onClickPlayButton(view)
+    }
+
+    fun onClickPlayButton2(view: View) {
+        try {
+            initializeMediaPlayerByResource(view)
+            mediaPlayer?.start() ?: showToast("파일을 재생할 수 없습니다")
+        } catch (e: Exception) {
+            showToast("파일을 재생할 수 없습니다")
+        }
+    }
+
+    fun initializeMediaPlayerByResource(view: View) {
+        val context = view.context
+        mediaPlayer = MediaPlayer.create(context, R.raw.gangwon_1_001)
     }
 }

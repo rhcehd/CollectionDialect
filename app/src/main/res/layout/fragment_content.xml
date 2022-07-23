@@ -40,26 +40,26 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button_structured_speak"
+                android:id="@+id/button_one_person"
                 android:layout_width="350dp"
-                android:layout_height="145dp"
+                android:layout_height="125dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginVertical="5dp"
-                android:background="@drawable/button_structured_speak_selector"
-                android:onClick="@{viewModel::onClickStructuredSpeakButton}"/>
+                android:background="@drawable/button_one_person_selector"
+                android:onClick="@{viewModel::onClickOnePersonButton}"/>
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/button_unstructured_speak"
-                android:layout_width="400dp"
-                android:layout_height="145dp"
-                app:layout_constraintTop_toBottomOf="@id/button_structured_speak"
+                android:id="@+id/button_two_person"
+                android:layout_width="350dp"
+                android:layout_height="125dp"
+                app:layout_constraintTop_toBottomOf="@id/button_one_person"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginVertical="5dp"
-                android:background="@drawable/button_unstructured_speak_selector"
-                android:onClick="@{viewModel::onClickUnstructuredSpeakButton}"/>
+                android:background="@drawable/button_two_person_selector"
+                android:onClick="@{viewModel::onClickTwoPersonButton}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

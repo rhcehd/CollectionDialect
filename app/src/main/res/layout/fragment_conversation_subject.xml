@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable name="viewModel" type="com.example.collectingdialect.ui.collecting.unstructured.conversation.ConversationSubjectViewModel" />
+        <variable name="viewModel" type="com.example.collectingdialect.ui.collecting.old.unstructured.conversation.ConversationSubjectViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

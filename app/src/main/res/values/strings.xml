@@ -31,4 +31,15 @@
     <string name="unit2">UNIT 02.</string>
     <string name="conversation_title">02\n수집자와의 2인 대화</string>
     <string name="virtual_partner_title">03\n가상 상대와의 대화</string>
+    <string name="qna_title">1인 발화\n질문에 답하기</string>
+    <string name="guide_qna">아래 문장을 보고 답해주세요</string>
+    <string name="repeat_title">1인 발화\n따라 말하기</string>
+    <string name="gender">성별</string>
+    <string name="birth_year">출생년도</string>
+    <string name="residence_province">거주 도</string>
+    <string name="residence_city">거주 시</string>
+    <string name="residence_period">거주 기간</string>
+    <string name="job">직업</string>
+    <string name="academic_background">학력</string>
+    <string name="health_condition">건강상태</string>
 </resources>
