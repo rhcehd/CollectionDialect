@@ -8,6 +8,7 @@ import androidx.databinding.Bindable
 import androidx.navigation.findNavController
 import com.example.collectingdialect.BR
 import com.example.collectingdialect.R
+import com.example.collectingdialect.data.RecordManager
 import com.example.collectingdialect.ui.BaseViewModel
 import com.example.collectingdialect.ui.content.ContentViewModel
 import com.example.collectingdialect.ui.content.region.RegionSelectionViewModel
@@ -125,6 +126,7 @@ class SpeakerInfoViewModel: BaseViewModel() {
     }
 
     fun onClickButton(view: View) {
+        RecordManager.clearRecordDirectory()
         view.findNavController().navigate(R.id.setSelectionFragment, bundleOf(ContentViewModel.KEY_SELECTED_CONTENT to selectedContent))
     }
 }

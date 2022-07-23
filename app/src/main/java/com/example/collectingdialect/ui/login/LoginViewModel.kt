@@ -69,7 +69,7 @@ class LoginViewModel: BaseViewModel() {
                     showToast("로그인 성공")
                     MainActivity.loginCallback?.invoke()
                     val navController = view.findNavController()
-                    navController.navigate(R.id.regionSelectionFragment)
+                    navController.navigate(R.id.contentFragment)
                     navController.backQueue.removeLast()
                 }, onFailure = { code ->
                     if(code == 401) {

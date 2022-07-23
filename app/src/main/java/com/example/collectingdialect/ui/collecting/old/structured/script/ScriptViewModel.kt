@@ -9,13 +9,13 @@ import com.example.collectingdialect.data.ContentData
 import com.example.collectingdialect.ui.collecting.CollectingViewModel
 
 class ScriptViewModel: CollectingViewModel() {
-    companion object {
+    /*companion object {
         @JvmStatic
         @BindingAdapter("scriptArray", "scriptIndex", requireAll = true)
         fun setScriptIndex(view: TextView, array: Array<String>, index: Int) {
             view.text = array[index]
         }
-    }
+    }*/
 
     var regionText: String = ""
         @Bindable get
@@ -26,7 +26,7 @@ class ScriptViewModel: CollectingViewModel() {
             }
         }
 
-    var dialectScriptArray = ContentData.dialectScriptArray
+    var dialectScriptArray = arrayOf<String>()
         @Bindable get
     var dialectScriptIndex: Int = 0
         @Bindable get
@@ -40,7 +40,7 @@ class ScriptViewModel: CollectingViewModel() {
     val dialectScriptSize
         get() = dialectScriptArray.size
 
-    var standardScriptArray = ContentData.standardScriptArray
+    var standardScriptArray = arrayOf<String>()
         @Bindable get
     var standardScriptIndex: Int = 0
         @Bindable get

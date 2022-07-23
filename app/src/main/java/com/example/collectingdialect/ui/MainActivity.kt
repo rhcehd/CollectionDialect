@@ -6,13 +6,14 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
 import com.example.collectingdialect.R
 import com.example.collectingdialect.data.ContentData
 import com.example.collectingdialect.data.RecordTimeUpdateCallback
-import com.example.collectingdialect.data.RecordTimeManager
+import com.example.collectingdialect.data.RecordManager
 import com.example.collectingdialect.remote.ApiManager
 import com.example.collectingdialect.ui.login.LoginViewModel
 import com.google.android.material.appbar.MaterialToolbar
@@ -31,6 +32,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         var loginCallback: (() -> Unit)? = null
     }
 
+    private val sharedViewModel: SharedViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         contextRequester = {this}
@@ -38,7 +41,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         if(checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), 1000)
         }
-        //ContentData.init(this)
+        ContentData.init(this)
     }
 
     override fun onRequestPermissionsResult(
@@ -54,7 +57,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         toolbar.isTitleCentered = true
         val userPreference = getSharedPreferences(LoginViewModel.PREFERENCE_USER, Context.MODE_PRIVATE)
-        RecordTimeManager.recordTimeUpdateCallback = object: RecordTimeUpdateCallback {
+        RecordManager.recordTimeUpdateCallback = object: RecordTimeUpdateCallback {
             override fun onUpdateRecordTime(timeString: String) {
                 val currentUser = userPreference.getString(LoginViewModel.KEY_ID, "") ?: ""
                 if(currentUser.isNotEmpty()) {
@@ -106,7 +109,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             val isLoggedIn = preference.contains(LoginViewModel.KEY_ID)
             loginMenu.isVisible = !isLoggedIn
             logoutMenu.isVisible = isLoggedIn
-            RecordTimeManager.updateRecordTime()
+            RecordManager.updateRecordTime()
         }
         loginCallback?.invoke()
 
@@ -114,7 +117,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             setIcon(R.drawable.ic_baseline_settings_24)
             setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
             setOnMenuItemClickListener {
-                val isValidRecordTime = RecordTimeManager.validateRecordTime()
+                val isValidRecordTime = RecordManager.validateRecordTime()
                 if(isValidRecordTime) {
                     ApiManager.sendRecordData(this@MainActivity, {}, {})
                 } else {

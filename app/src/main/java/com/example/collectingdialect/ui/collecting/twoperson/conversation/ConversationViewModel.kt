@@ -3,32 +3,21 @@ package com.example.collectingdialect.ui.collecting.twoperson.conversation
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.appcompat.app.AlertDialog
 import androidx.core.graphics.drawable.toDrawable
 import androidx.databinding.Bindable
 import androidx.databinding.BindingAdapter
-import androidx.navigation.findNavController
 import com.example.collectingdialect.BR
 import com.example.collectingdialect.R
 import com.example.collectingdialect.data.ContentData
+import com.example.collectingdialect.ui.MainActivity.Companion.showToast
 import com.example.collectingdialect.ui.collecting.CollectingViewModel
 import com.example.collectingdialect.ui.collecting.RecordAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ConversationViewModel: CollectingViewModel() {
-    companion object {
-        @JvmStatic
-        @BindingAdapter("conversationArray", "conversationIndex", requireAll = true)
-        fun setScriptIndex(view: ImageView, array: Array<Int>, index: Int) {
-            view.setImageResource(array[index])
-        }
-    }
-
     var regionText: String = ""
         @Bindable get
         set(value) {
@@ -38,15 +27,14 @@ class ConversationViewModel: CollectingViewModel() {
             }
         }
 
-    var imageArray = ContentData.imageArray
-        @Bindable get
+    var imageArray = arrayOf<Int>()
     var imageIndex = 0
         @Bindable get
         set(value) {
             if(field != value) {
                 field = value
-                fileNamePrefix = "${userName}_conversation_${currentSubject}_${imageIndex}"
-                fileName = "${userName}_conversation_${currentSubject}_${imageIndex}_${adapter.itemCount}"
+                fileNamePrefix = "conversation_${imageIndex}"
+                fileName = "conversation_${imageIndex}_${adapter.itemCount}"
                 notifyChange(BR.imageIndex)
             }
         }
@@ -60,10 +48,9 @@ class ConversationViewModel: CollectingViewModel() {
             adapter.requestRecordList(fileNamePrefix)
         }
 
-    override fun setSubject(subject: String) {
-        super.setSubject(subject)
-        fileNamePrefix = "${userName}_conversation_${currentSubject}_${imageIndex}"
-        fileName = "${userName}_conversation_${currentSubject}_${imageIndex}_${adapter.itemCount}"
+    init {
+        fileNamePrefix = "conversation_${imageIndex}"
+        fileName = "conversation_${imageIndex}_${adapter.itemCount}"
     }
 
     fun onClickImage(view: View) {
@@ -93,10 +80,6 @@ class ConversationViewModel: CollectingViewModel() {
         }*/
     }
 
-    fun onClickBackButton(view: View) {
-        view.findNavController().popBackStack()
-    }
-
     fun onClickPreviousButton(view: View) {
         imageIndex = if(imageIndex - 1 < 0) {
             0
@@ -106,7 +89,8 @@ class ConversationViewModel: CollectingViewModel() {
     }
 
     fun onClickNextButton(view: View) {
-        imageIndex = if(imageIndex + 1 >= imageArray.size) {
+        imageIndex = if(imageIndex + 1 >= imageArraySize) {
+            showToast("last item")
             imageIndex
         } else {
             imageIndex + 1
@@ -115,7 +99,7 @@ class ConversationViewModel: CollectingViewModel() {
 
     override fun onClickRecordButton(view: View) {
         if(!isRecording) {
-            fileName = "${userName}_conversation_${currentSubject}_${imageIndex}_${adapter.itemCount}"
+            fileName = "conversation_${imageIndex}_${adapter.itemCount}"
         }
         val recordCallback = {adapter.requestRecordList(fileNamePrefix)}
         super.onClickRecordButton(view, recordCallback)

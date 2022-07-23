@@ -1,6 +1,8 @@
 package com.example.collectingdialect.ui
 
 import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.databinding.Observable
 import androidx.databinding.PropertyChangeRegistry
@@ -28,6 +30,18 @@ open class BaseViewModel: ViewModel(), Observable {
         fun setDropdown(view: MaterialAutoCompleteTextView, array: Array<String>) {
             val adapter = ArrayAdapter(view.context, android.R.layout.simple_dropdown_item_1line, array)
             view.setAdapter(adapter)
+        }
+
+        @JvmStatic
+        @BindingAdapter("scriptArray", "scriptIndex", requireAll = true)
+        fun setScriptIndex(view: TextView, array: Array<String>, index: Int) {
+            view.text = array[index]
+        }
+
+        @JvmStatic
+        @BindingAdapter("imageArray", "imageIndex", requireAll = true)
+        fun setScriptIndex(view: ImageView, array: Array<Int>, index: Int) {
+            view.setImageResource(array[index])
         }
     }
 

@@ -11,13 +11,13 @@ import com.example.collectingdialect.ui.collecting.CollectingViewModel
 import com.example.collectingdialect.ui.collecting.RecordAdapter
 
 class ConversationViewModel: CollectingViewModel() {
-    companion object {
+    /*companion object {
         @JvmStatic
         @BindingAdapter("conversationArray", "conversationIndex", requireAll = true)
         fun setScriptIndex(view: ImageView, array: Array<Int>, index: Int) {
             view.setImageResource(array[index])
         }
-    }
+    }*/
 
     var regionText: String = ""
         @Bindable get
@@ -28,7 +28,7 @@ class ConversationViewModel: CollectingViewModel() {
             }
         }
 
-    var imageArray = ContentData.imageArray
+    var imageArray = arrayOf<Int>()
         @Bindable get
     var imageIndex = 0
         @Bindable get

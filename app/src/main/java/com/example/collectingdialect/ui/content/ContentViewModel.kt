@@ -4,9 +4,7 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import com.example.collectingdialect.R
-import com.example.collectingdialect.data.RecordTimeManager
 import com.example.collectingdialect.ui.BaseViewModel
-import com.example.collectingdialect.ui.MainActivity.Companion.showToast
 
 class ContentViewModel: BaseViewModel() {
     companion object {

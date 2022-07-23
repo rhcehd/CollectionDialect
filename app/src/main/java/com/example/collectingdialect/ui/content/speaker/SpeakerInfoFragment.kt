@@ -6,17 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.clearFragmentResultListener
-import androidx.fragment.app.setFragmentResultListener
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.*
 import com.example.collectingdialect.R
 import com.example.collectingdialect.databinding.FragmentSpeakerInfoBinding
+import com.example.collectingdialect.ui.SharedViewModel
 import com.example.collectingdialect.ui.content.ContentViewModel
 import com.example.collectingdialect.ui.content.region.RegionSelectionViewModel
 
 class SpeakerInfoFragment: Fragment(R.layout.fragment_speaker_info) {
     val viewModel: SpeakerInfoViewModel by viewModels()
+    val sharedViewModel: SharedViewModel by activityViewModels()
     var binding: FragmentSpeakerInfoBinding? = null
 
     override fun onCreateView(

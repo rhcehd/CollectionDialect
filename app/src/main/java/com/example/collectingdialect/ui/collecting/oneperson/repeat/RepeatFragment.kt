@@ -30,8 +30,6 @@ class RepeatFragment: Fragment(R.layout.fragment_repeat) {
         if(binding == null) {
             binding = DataBindingUtil.bind(view)
             binding?.viewModel = viewModel
-            val subject = arguments?.getString(SubjectViewModel.KEY_SUBJECT) ?: ""
-            viewModel.setSubject(subject)
             val preference = view.context.getSharedPreferences(RegionSelectionViewModel.KEY_REGION, Context.MODE_PRIVATE)
             val regionText = preference.getString(RegionSelectionViewModel.KEY_REGION, "") ?: ""
             viewModel.regionText = regionText

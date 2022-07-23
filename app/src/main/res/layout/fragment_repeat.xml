@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable name="viewModel" type="com.example.collectingdialect.ui.collecting.oneperson.repeat.RepeatViewModel" />
         <import type="android.view.View"/>
@@ -69,6 +69,17 @@
                 android:textSize="10sp"/>
 
             <TextView
+                android:id="@+id/content_sequence_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/unit_text"
+                app:layout_constraintBottom_toTopOf="@id/dialect_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="1 / 100"
+                android:text="@{viewModel.contentSequence}"/>
+
+            <TextView
                 android:id="@+id/dialect_text"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -79,7 +90,7 @@
                 android:textSize="30sp"
                 android:gravity="center"
                 scriptArray="@{viewModel.dialectScriptArray}"
-                scriptIndex="@{viewModel.dialectScriptIndex}"/>
+                scriptIndex="@{viewModel.scriptIndex}"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/repeat_button"
@@ -90,7 +101,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:background="@drawable/ic_baseline_play_circle_outline_24"
-                android:onClick="@{viewModel::onClickPlayButton2}"/>
+                android:onClick="@{viewModel::onClickPlayScriptButton}"/>
 
             <!--<TextView
                 android:id="@+id/standard_text"
@@ -123,7 +134,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/record_button"
                     android:background="@drawable/button_previous_selector"
-                    android:visibility="@{viewModel.dialectScriptIndex == 0 ? View.GONE : View.VISIBLE}"
+                    android:visibility="@{viewModel.scriptIndex == 0 ? View.GONE : View.VISIBLE}"
                     android:onClick="@{viewModel::onClickPreviousButton}"/>
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -158,7 +169,6 @@
                     app:layout_constraintStart_toEndOf="@id/record_button"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:background="@drawable/button_next_selector"
-                    android:visibility="@{viewModel.dialectScriptIndex == viewModel.dialectScriptSize - 1 ? View.GONE : View.VISIBLE}"
                     android:onClick="@{viewModel::onClickNextButton}"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

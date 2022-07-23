@@ -5,10 +5,11 @@ import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Build
 import android.view.View
+import androidx.annotation.RawRes
 import androidx.databinding.Bindable
 import com.example.collectingdialect.BR
 import com.example.collectingdialect.R
-import com.example.collectingdialect.data.RecordTimeManager
+import com.example.collectingdialect.data.RecordManager
 import com.example.collectingdialect.ui.BaseViewModel
 import com.example.collectingdialect.ui.MainActivity
 import com.example.collectingdialect.ui.MainActivity.Companion.showToast
@@ -98,7 +99,7 @@ open class CollectingViewModel: BaseViewModel() {
                 stop()
                 reset()
                 release()
-                RecordTimeManager.updateRecordTime()
+                RecordManager.updateRecordTime()
                 isRecordExist = true
                 recordCallback?.invoke()
             }
@@ -147,17 +148,12 @@ open class CollectingViewModel: BaseViewModel() {
         onClickPlayButton(view)
     }
 
-    fun onClickPlayButton2(view: View) {
+    fun playScript(context: Context, @RawRes resId: Int) {
         try {
-            initializeMediaPlayerByResource(view)
+            mediaPlayer = MediaPlayer.create(context, resId)
             mediaPlayer?.start() ?: showToast("파일을 재생할 수 없습니다")
         } catch (e: Exception) {
             showToast("파일을 재생할 수 없습니다")
         }
-    }
-
-    fun initializeMediaPlayerByResource(view: View) {
-        val context = view.context
-        mediaPlayer = MediaPlayer.create(context, R.raw.gangwon_1_001)
     }
 }
