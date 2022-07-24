@@ -5,6 +5,7 @@ import com.example.collectingdialect.ui.MainActivity
 import com.example.collectingdialect.ui.SharedViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 object RecordManager {
@@ -62,6 +63,12 @@ object RecordManager {
         recordTimeUpdateCallback?.onUpdateRecordTime(String.format("%02d분 %02d초", minutes, seconds))
     }
 
+    fun updateRecordTime(recordTimeMillis: Long) {
+        val minutes: Long = (recordTimeMillis / 1000) / 60
+        val seconds: Long = (recordTimeMillis / 1000) % 60
+        recordTimeUpdateCallback?.onUpdateRecordTime(String.format("%02d분 %02d초", minutes, seconds))
+    }
+
     private fun validateRecordCount(collectingType: Int): Boolean {
         val context = MainActivity.contextRequester?.invoke() ?: return false
         val mediaDirectory = context.filesDir
@@ -102,13 +109,15 @@ object RecordManager {
 
     fun onStartRecording() {
         isRecording = true
-        val recordTimeMillis = calculateRecordTime()
+        var recordTimeMillis = calculateRecordTime()
         CoroutineScope(Dispatchers.Main).launch {
             while (isRecording) {
+                delay(1000)
+                recordTimeMillis += 1000
                 if(!isRecording) {
                     break
                 }
-
+                updateRecordTime(recordTimeMillis)
             }
         }
     }

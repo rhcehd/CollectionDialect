@@ -89,6 +89,7 @@ open class CollectingViewModel: BaseViewModel() {
     fun onClickRecordButton(view: View, recordCallback: (() -> Unit)?) {
         if(isRecording) {
             isRecording = false
+            RecordManager.onStopRecording()
             if(recordCallback == null) {
                 view.setBackgroundResource(R.drawable.re_recording)
             } else {
@@ -106,6 +107,7 @@ open class CollectingViewModel: BaseViewModel() {
             this.mediaRecorder = null
         } else {
             isRecording = true
+            RecordManager.onStartRecording()
             view.setBackgroundResource(R.drawable.recording)
             val context = MainActivity.contextRequester?.invoke()
             if(context == null) {
