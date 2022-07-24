@@ -1,13 +1,24 @@
 package com.example.collectingdialect.ui.collecting.twoperson.conversation
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.graphics.drawable.Drawable
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.ImageView
 import androidx.core.graphics.drawable.toDrawable
+import androidx.core.view.updateLayoutParams
 import androidx.databinding.Bindable
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.Transformation
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.engine.Resource
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.example.collectingdialect.BR
 import com.example.collectingdialect.R
 import com.example.collectingdialect.data.ContentData
@@ -16,6 +27,7 @@ import com.example.collectingdialect.ui.SharedViewModel
 import com.example.collectingdialect.ui.collecting.CollectingViewModel
 import com.example.collectingdialect.ui.collecting.RecordAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.security.MessageDigest
 
 class ConversationViewModel: CollectingViewModel() {
     var sharedViewModel: SharedViewModel? = null
@@ -73,18 +85,17 @@ class ConversationViewModel: CollectingViewModel() {
     }
 
     fun onClickImage(view: View) {
-        var image = BitmapFactory.decodeResource(view.resources, imageArray[index])
-        if(image.width > image.height) {
-            val matrix = Matrix().apply { postRotate(90.0f) }
-            image = Bitmap.createBitmap(image, 0, 0, image.width, image.height, matrix, false)
-            image = Bitmap.createScaledBitmap(image, image.width, image.height, false)
+        val image = BitmapFactory.decodeResource(view.resources, imageArray[index])
+        var isLandScapeDialog = false
+        val imageWidth = image.width
+        val imageHeight = image.height
+        if(imageWidth > imageHeight) {
+            isLandScapeDialog = true
         }
-        val imageView = ImageView(view.context)
-        imageView.setImageBitmap(image)
-        //val dialog = AlertDialog.Builder(view.context, R.style.EmptyDialog)
-        val dialog = MaterialAlertDialogBuilder(view.context, R.style.EmptyDialog)
-            //.setView(imageView)
-            .setBackground(image.toDrawable(view.resources))
+        val imageView = ImageView(view.context).apply {
+            layoutParams = ViewGroup.LayoutParams(0, 0)
+        }
+        val dialog = MaterialAlertDialogBuilder(view.context)
             .create()
         dialog.setOnShowListener {
             dialog.window?.apply {
@@ -93,10 +104,54 @@ class ConversationViewModel: CollectingViewModel() {
             }
         }
         dialog.show()
-        /*dialog.window?.apply {
-            setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-            //setDimAmount(0.6f)
-        }*/
+        val decorView = dialog.window?.decorView ?: return
+        var onAfterDecorViewLayout: (() -> Unit)? = null
+        var decorViewWidth = 0
+        val decorViewLayoutListener = ViewTreeObserver.OnGlobalLayoutListener {
+            decorViewWidth = decorView.width
+            onAfterDecorViewLayout?.invoke()
+        }
+        onAfterDecorViewLayout = {
+            decorView.viewTreeObserver.removeOnGlobalLayoutListener(decorViewLayoutListener)
+
+            val adjustedViewWidth: Int
+            val adjustedViewHeight: Int
+            if(isLandScapeDialog) {
+                adjustedViewWidth = imageWidth * decorViewWidth / imageHeight
+                adjustedViewHeight = decorViewWidth
+            } else {
+                adjustedViewWidth = decorViewWidth
+                adjustedViewHeight = imageHeight * decorViewWidth / imageWidth
+            }
+            imageView.updateLayoutParams {
+                width = adjustedViewWidth
+                height = adjustedViewHeight
+            }
+            Glide.with(imageView).load(imageArray[index]).addListener(object:RequestListener<Drawable>{
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    return true
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    if(resource != null) {
+                        decorView.background = resource
+                    }
+                    return true
+                }
+            }).into(imageView)
+        }
+        decorView.viewTreeObserver?.addOnGlobalLayoutListener(decorViewLayoutListener)
     }
 
     fun onClickPreviousButton(view: View) {

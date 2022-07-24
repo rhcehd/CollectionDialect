@@ -60,13 +60,13 @@ object RecordManager {
         val recordTimeMillis: Long = calculateRecordTime()
         val minutes: Long = (recordTimeMillis / 1000) / 60
         val seconds: Long = (recordTimeMillis / 1000) % 60
-        recordTimeUpdateCallback?.onUpdateRecordTime(String.format("%02d분 %02d초", minutes, seconds))
+        recordTimeUpdateCallback?.onUpdateRecordTime(String.format("%02d:%02d", minutes, seconds))
     }
 
     fun updateRecordTime(recordTimeMillis: Long) {
         val minutes: Long = (recordTimeMillis / 1000) / 60
         val seconds: Long = (recordTimeMillis / 1000) % 60
-        recordTimeUpdateCallback?.onUpdateRecordTime(String.format("%02d분 %02d초", minutes, seconds))
+        recordTimeUpdateCallback?.onUpdateRecordTime(String.format("%02d:%02d", minutes, seconds))
     }
 
     private fun validateRecordCount(collectingType: Int): Boolean {

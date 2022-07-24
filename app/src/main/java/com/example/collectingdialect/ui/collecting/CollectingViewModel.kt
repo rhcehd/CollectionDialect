@@ -17,12 +17,6 @@ import com.example.collectingdialect.ui.login.LoginViewModel
 import java.io.File
 
 open class CollectingViewModel: BaseViewModel() {
-    companion object {
-        const val TYPE_SCRIPT = "script"
-        const val TYPE_CONVERSATION = "conversation"
-        const val TYPE_VIRTUAL_PARTNER ="virtual_partner"
-    }
-
     private var mediaRecorder: MediaRecorder? = null
     private var mediaPlayer: MediaPlayer? = null
     private var mediaDirectory: File? = null

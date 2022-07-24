@@ -59,8 +59,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             override fun onUpdateRecordTime(timeString: String) {
                 when(sharedViewModel.collectingType) {
                     SharedViewModel.COLLECTING_TYPE_NON_COLLECTING -> toolbar.title = ""
-                    SharedViewModel.COLLECTING_TYPE_ONE_PERSON -> toolbar.title = "녹음시간 : $timeString / 50분 00초"
-                    SharedViewModel.COLLECTING_TYPE_TWO_PERSON -> toolbar.title = "녹음시간 : $timeString / 25분 00초"
+                    SharedViewModel.COLLECTING_TYPE_ONE_PERSON -> toolbar.title = "녹음시간 $timeString / 50:00"
+                    SharedViewModel.COLLECTING_TYPE_TWO_PERSON -> toolbar.title = "녹음시간 $timeString / 25:00"
                 }
             }
         }
