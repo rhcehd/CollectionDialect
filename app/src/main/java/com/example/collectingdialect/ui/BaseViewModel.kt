@@ -35,12 +35,18 @@ open class BaseViewModel: ViewModel(), Observable {
         @JvmStatic
         @BindingAdapter("scriptArray", "scriptIndex", requireAll = true)
         fun setScriptIndex(view: TextView, array: Array<String>, index: Int) {
+            if(array.isEmpty()) {
+                return
+            }
             view.text = array[index]
         }
 
         @JvmStatic
         @BindingAdapter("imageArray", "imageIndex", requireAll = true)
         fun setScriptIndex(view: ImageView, array: Array<Int>, index: Int) {
+            if(array.isEmpty()) {
+                return
+            }
             view.setImageResource(array[index])
         }
     }

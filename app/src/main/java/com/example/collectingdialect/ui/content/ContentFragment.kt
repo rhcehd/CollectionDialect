@@ -6,13 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.example.collectingdialect.R
 import com.example.collectingdialect.databinding.FragmentContentBinding
+import com.example.collectingdialect.ui.SharedViewModel
 
 class ContentFragment: Fragment(R.layout.fragment_content) {
     private var binding: FragmentContentBinding? = null
     private val viewModel: ContentViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,6 +30,7 @@ class ContentFragment: Fragment(R.layout.fragment_content) {
         if(binding == null) {
             binding = DataBindingUtil.bind(view)
             binding?.viewModel = viewModel
+            viewModel.sharedViewModel = sharedViewModel
         }
     }
 }

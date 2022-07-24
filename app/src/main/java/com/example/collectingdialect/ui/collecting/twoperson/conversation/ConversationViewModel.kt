@@ -8,16 +8,17 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.graphics.drawable.toDrawable
 import androidx.databinding.Bindable
-import androidx.databinding.BindingAdapter
 import com.example.collectingdialect.BR
 import com.example.collectingdialect.R
 import com.example.collectingdialect.data.ContentData
 import com.example.collectingdialect.ui.MainActivity.Companion.showToast
+import com.example.collectingdialect.ui.SharedViewModel
 import com.example.collectingdialect.ui.collecting.CollectingViewModel
 import com.example.collectingdialect.ui.collecting.RecordAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ConversationViewModel: CollectingViewModel() {
+    var sharedViewModel: SharedViewModel? = null
     var regionText: String = ""
         @Bindable get
         set(value) {
@@ -27,18 +28,27 @@ class ConversationViewModel: CollectingViewModel() {
             }
         }
 
-    var imageArray = arrayOf<Int>()
-    var imageIndex = 0
+    val contentSequence: String
+        @Bindable get() = if(arraySize > 0) {
+            "${index + 1} / $arraySize"
+        } else {
+            ""
+        }
+
+    var imageArray: Array<Int> = arrayOf()
+    var scriptArray: Array<String> = arrayOf()
+    var index = 0
         @Bindable get
         set(value) {
             if(field != value) {
                 field = value
-                fileNamePrefix = "conversation_${imageIndex}"
-                fileName = "conversation_${imageIndex}_${adapter.itemCount}"
-                notifyChange(BR.imageIndex)
+                fileNamePrefix = "conversation_${index}"
+                fileName = "conversation_${index}_${adapter.itemCount}"
+                notifyChange(BR.index)
+                notifyChange(BR.contentSequence)
             }
         }
-    val imageArraySize
+    private val arraySize
         get() = imageArray.size
 
     var adapter = RecordAdapter {this}
@@ -49,12 +59,21 @@ class ConversationViewModel: CollectingViewModel() {
         }
 
     init {
-        fileNamePrefix = "conversation_${imageIndex}"
-        fileName = "conversation_${imageIndex}_${adapter.itemCount}"
+        fileNamePrefix = "conversation_${index}"
+        fileName = "conversation_${index}_${adapter.itemCount}"
+    }
+
+    fun initializeWithSharedViewModel(sharedViewModel: SharedViewModel?) {
+        this.sharedViewModel = sharedViewModel
+        val selectedRegion = sharedViewModel?.currentSpeakerInfo?.residenceProvince
+        val selectedSet = sharedViewModel?.selectedSet
+        regionText = selectedRegion ?: ""
+        imageArray = ContentData.getConversationImage(selectedSet)
+        scriptArray = ContentData.getConversationScriptText(selectedRegion, selectedSet)
     }
 
     fun onClickImage(view: View) {
-        var image = BitmapFactory.decodeResource(view.resources, imageArray[imageIndex])
+        var image = BitmapFactory.decodeResource(view.resources, imageArray[index])
         if(image.width > image.height) {
             val matrix = Matrix().apply { postRotate(90.0f) }
             image = Bitmap.createBitmap(image, 0, 0, image.width, image.height, matrix, false)
@@ -81,27 +100,31 @@ class ConversationViewModel: CollectingViewModel() {
     }
 
     fun onClickPreviousButton(view: View) {
-        imageIndex = if(imageIndex - 1 < 0) {
+        index = if(index - 1 < 0) {
             0
         } else {
-            imageIndex - 1
+            index - 1
         }
     }
 
     fun onClickNextButton(view: View) {
-        imageIndex = if(imageIndex + 1 >= imageArraySize) {
-            showToast("last item")
-            imageIndex
+        index = if(index + 1 >= arraySize) {
+            sharedViewModel?.testUpload?.invoke(view)
+            index
         } else {
-            imageIndex + 1
+            index + 1
         }
     }
 
     override fun onClickRecordButton(view: View) {
         if(!isRecording) {
-            fileName = "conversation_${imageIndex}_${adapter.itemCount}"
+            fileName = "conversation_${index}_${adapter.itemCount}"
         }
         val recordCallback = {adapter.requestRecordList(fileNamePrefix)}
         super.onClickRecordButton(view, recordCallback)
+    }
+
+    fun onClickTempButton(view: View) {
+        sharedViewModel?.testUpload?.invoke(view)
     }
 }

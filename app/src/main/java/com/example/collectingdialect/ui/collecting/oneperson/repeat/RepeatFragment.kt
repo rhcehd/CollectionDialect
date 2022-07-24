@@ -1,21 +1,21 @@
 package com.example.collectingdialect.ui.collecting.oneperson.repeat
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.example.collectingdialect.R
 import com.example.collectingdialect.databinding.FragmentRepeatBinding
-import com.example.collectingdialect.ui.collecting.SubjectViewModel
-import com.example.collectingdialect.ui.content.region.RegionSelectionViewModel
+import com.example.collectingdialect.ui.SharedViewModel
 
 class RepeatFragment: Fragment(R.layout.fragment_repeat) {
     private var binding: FragmentRepeatBinding? = null
     private val viewModel: RepeatViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,9 +30,17 @@ class RepeatFragment: Fragment(R.layout.fragment_repeat) {
         if(binding == null) {
             binding = DataBindingUtil.bind(view)
             binding?.viewModel = viewModel
-            val preference = view.context.getSharedPreferences(RegionSelectionViewModel.KEY_REGION, Context.MODE_PRIVATE)
-            val regionText = preference.getString(RegionSelectionViewModel.KEY_REGION, "") ?: ""
-            viewModel.regionText = regionText
+            viewModel.initializeWithSharedViewModel(sharedViewModel)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sharedViewModel.collectingType = SharedViewModel.COLLECTING_TYPE_ONE_PERSON
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sharedViewModel.collectingType = SharedViewModel.COLLECTING_TYPE_NON_COLLECTING
     }
 }

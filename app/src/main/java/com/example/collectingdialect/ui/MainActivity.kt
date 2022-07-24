@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +13,6 @@ import com.example.collectingdialect.R
 import com.example.collectingdialect.data.ContentData
 import com.example.collectingdialect.data.RecordTimeUpdateCallback
 import com.example.collectingdialect.data.RecordManager
-import com.example.collectingdialect.remote.ApiManager
 import com.example.collectingdialect.ui.login.LoginViewModel
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.navigation.NavigationView
@@ -37,6 +35,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         contextRequester = {this}
+        RecordManager.sharedViewModel = sharedViewModel
         setToolbar()
         if(checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), 1000)
@@ -56,14 +55,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun setToolbar() {
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         toolbar.isTitleCentered = true
-        val userPreference = getSharedPreferences(LoginViewModel.PREFERENCE_USER, Context.MODE_PRIVATE)
         RecordManager.recordTimeUpdateCallback = object: RecordTimeUpdateCallback {
             override fun onUpdateRecordTime(timeString: String) {
-                val currentUser = userPreference.getString(LoginViewModel.KEY_ID, "") ?: ""
-                if(currentUser.isNotEmpty()) {
-                    toolbar.title = "녹음시간 : $timeString"
-                } else {
-                    toolbar.title = ""
+                when(sharedViewModel.collectingType) {
+                    SharedViewModel.COLLECTING_TYPE_NON_COLLECTING -> toolbar.title = ""
+                    SharedViewModel.COLLECTING_TYPE_ONE_PERSON -> toolbar.title = "녹음시간 : $timeString / 50분 00초"
+                    SharedViewModel.COLLECTING_TYPE_TWO_PERSON -> toolbar.title = "녹음시간 : $timeString / 25분 00초"
                 }
             }
         }
@@ -113,7 +110,7 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
         }
         loginCallback?.invoke()
 
-        toolbar.menu.add("setting").apply {
+        /*toolbar.menu.add("setting").apply {
             setIcon(R.drawable.ic_baseline_settings_24)
             setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
             setOnMenuItemClickListener {
@@ -125,6 +122,6 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 }
                 true
             }
-        }
+        }*/
     }
 }

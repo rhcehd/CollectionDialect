@@ -6,13 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.example.collectingdialect.R
 import com.example.collectingdialect.databinding.FragmentSetSelectionBinding
+import com.example.collectingdialect.ui.SharedViewModel
 import com.example.collectingdialect.ui.content.ContentViewModel
 
 class SetSelectionFragment: Fragment(R.layout.fragment_set_selection) {
     private val viewModel: SetSelectionViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private var binding: FragmentSetSelectionBinding? = null
 
     override fun onCreateView(
@@ -28,7 +31,7 @@ class SetSelectionFragment: Fragment(R.layout.fragment_set_selection) {
         if(binding == null) {
             binding = DataBindingUtil.bind(view)
             binding?.viewModel = viewModel
-            viewModel.selectedContent = arguments?.getInt(ContentViewModel.KEY_SELECTED_CONTENT) ?: 0
+            viewModel.sharedViewModel = sharedViewModel
         }
     }
 }

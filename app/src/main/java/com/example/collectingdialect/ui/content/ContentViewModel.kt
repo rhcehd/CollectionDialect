@@ -1,10 +1,10 @@
 package com.example.collectingdialect.ui.content
 
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import com.example.collectingdialect.R
 import com.example.collectingdialect.ui.BaseViewModel
+import com.example.collectingdialect.ui.SharedViewModel
 
 class ContentViewModel: BaseViewModel() {
     companion object {
@@ -12,12 +12,17 @@ class ContentViewModel: BaseViewModel() {
         const val SELECTED_CONTENT_ONE_PERSON = 1
         const val SELECTED_CONTENT_TWO_PERSON = 2
     }
+
+    var sharedViewModel: SharedViewModel? = null
+
     fun onClickOnePersonButton(view: View) {
-        view.findNavController().navigate(R.id.speakerInfoFragment, bundleOf(KEY_SELECTED_CONTENT to SELECTED_CONTENT_ONE_PERSON))
+        sharedViewModel?.selectedContent = SELECTED_CONTENT_ONE_PERSON
+        view.findNavController().navigate(R.id.speakerInfoFragment)
     }
 
     fun onClickTwoPersonButton(view: View) {
-        view.findNavController().navigate(R.id.speakerInfoFragment, bundleOf(KEY_SELECTED_CONTENT to SELECTED_CONTENT_TWO_PERSON))
+        sharedViewModel?.selectedContent = SELECTED_CONTENT_TWO_PERSON
+        view.findNavController().navigate(R.id.speakerInfoFragment)
     }
 
 }

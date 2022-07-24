@@ -8,6 +8,7 @@ import androidx.databinding.library.baseAdapters.BR
 import androidx.navigation.findNavController
 import com.example.collectingdialect.R
 import com.example.collectingdialect.data.ContentData
+import com.example.collectingdialect.ui.SharedViewModel
 import com.example.collectingdialect.ui.collecting.CollectingViewModel
 import com.example.collectingdialect.ui.content.region.RegionSelectionViewModel
 
@@ -22,11 +23,15 @@ class RepeatViewModel: CollectingViewModel() {
         }
 
     val contentSequence: String
-        @Bindable get() = "${scriptIndex + 1} / $scriptSize"
+        @Bindable get() = if(scriptSize > 0) {
+            "${scriptIndex + 1} / $scriptSize"
+        } else {
+            ""
+        }
 
-    val dialectScriptArray = ContentData.getRepeatScriptTextDialect(RegionSelectionViewModel.REGION_GANGWON, 1)
-    val standardScriptArray = ContentData.getRepeatScriptTextStandard(RegionSelectionViewModel.REGION_GANGWON, 1)
-    private val scriptVoiceArray = ContentData.getRepeatScriptVoice(RegionSelectionViewModel.REGION_GANGWON, 1)
+    var dialectScriptArray: Array<String> = arrayOf()
+    var standardScriptArray: Array<String> = arrayOf()
+    private var scriptVoiceArray: Array<Int> = arrayOf()
     var scriptIndex: Int = 0
         @Bindable get
         set(value) {
@@ -37,8 +42,17 @@ class RepeatViewModel: CollectingViewModel() {
                 notifyChange(BR.contentSequence)
             }
         }
-    val scriptSize
+    private val scriptSize
         get() = dialectScriptArray.size
+
+    fun initializeWithSharedViewModel(sharedViewModel: SharedViewModel?) {
+        val selectedRegion = sharedViewModel?.currentSpeakerInfo?.residenceProvince
+        val selectedSet = sharedViewModel?.selectedSet
+        regionText = selectedRegion ?: ""
+        dialectScriptArray = ContentData.getRepeatScriptTextDialect(selectedRegion, selectedSet)
+        standardScriptArray = ContentData.getRepeatScriptTextStandard(selectedRegion, selectedSet)
+        scriptVoiceArray = ContentData.getRepeatScriptVoice(selectedRegion, selectedSet)
+    }
 
     fun onClickPreviousButton(view: View) {
         scriptIndex = if(scriptIndex - 1 < 0) {
@@ -46,11 +60,6 @@ class RepeatViewModel: CollectingViewModel() {
         } else {
             scriptIndex - 1
         }
-        /*standardScriptIndex = if(standardScriptIndex - 1 < 0) {
-            0
-        } else {
-            standardScriptIndex - 1
-        }*/
     }
 
     fun onClickNextButton(view: View) {
@@ -60,14 +69,13 @@ class RepeatViewModel: CollectingViewModel() {
         } else {
             scriptIndex + 1
         }
-        /*standardScriptIndex = if(standardScriptIndex + 1 >= standardScriptArray.size) {
-            standardScriptIndex
-        } else {
-            standardScriptIndex + 1
-        }*/
     }
 
     fun onClickPlayScriptButton(view: View) {
         playScript(view.context, scriptVoiceArray[scriptIndex])
+    }
+
+    fun onClickTempButton(view: View) {
+        view.findNavController().navigate(R.id.qnAFragment)
     }
 }

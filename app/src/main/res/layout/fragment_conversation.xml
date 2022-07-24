@@ -34,6 +34,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/background_round_top_corner">
 
+            <Button
+                android:id="@+id/temp_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:onClick="@{viewModel::onClickTempButton}"/>
+
             <!--<androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/back_button"
                 android:layout_width="wrap_content"
@@ -68,23 +76,44 @@
                 android:text="@{viewModel.regionText}"
                 android:textSize="20sp"/>
 
+            <TextView
+                android:id="@+id/content_sequence_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/region_text"
+                app:layout_constraintBottom_toTopOf="@id/conversation_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="1 / 100"
+                android:text="@{viewModel.contentSequence}"/>
+
             <ImageView
                 android:id="@+id/conversation_image"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                app:layout_constraintTop_toBottomOf="@id/region_text"
+                app:layout_constraintTop_toBottomOf="@id/content_sequence_text"
                 app:layout_constraintBottom_toTopOf="@id/conversation_list"
                 android:layout_marginTop="10dp"
                 tools:src="@drawable/bono"
                 imageArray="@{viewModel.imageArray}"
-                imageIndex="@{viewModel.imageIndex}"
+                imageIndex="@{viewModel.index}"
                 android:onClick="@{viewModel::onClickImage}"/>
+
+            <TextView
+                android:id="@+id/conversation_script_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/conversation_image"
+                app:layout_constraintBottom_toTopOf="@id/conversation_list"
+                android:textAlignment="center"
+                scriptArray="@{viewModel.scriptArray}"
+                scriptIndex="@{viewModel.index}"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/conversation_list"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_constraintTop_toBottomOf="@id/conversation_image"
+                app:layout_constraintTop_toBottomOf="@id/conversation_script_text"
                 app:layout_constraintBottom_toTopOf="@id/button_layout"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 adapter="@{viewModel.adapter}"/>
@@ -105,7 +134,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/record_button"
                     android:background="@drawable/button_previous_selector"
-                    android:visibility="@{viewModel.imageIndex == 0 ? View.GONE : View.VISIBLE}"
+                    android:visibility="@{viewModel.index == 0 ? View.GONE : View.VISIBLE}"
                     android:onClick="@{viewModel::onClickPreviousButton}"/>
 
                 <androidx.appcompat.widget.AppCompatButton

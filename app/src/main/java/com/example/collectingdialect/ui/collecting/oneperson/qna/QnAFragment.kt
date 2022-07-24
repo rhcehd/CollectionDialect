@@ -6,13 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.example.collectingdialect.R
 import com.example.collectingdialect.databinding.FragmentQnaBinding
+import com.example.collectingdialect.ui.SharedViewModel
 
 class QnAFragment: Fragment(R.layout.fragment_qna) {
     private var binding: FragmentQnaBinding? = null
     private val viewModel: QnAViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,6 +30,17 @@ class QnAFragment: Fragment(R.layout.fragment_qna) {
         if(binding == null) {
             binding = DataBindingUtil.bind(view)
             binding?.viewModel = viewModel
+            viewModel.initializeWithSharedViewModel(sharedViewModel)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        sharedViewModel.collectingType = SharedViewModel.COLLECTING_TYPE_ONE_PERSON
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sharedViewModel.collectingType = SharedViewModel.COLLECTING_TYPE_NON_COLLECTING
     }
 }

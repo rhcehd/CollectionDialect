@@ -31,6 +31,7 @@ class SpeakerInfoFragment: Fragment(R.layout.fragment_speaker_info) {
         if(binding == null) {
             binding = DataBindingUtil.bind(view)
             binding?.viewModel = viewModel
+            viewModel.sharedViewModel = sharedViewModel
             viewModel.selectedContent = arguments?.getInt(ContentViewModel.KEY_SELECTED_CONTENT) ?: 0
             setFragmentResultListener(RegionSelectionViewModel.KEY_REGION, viewModel.regionSelectResultListener)
         }

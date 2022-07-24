@@ -5,6 +5,7 @@ import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
 import com.example.collectingdialect.R
 import com.example.collectingdialect.ui.BaseViewModel
+import com.example.collectingdialect.ui.SharedViewModel
 import com.example.collectingdialect.ui.content.ContentViewModel
 
 class SetSelectionViewModel: BaseViewModel() {
@@ -14,40 +15,46 @@ class SetSelectionViewModel: BaseViewModel() {
         const val SELECTED_SET_2 = 2
         const val SELECTED_SET_3 = 3
     }
-    var selectedContent: Int = 0
+    var sharedViewModel: SharedViewModel? = null
 
     fun onClickSet1Button(view: View) {
         val navController = view.findNavController()
-        when(selectedContent) {
+        when(sharedViewModel?.selectedContent) {
             ContentViewModel.SELECTED_CONTENT_ONE_PERSON -> {
-                navController.navigate(R.id.repeatFragment, bundleOf(KEY_SELECTED_SET to SELECTED_SET_1))
+                sharedViewModel?.selectedSet = SELECTED_SET_1
+                navController.navigate(R.id.repeatFragment)
             }
             ContentViewModel.SELECTED_CONTENT_TWO_PERSON -> {
-                navController.navigate(R.id.conversationFragment, bundleOf(KEY_SELECTED_SET to SELECTED_SET_1))
+                sharedViewModel?.selectedSet = SELECTED_SET_1
+                navController.navigate(R.id.conversationFragment)
             }
         }
     }
 
     fun onClickSet2Button(view: View) {
         val navController = view.findNavController()
-        when(selectedContent) {
+        when(sharedViewModel?.selectedContent) {
             ContentViewModel.SELECTED_CONTENT_ONE_PERSON -> {
-                navController.navigate(R.id.repeatFragment, bundleOf(KEY_SELECTED_SET to SELECTED_SET_2))
+                sharedViewModel?.selectedSet = SELECTED_SET_2
+                navController.navigate(R.id.repeatFragment)
             }
             ContentViewModel.SELECTED_CONTENT_TWO_PERSON -> {
-                navController.navigate(R.id.conversationFragment, bundleOf(KEY_SELECTED_SET to SELECTED_SET_2))
+                sharedViewModel?.selectedSet = SELECTED_SET_2
+                navController.navigate(R.id.conversationFragment)
             }
         }
     }
 
     fun onClickSet3Button(view: View) {
         val navController = view.findNavController()
-        when(selectedContent) {
+        when(sharedViewModel?.selectedContent) {
             ContentViewModel.SELECTED_CONTENT_ONE_PERSON -> {
-                navController.navigate(R.id.repeatFragment, bundleOf(KEY_SELECTED_SET to SELECTED_SET_3))
+                sharedViewModel?.selectedSet = SELECTED_SET_3
+                navController.navigate(R.id.repeatFragment)
             }
             ContentViewModel.SELECTED_CONTENT_TWO_PERSON -> {
-                navController.navigate(R.id.conversationFragment, bundleOf(KEY_SELECTED_SET to SELECTED_SET_3))
+                sharedViewModel?.selectedSet = SELECTED_SET_3
+                navController.navigate(R.id.conversationFragment)
             }
         }
     }
