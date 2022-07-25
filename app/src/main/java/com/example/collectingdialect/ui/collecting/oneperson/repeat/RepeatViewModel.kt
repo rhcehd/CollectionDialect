@@ -37,6 +37,7 @@ class RepeatViewModel: CollectingViewModel() {
         set(value) {
             if(field != value) {
                 field = value
+                onChangeUIState()
                 fileName = "repeat_$scriptIndex"
                 notifyChange(BR.scriptIndex)
                 notifyChange(BR.contentSequence)
@@ -44,6 +45,10 @@ class RepeatViewModel: CollectingViewModel() {
         }
     private val scriptSize
         get() = dialectScriptArray.size
+
+    init {
+        fileName = "repeat_$scriptIndex"
+    }
 
     fun initializeWithSharedViewModel(sharedViewModel: SharedViewModel?) {
         val selectedRegion = sharedViewModel?.currentSpeakerInfo?.residenceProvince

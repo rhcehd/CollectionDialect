@@ -37,10 +37,12 @@ class QnAFragment: Fragment(R.layout.fragment_qna) {
     override fun onResume() {
         super.onResume()
         sharedViewModel.collectingType = SharedViewModel.COLLECTING_TYPE_ONE_PERSON
+        viewModel.onChangeUIState()
     }
 
     override fun onPause() {
         super.onPause()
         sharedViewModel.collectingType = SharedViewModel.COLLECTING_TYPE_NON_COLLECTING
+        viewModel.onChangeUIState()
     }
 }

@@ -82,7 +82,9 @@ class SharedViewModel: BaseViewModel() {
             dialog.dismiss()
             val navController = view.findNavController()
             val navOptions = NavOptions.Builder()
-            navController.clearBackStack(R.id.mainFragment)
+                .setPopUpTo(R.id.nav_graph, true)
+                .build()
+            navController.navigate(R.id.mainFragment, null, navOptions)
         }
         dialog.show()
         dialog.window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT)

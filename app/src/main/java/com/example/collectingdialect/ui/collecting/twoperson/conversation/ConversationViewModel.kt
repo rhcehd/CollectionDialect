@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.graphics.drawable.Drawable
+import android.media.MediaPlayer
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
@@ -22,11 +23,16 @@ import com.bumptech.glide.request.target.Target
 import com.example.collectingdialect.BR
 import com.example.collectingdialect.R
 import com.example.collectingdialect.data.ContentData
+import com.example.collectingdialect.data.RecordManager
 import com.example.collectingdialect.ui.MainActivity.Companion.showToast
 import com.example.collectingdialect.ui.SharedViewModel
 import com.example.collectingdialect.ui.collecting.CollectingViewModel
 import com.example.collectingdialect.ui.collecting.RecordAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.File
 import java.security.MessageDigest
 
 class ConversationViewModel: CollectingViewModel() {
@@ -54,6 +60,7 @@ class ConversationViewModel: CollectingViewModel() {
         set(value) {
             if(field != value) {
                 field = value
+                onChangeUIState()
                 fileNamePrefix = "conversation_${index}"
                 fileName = "conversation_${index}_${adapter.itemCount}"
                 notifyChange(BR.index)
@@ -180,6 +187,21 @@ class ConversationViewModel: CollectingViewModel() {
     }
 
     fun onClickTempButton(view: View) {
+        /*RecordManager.integrateRecording {
+            MediaPlayer().apply {
+                try {
+                    val file = File(view.context.filesDir, "conversation_0.mp4")
+                    setDataSource(file.absolutePath)
+                    prepare()
+                    start()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+            CoroutineScope(Dispatchers.Main).launch {
+                sharedViewModel?.testUpload?.invoke(view)
+            }
+        }*/
         sharedViewModel?.testUpload?.invoke(view)
     }
 }

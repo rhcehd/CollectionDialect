@@ -100,15 +100,18 @@ open class CollectingViewModel: BaseViewModel() {
             }
             this.mediaRecorder = null
         } else {
-            isRecording = true
-            RecordManager.onStartRecording()
-            view.setBackgroundResource(R.drawable.recording)
             val context = MainActivity.contextRequester?.invoke()
             if(context == null) {
                 showToast("올바르지 않은 동작입니다. 앱을 완전히 종료 후 다시 시도해주세요")
             } else {
-                initializeMediaRecorder(context)
+                isRecording = true
                 val outputFile = File(mediaDirectory, "$fileName.mp4")
+                if(outputFile.exists()) {
+                    outputFile.delete()
+                }
+                RecordManager.onStartRecording()
+                view.setBackgroundResource(R.drawable.recording)
+                initializeMediaRecorder(context)
                 mediaRecorder?.apply {
                     setOutputFile(outputFile.absolutePath)
                     prepare()
@@ -120,6 +123,9 @@ open class CollectingViewModel: BaseViewModel() {
 
     open fun onClickPlayButton(view: View) {
         try {
+            if(mediaPlayer?.isPlaying == true) {
+                return
+            }
             initializeMediaPlayer()
             mediaPlayer?.start() ?: showToast("파일을 재생할 수 없습니다")
         } catch (e: Exception) {
@@ -146,10 +152,23 @@ open class CollectingViewModel: BaseViewModel() {
 
     fun playScript(context: Context, @RawRes resId: Int) {
         try {
+            if(mediaPlayer?.isPlaying == true) {
+                return
+            }
             mediaPlayer = MediaPlayer.create(context, resId)
             mediaPlayer?.start() ?: showToast("파일을 재생할 수 없습니다")
         } catch (e: Exception) {
             showToast("파일을 재생할 수 없습니다")
+        }
+    }
+
+    fun onChangeUIState() {
+        try {
+            if(mediaPlayer?.isPlaying == true) {
+                mediaPlayer?.stop()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 }

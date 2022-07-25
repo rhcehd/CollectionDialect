@@ -7,6 +7,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import zeroonezero.android.audio_mixer.AudioMixer
+import zeroonezero.android.audio_mixer.input.BlankAudioInput
+import zeroonezero.android.audio_mixer.input.GeneralAudioInput
+import java.io.File
 
 object RecordManager {
     private const val MIN_RECORD_TIME_TYPE_ONE_PERSON = 50 * 60 * 1000
@@ -63,7 +67,7 @@ object RecordManager {
         recordTimeUpdateCallback?.onUpdateRecordTime(String.format("%02d:%02d", minutes, seconds))
     }
 
-    fun updateRecordTime(recordTimeMillis: Long) {
+    private fun updateRecordTime(recordTimeMillis: Long) {
         val minutes: Long = (recordTimeMillis / 1000) / 60
         val seconds: Long = (recordTimeMillis / 1000) % 60
         recordTimeUpdateCallback?.onUpdateRecordTime(String.format("%02d:%02d", minutes, seconds))
@@ -78,7 +82,12 @@ object RecordManager {
                 recordList.size == REQUIRE_RECORD_COUNT_TYPE_ONE_PERSON
             }
             SharedViewModel.COLLECTING_TYPE_TWO_PERSON -> {
-                recordList.size == REQUIRE_RECORD_COUNT_TYPE_TWO_PERSON
+                for(i in 0 until REQUIRE_RECORD_COUNT_TYPE_TWO_PERSON) {
+                    recordList.find { file ->
+                        file.name.startsWith("conversation_$i")
+                    } ?: return false
+                }
+                true
             }
             else -> {
                 false
@@ -110,6 +119,7 @@ object RecordManager {
     fun onStartRecording() {
         isRecording = true
         var recordTimeMillis = calculateRecordTime()
+        updateRecordTime(recordTimeMillis)
         CoroutineScope(Dispatchers.Main).launch {
             while (isRecording) {
                 delay(1000)
@@ -125,5 +135,58 @@ object RecordManager {
     fun onStopRecording() {
         isRecording = false
         updateRecordTime()
+    }
+
+    fun integrateRecording(onComplete: () -> Unit) {
+        val context = MainActivity.contextRequester?.invoke() ?: return
+        val mediaDirectory = context.filesDir
+        val recordList = mediaDirectory?.listFiles() ?: emptyArray()
+        var outputFile: File
+        var audioMixer: AudioMixer
+        var audioInput: GeneralAudioInput
+        val blankInput = BlankAudioInput(500000)
+        var completedProcessCount = 0
+
+        for(i in 0 until REQUIRE_RECORD_COUNT_TYPE_TWO_PERSON) {
+            outputFile = File(mediaDirectory, "conversation_$i.mp4")
+            audioMixer = AudioMixer(outputFile.absolutePath)
+            val filteredRecordList = recordList.filter { file ->
+                file.name.startsWith("conversation_$i")
+            }
+            if(filteredRecordList.isNotEmpty()) {
+                filteredRecordList.forEachIndexed { index, file ->
+                    audioInput = GeneralAudioInput(file.absolutePath)
+                    audioMixer.addDataSource(audioInput)
+                    /*if(index != filteredRecordList.lastIndex) {
+                        audioMixer.addDataSource(blankInput)
+                    }*/
+                }
+                audioMixer.setSampleRate(44100); // Optional
+                audioMixer.setBitRate(128000); // Optional
+                audioMixer.setChannelCount(2); // Optional //1(mono) or 2(stereo)
+                audioMixer.mixingType = AudioMixer.MixingType.PARALLEL
+                audioMixer.isLoopingEnabled = false
+                audioMixer.setProcessingListener(object: AudioMixer.ProcessingListener{
+                    override fun onProgress(progress: Double) {
+                        //do nothing
+                    }
+
+                    override fun onEnd() {
+                        audioMixer.release()
+                        completedProcessCount += 1
+                        if(completedProcessCount == REQUIRE_RECORD_COUNT_TYPE_TWO_PERSON) {
+                            onComplete.invoke()
+                        }
+                    }
+                })
+                audioMixer.start()
+                audioMixer.processAsync()
+            } else {
+                completedProcessCount += 1
+                if(completedProcessCount == REQUIRE_RECORD_COUNT_TYPE_TWO_PERSON) {
+                    onComplete.invoke()
+                }
+            }
+        }
     }
 }

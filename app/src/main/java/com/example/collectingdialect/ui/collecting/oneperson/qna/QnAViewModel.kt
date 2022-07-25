@@ -32,6 +32,7 @@ class QnAViewModel: CollectingViewModel() {
         set(value) {
             if(field != value) {
                 field = value
+                onChangeUIState()
                 fileName = "qna_$scriptIndex"
                 notifyChange(BR.scriptIndex)
                 notifyChange(BR.contentSequence)
@@ -39,6 +40,10 @@ class QnAViewModel: CollectingViewModel() {
         }
     private val scriptSize
         get() = ScriptArray.size
+
+    init {
+        fileName = "qna_$scriptIndex"
+    }
 
     fun initializeWithSharedViewModel(sharedViewModel: SharedViewModel?) {
         this.sharedViewModel = sharedViewModel
