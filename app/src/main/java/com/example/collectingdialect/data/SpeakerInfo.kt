@@ -1,6 +1,9 @@
 package com.example.collectingdialect.data
 
+import java.io.Serializable
+
 data class SpeakerInfo(
+    val speakerId: String,
     val gender: String,
     val birthYear: Int,
     val residenceProvince: String,
@@ -9,4 +12,4 @@ data class SpeakerInfo(
     val job: String,
     val academicBackground: String,
     val healthCondition: String
-)
+): Serializable

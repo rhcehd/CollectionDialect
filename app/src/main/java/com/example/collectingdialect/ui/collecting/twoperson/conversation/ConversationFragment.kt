@@ -36,13 +36,11 @@ class ConversationFragment: Fragment(R.layout.fragment_conversation) {
 
     override fun onResume() {
         super.onResume()
-        sharedViewModel.collectingType = SharedViewModel.COLLECTING_TYPE_TWO_PERSON
-        viewModel.onChangeUIState()
+        viewModel.onFragmentResume()
     }
 
     override fun onPause() {
         super.onPause()
-        sharedViewModel.collectingType = SharedViewModel.COLLECTING_TYPE_NON_COLLECTING
-        viewModel.onChangeUIState()
+        viewModel.onFragmentPause()
     }
 }

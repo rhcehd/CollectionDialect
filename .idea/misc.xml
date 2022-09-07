@@ -36,7 +36,7 @@
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/drawable/ic_baseline_play_unselected.xml" value="0.1955" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/drawable/play_icon_selector.xml" value="0.1945" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/font/a_gothic.xml" value="0.21770833333333334" />
-        <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/activity_main.xml" value="0.3515625" />
+        <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/activity_main.xml" value="0.22019464720194648" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_collecting_free_talk.xml" value="0.1875" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_collecting_interview.xml" value="0.33" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_collecting_script.xml" value="0.33" />
@@ -44,17 +44,21 @@
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_content.xml" value="0.33" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_conversation.xml" value="0.30055579307396324" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_conversation_old.xml" value="0.2997007268063275" />
+        <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_conversation_one_person.xml" value="0.14505893019038985" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_conversation_subject.xml" value="0.2997007268063275" />
+        <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_conversation_two_person.xml" value="0.25" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_login.xml" value="0.19" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_main.xml" value="0.33" />
-        <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_qna.xml" value="0.30055579307396324" />
+        <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_qna.xml" value="0.22" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_region_selection.xml" value="0.25" />
-        <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_registration.xml" value="0.1388888888888889" />
-        <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_repeat.xml" value="0.2997007268063275" />
+        <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_registration.xml" value="0.33" />
+        <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_repeat.xml" value="0.25" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_script.xml" value="0.25" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_script_subject.xml" value="0.30055579307396324" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_set_selection.xml" value="0.2997007268063275" />
-        <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_speaker_info.xml" value="0.2" />
+        <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_speaker_info.xml" value="0.25" />
+        <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_speaker_info_one_person.xml" value="0.22" />
+        <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_speaker_info_two_person.xml" value="0.21" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_structured_content.xml" value="0.2997007268063275" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_unstructured_content.xml" value="0.30055579307396324" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/fragment_virtual_partner.xml" value="0.2997007268063275" />
@@ -65,6 +69,7 @@
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/item_script_image.xml" value="0.30055579307396324" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/layout_collecting.xml" value="0.1875" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/layout_collecting_title.xml" value="0.1875" />
+        <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/layout_drawer_header.xml" value="0.1" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/layout_previous_next_button.xml" value="0.36614583333333334" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/layout_select_subject.xml" value="0.273828125" />
         <entry key="..\:/Users/lhs94/Desktop/CollectingDialect/app/src/main/res/layout/layout_title.xml" value="0.36614583333333334" />
@@ -76,6 +81,8 @@
         <entry key="..\:/android/CollectingDialect/app/src/main/res/layout/fragment_script.xml" value="0.13541666666666666" />
         <entry key="..\:/android/CollectingDialect/app/src/main/res/layout/fragment_speaker_info.xml" value="0.1" />
         <entry key="..\:/android/CollectingDialect/app/src/main/res/layout/fragment_virtual_partner.xml" value="0.1" />
+        <entry key="..\:/projects/CollectingDialect/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/projects/CollectingDialect/app/src/main/res/layout/fragment_repeat.xml" value="0.15639165911151406" />
       </map>
     </option>
   </component>

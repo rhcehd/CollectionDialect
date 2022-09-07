@@ -3,13 +3,21 @@ package com.example.collectingdialect.ui.collecting.oneperson.qna
 import android.view.View
 import androidx.databinding.Bindable
 import androidx.databinding.library.baseAdapters.BR
+import androidx.navigation.findNavController
 import com.example.collectingdialect.data.ContentData
-import com.example.collectingdialect.ui.MainActivity.Companion.showToast
 import com.example.collectingdialect.ui.SharedViewModel
 import com.example.collectingdialect.ui.collecting.CollectingViewModel
 
 class QnAViewModel: CollectingViewModel() {
-    var sharedViewModel: SharedViewModel? = null
+    var isOver50YearsOld = false
+        @Bindable get
+        set(value) {
+            if(field != value) {
+                field = value
+                notifyChange(BR.over50YearsOld)
+            }
+        }
+
     var regionText: String = ""
         @Bindable get
         set(value) {
@@ -33,7 +41,7 @@ class QnAViewModel: CollectingViewModel() {
             if(field != value) {
                 field = value
                 onChangeUIState()
-                fileName = "qna_$scriptIndex"
+                firstIndex = "$scriptIndex"
                 notifyChange(BR.scriptIndex)
                 notifyChange(BR.contentSequence)
             }
@@ -41,16 +49,27 @@ class QnAViewModel: CollectingViewModel() {
     private val scriptSize
         get() = ScriptArray.size
 
-    init {
-        fileName = "qna_$scriptIndex"
-    }
+    override fun initializeWithSharedViewModel(sharedViewModel: SharedViewModel) {
+        val collectorBirthYear = sharedViewModel.collectorBirthYear ?: 9999
+        isOver50YearsOld = if(collectorBirthYear <= 1972) {
+            isConversationType = true
+            contentName = CONTENT_NAME_CONVERSATION
+            true
+        } else {
+            contentName = CONTENT_NAME_QNA
+            false
+        }
 
-    fun initializeWithSharedViewModel(sharedViewModel: SharedViewModel?) {
-        this.sharedViewModel = sharedViewModel
-        val selectedRegion = sharedViewModel?.currentSpeakerInfo?.residenceProvince
-        val selectedSet = sharedViewModel?.selectedSet
+        val selectedRegion = sharedViewModel.currentSpeaker1Info?.residenceProvince
+        val selectedSet = sharedViewModel.selectedSet
         regionText = selectedRegion ?: ""
-        ScriptArray = ContentData.getQnAScriptText(selectedRegion, selectedSet)
+        ScriptArray = ContentData.getQnAScriptText(selectedSet)
+
+        setName = "set${selectedSet ?: 0}"
+        firstIndex = "$scriptIndex"
+        adapterEnabled = true
+
+        super.initializeWithSharedViewModel(sharedViewModel)
     }
 
     fun onClickPreviousButton(view: View) {
@@ -63,14 +82,13 @@ class QnAViewModel: CollectingViewModel() {
 
     fun onClickNextButton(view: View) {
         scriptIndex = if(scriptIndex + 1 >= scriptSize) {
-            sharedViewModel?.testUpload?.invoke(view)
             scriptIndex
         } else {
             scriptIndex + 1
         }
     }
 
-    fun onClickTempButton(view: View) {
-        sharedViewModel?.testUpload?.invoke(view)
+    fun onClickPreviousPartButton(view: View) {
+        view.findNavController().popBackStack()
     }
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "40572946121",
+    "project_id": "collecting-dialect",
+    "storage_bucket": "collecting-dialect.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:40572946121:android:f77e38a8b6db85035f2f18",
+        "android_client_info": {
+          "package_name": "com.example.collectingdialect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "40572946121-n6ls41ebv6u4d6ntbnhoj0vsvd1vn40a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZSsYrgYL7A_fOMMs9-ily-CWKTF31ckM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "40572946121-n6ls41ebv6u4d6ntbnhoj0vsvd1vn40a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

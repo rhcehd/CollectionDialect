@@ -20,8 +20,8 @@
     <string name="script_instruction">• 다음 그림을 보고 상황을 말해 보세요 •</string>
     <string name="interview_title">인터뷰\n(비정형발화)</string>
     <string name="interview_instruction">• 다음 질문에 자유롭게 답해 주세요 •</string>
-    <string name="main_title_1">대한민국 방언</string>
-    <string name="main_title_2">음성 데이터 수집</string>
+    <string name="main_title_1">중노년층</string>
+    <string name="main_title_2">방언 데이터 수집</string>
     <string name="button_start_title">시작하기</string>
     <string name="button_start_subtitle">START</string>
     <string name="content_title">목차</string>
@@ -29,9 +29,10 @@
     <string name="unit1">UNIT 01.</string>
     <string name="guide_script">다음 문장을 따라해 주세요</string>
     <string name="unit2">UNIT 02.</string>
-    <string name="conversation_title">02\n수집자와의 2인 대화</string>
+    <string name="conversation_title">2인 대화</string>
     <string name="virtual_partner_title">03\n가상 상대와의 대화</string>
     <string name="qna_title">1인 발화\n질문에 답하기</string>
+    <string name="qna_title_over_50_years_old">2인 대화</string>
     <string name="guide_qna">아래 문장을 보고 답해주세요</string>
     <string name="repeat_title">1인 발화\n따라 말하기</string>
     <string name="gender">성별</string>

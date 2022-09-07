@@ -4,20 +4,32 @@ import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.text.InputType
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
 import com.example.collectingdialect.R
 import com.example.collectingdialect.data.ContentData
-import com.example.collectingdialect.data.RecordTimeUpdateCallback
+import com.example.collectingdialect.data.OnToolbarRecordTimeChangeListener
 import com.example.collectingdialect.data.RecordManager
+import com.example.collectingdialect.databinding.ActivityMainBinding
 import com.example.collectingdialect.ui.login.LoginViewModel
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
 
-class MainActivity : AppCompatActivity(R.layout.activity_main) {
+/*
+coldbaby12@naver.com
+* kmkwak@mtdata.co.kr
+* */
+
+class MainActivity : AppCompatActivity() {
     companion object {
         var contextRequester: (() -> Context)? = null
         fun showToast(msg: String) {
@@ -34,13 +46,41 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding.viewModel = sharedViewModel
+
+        val preference = getSharedPreferences(LoginViewModel.PREFERENCE_COLLECTOR, Context.MODE_PRIVATE)
+        val collectorId = preference.getString(LoginViewModel.KEY_ID, "")
+        val collectorBirthYear = preference.getInt(LoginViewModel.KEY_BIRTH_YEAR, 9999)
+        sharedViewModel.collectorId = collectorId
+        sharedViewModel.collectorBirthYear = collectorBirthYear
+
         contextRequester = {this}
-        RecordManager.sharedViewModel = sharedViewModel
+        val inputMethodManager = getSystemService(InputMethodManager::class.java)
+        findViewById<View>(R.id.fragment_container_view).viewTreeObserver.addOnGlobalFocusChangeListener { oldFocus, newFocus ->
+            if(newFocus is EditText && newFocus.inputType == InputType.TYPE_NULL) {
+                inputMethodManager.hideSoftInputFromWindow(newFocus.windowToken, 0)
+            }
+        }
         setToolbar()
         if(checkSelfPermission(Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(Manifest.permission.RECORD_AUDIO), 1000)
         }
         ContentData.init(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val preference = getPreferences(Context.MODE_PRIVATE)
+        val lastRecordCheckTimeMillis = preference.getLong(RecordManager.KEY_LAST_RECORD_CHECK_TIME_MILLIS, 0)
+        val currentTimeMillis = System.currentTimeMillis()
+        if(currentTimeMillis - lastRecordCheckTimeMillis > RecordManager.TIME_24_HOUR_MILLIS) {
+            RecordManager.checkAndUploadRecord()
+            preference.edit()
+                .putLong(RecordManager.KEY_LAST_RECORD_CHECK_TIME_MILLIS, currentTimeMillis)
+                .apply()
+        }
     }
 
     override fun onRequestPermissionsResult(
@@ -55,12 +95,12 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
     private fun setToolbar() {
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         toolbar.isTitleCentered = true
-        RecordManager.recordTimeUpdateCallback = object: RecordTimeUpdateCallback {
-            override fun onUpdateRecordTime(timeString: String) {
-                when(sharedViewModel.collectingType) {
-                    SharedViewModel.COLLECTING_TYPE_NON_COLLECTING -> toolbar.title = ""
-                    SharedViewModel.COLLECTING_TYPE_ONE_PERSON -> toolbar.title = "녹음시간 $timeString / 50:00"
-                    SharedViewModel.COLLECTING_TYPE_TWO_PERSON -> toolbar.title = "녹음시간 $timeString / 25:00"
+        RecordManager.onToolbarRecordTimeChangeListener = object: OnToolbarRecordTimeChangeListener {
+            override fun onChangeRecordTime(timeString: String) {
+                if(timeString.isNotEmpty()) {
+                    toolbar.title = "녹음시간 $timeString / 25:00"
+                } else {
+                    toolbar.title = ""
                 }
             }
         }
@@ -82,17 +122,28 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
                 true
             }
         }
-        val loginMenu = navigationViewMenu.add("로그인").apply {
+        val uploadDataMenu = navigationViewMenu.add("데이터 전송").apply {
             setOnMenuItemClickListener {
-                navController.navigate(R.id.loginFragment)
+                MaterialAlertDialogBuilder(window.context)
+                    .setMessage("저장된 모든 데이터를 서버로 전송 후 전송된 데이터를 삭제합니다")
+                    .setPositiveButton("확인") { _, _ ->
+                        navController.navigate(R.id.mainFragment)
+                        navController.backQueue.clear()
+                        RecordManager.uploadRecord()
+                    }
+                    .setNegativeButton("취소") { _, _ -> /*do nothing*/ }
+                    .create()
+                    .show()
                 drawerLayout.close()
                 true
             }
         }
         val logoutMenu = navigationViewMenu.add("로그아웃").apply {
             setOnMenuItemClickListener {
-                val preference = getSharedPreferences(LoginViewModel.PREFERENCE_USER, Context.MODE_PRIVATE)
+                val preference = getSharedPreferences(LoginViewModel.PREFERENCE_COLLECTOR, Context.MODE_PRIVATE)
                 preference.edit().clear().apply()
+                sharedViewModel.collectorId = null
+                sharedViewModel.collectorBirthYear = null
                 showToast("로그아웃 성공")
                 loginCallback?.invoke()
                 navController.navigate(R.id.mainFragment)
@@ -102,26 +153,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main) {
             }
         }
         loginCallback = {
-            val preference = getSharedPreferences(LoginViewModel.PREFERENCE_USER, Context.MODE_PRIVATE)
+            val preference = getSharedPreferences(LoginViewModel.PREFERENCE_COLLECTOR, Context.MODE_PRIVATE)
             val isLoggedIn = preference.contains(LoginViewModel.KEY_ID)
-            loginMenu.isVisible = !isLoggedIn
             logoutMenu.isVisible = isLoggedIn
-            RecordManager.updateRecordTime()
         }
         loginCallback?.invoke()
-
-        /*toolbar.menu.add("setting").apply {
-            setIcon(R.drawable.ic_baseline_settings_24)
-            setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
-            setOnMenuItemClickListener {
-                val isValidRecordTime = RecordManager.validateRecordTime()
-                if(isValidRecordTime) {
-                    ApiManager.sendRecordData(this@MainActivity, {}, {})
-                } else {
-                    //do nothing
-                }
-                true
-            }
-        }*/
     }
 }

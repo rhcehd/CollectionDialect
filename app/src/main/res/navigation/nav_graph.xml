@@ -12,42 +12,6 @@
         android:name="com.example.collectingdialect.ui.content.ContentFragment"
         android:label="ContentFragment" />
     <fragment
-        android:id="@+id/regionSelectionFragment"
-        android:name="com.example.collectingdialect.ui.content.region.RegionSelectionFragment"
-        android:label="RegionSelectionFragment" />
-    <fragment
-        android:id="@+id/scriptFragment"
-        android:name="com.example.collectingdialect.ui.collecting.old.structured.script.ScriptFragment"
-        android:label="scriptFragment" />
-    <fragment
-        android:id="@+id/collectingInterviewFragment"
-        android:name="com.example.collectingdialect.ui.collecting.old.unstructured.CollectingInterviewFragment"
-        android:label="CollectingInterviewFragment" />
-    <fragment
-        android:id="@+id/structuredContentFragment"
-        android:name="com.example.collectingdialect.ui.collecting.old.structured.script.ScriptSubjectFragment"
-        android:label="StructuredContentFragment" />
-    <fragment
-        android:id="@+id/unstructuredContentFragment"
-        android:name="com.example.collectingdialect.ui.collecting.old.unstructured.content.UnstructuredContentFragment"
-        android:label="UnstructuredContentFragment" />
-    <fragment
-        android:id="@+id/conversationOldFragment"
-        android:name="com.example.collectingdialect.ui.collecting.old.unstructured.conversation.ConversationFragment"
-        android:label="ConversationOldFragment" />
-    <fragment
-        android:id="@+id/virtualPartnerFragment"
-        android:name="com.example.collectingdialect.ui.collecting.old.unstructured.virtual.VirtualPartnerFragment"
-        android:label="VirtualPartnerFragment" />
-    <fragment
-        android:id="@+id/conversationSubjectFragment"
-        android:name="com.example.collectingdialect.ui.collecting.old.unstructured.conversation.ConversationSubjectFragment"
-        android:label="ConversationSubjectFragment" />
-    <fragment
-        android:id="@+id/virtualPartnerSubjectFragment"
-        android:name="com.example.collectingdialect.ui.collecting.old.unstructured.virtual.VirtualPartnerSubjectFragment"
-        android:label="VirtualPartnerSubjectFragment" />
-    <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.collectingdialect.ui.login.LoginFragment"
         android:label="LoginFragment" />
@@ -56,13 +20,13 @@
         android:name="com.example.collectingdialect.ui.registration.RegistrationFragment"
         android:label="RegistrationFragment" />
     <fragment
-        android:id="@+id/speakerInfoFragment"
-        android:name="com.example.collectingdialect.ui.content.speaker.SpeakerInfoFragment"
-        android:label="SpeakerInfoFragment" />
+        android:id="@+id/speakerInfoOnePersonFragment"
+        android:name="com.example.collectingdialect.ui.collecting.oneperson.speaker.SpeakerInfoOnePersonFragment"
+        android:label="SpeakerInfoOnePersonFragment" />
     <fragment
-        android:id="@+id/conversationFragment"
+        android:id="@+id/conversationTwoPersonFragment"
         android:name="com.example.collectingdialect.ui.collecting.twoperson.conversation.ConversationFragment"
-        android:label="ConversationFragment" />
+        android:label="ConversationTwoPersonFragment" />
     <fragment
         android:id="@+id/qnAFragment"
         android:name="com.example.collectingdialect.ui.collecting.oneperson.qna.QnAFragment"
@@ -75,4 +39,12 @@
         android:id="@+id/setSelectionFragment"
         android:name="com.example.collectingdialect.ui.content.set.SetSelectionFragment"
         android:label="SetSelectionFragment" />
+    <fragment
+        android:id="@+id/speakerInfoTwoPersonFragment"
+        android:name="com.example.collectingdialect.ui.collecting.twoperson.speaker.SpeakerInfoTwoPersonFragment"
+        android:label="SpeakerInfoTwoPersonFragment" />
+    <fragment
+        android:id="@+id/conversationOnePersonFragment"
+        android:name="com.example.collectingdialect.ui.collecting.oneperson.conversation.ConversationOnePersonFragment"
+        android:label="ConversationOnePersonFragment" />
 </navigation>

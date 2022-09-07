@@ -19,7 +19,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginVertical="20dp"
-            android:text="@string/qna_title"
+            android:text="@{viewModel.over50YearsOld ? @string/qna_title_over_50_years_old : @string/qna_title}"
+            tools:text="@string/qna_title"
             android:textColor="@color/white"
             android:textAlignment="center"
             android:textSize="30sp"
@@ -33,13 +34,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/background_round_top_corner">
 
-            <Button
-                android:id="@+id/temp_button"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/previous_part_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:onClick="@{viewModel::onClickTempButton}"/>
+                android:layout_margin="20dp"
+                android:text="돌아가기"
+                android:onClick="@{viewModel::onClickPreviousPartButton}"/>
 
             <TextView
                 android:id="@+id/unit_text"
@@ -92,28 +95,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintTop_toBottomOf="@id/guide_text"
-                app:layout_constraintBottom_toTopOf="@id/button_layout"
+                app:layout_constraintBottom_toTopOf="@id/qna_list"
                 android:layout_marginHorizontal="20dp"
-                android:text="아아아 테스트\ntest"
+                tools:text="아아아 테스트\ntest"
                 android:textSize="30sp"
                 android:gravity="center"
                 scriptArray="@{viewModel.scriptArray}"
                 scriptIndex="@{viewModel.scriptIndex}"/>
 
-            <!--<TextView
-                android:id="@+id/standard_text"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/qna_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 app:layout_constraintTop_toBottomOf="@id/dialect_text"
                 app:layout_constraintBottom_toTopOf="@id/button_layout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginBottom="30dp"
-                android:layout_marginHorizontal="50dp"
-                android:text="아아아 테스트"
-                android:textSize="15sp"
-                scriptArray="@{viewModel.standardScriptArray}"
-                scriptIndex="@{viewModel.scriptIndex}"/>-->
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                adapter="@{viewModel.adapter}"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/button_layout"
@@ -144,18 +141,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:background="@drawable/start_recording"
                     android:onClick="@{viewModel::onClickRecordButton}"/>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/play_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/record_button"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:text="play"
-                    android:visibility="@{viewModel.recordExist ? View.VISIBLE : View.GONE}"
-                    android:onClick="@{viewModel::onClickPlayButton}"/>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/next_button"

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.example.collectingdialect.R
+import com.example.collectingdialect.data.RecordManager
 import com.example.collectingdialect.databinding.FragmentRepeatBinding
 import com.example.collectingdialect.ui.SharedViewModel
 
@@ -36,13 +37,11 @@ class RepeatFragment: Fragment(R.layout.fragment_repeat) {
 
     override fun onResume() {
         super.onResume()
-        sharedViewModel.collectingType = SharedViewModel.COLLECTING_TYPE_ONE_PERSON
-        viewModel.onChangeUIState()
+        viewModel.onFragmentResume()
     }
 
     override fun onPause() {
         super.onPause()
-        sharedViewModel.collectingType = SharedViewModel.COLLECTING_TYPE_NON_COLLECTING
-        viewModel.onChangeUIState()
+        viewModel.onFragmentPause()
     }
 }

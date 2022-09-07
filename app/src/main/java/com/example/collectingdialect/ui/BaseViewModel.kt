@@ -8,6 +8,7 @@ import androidx.databinding.Observable
 import androidx.databinding.PropertyChangeRegistry
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import com.google.android.material.textfield.TextInputLayout
 
@@ -48,6 +49,16 @@ open class BaseViewModel: ViewModel(), Observable {
                 return
             }
             view.setImageResource(array[index])
+        }
+
+        @JvmStatic
+        @BindingAdapter("headerText")
+        fun setHeaderText(view: NavigationView, text: String?) {
+            (view.getHeaderView(0) as? TextView)?.text = if(text.isNullOrEmpty()) {
+                ""
+            } else {
+                "수집자 -\n$text"
+            }
         }
     }
 

@@ -33,13 +33,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/background_round_top_corner">
 
-            <Button
-                android:id="@+id/temp_button"
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/next_part_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:onClick="@{viewModel::onClickTempButton}"/>
+                android:layout_margin="20dp"
+                android:text="넘어가기"
+                android:onClick="@{viewModel::onClickNextPartButton}"/>
 
             <TextView
                 android:id="@+id/unit_text"
@@ -177,6 +179,17 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     android:background="@drawable/button_next_selector"
                     android:onClick="@{viewModel::onClickNextButton}"/>
+
+                <TextView
+                    android:id="@+id/record_time_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@id/record_button"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginBottom="10dp"
+                    android:text="@{viewModel.recordTime}"
+                    tools:text="00:00"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

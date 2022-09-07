@@ -1,42 +1,25 @@
 package com.example.collectingdialect.ui.collecting.twoperson.conversation
 
-import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.graphics.drawable.Drawable
-import android.media.MediaPlayer
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.ImageView
-import androidx.core.graphics.drawable.toDrawable
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.Bindable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.Transformation
 import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.load.engine.Resource
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.example.collectingdialect.BR
-import com.example.collectingdialect.R
 import com.example.collectingdialect.data.ContentData
-import com.example.collectingdialect.data.RecordManager
-import com.example.collectingdialect.ui.MainActivity.Companion.showToast
 import com.example.collectingdialect.ui.SharedViewModel
 import com.example.collectingdialect.ui.collecting.CollectingViewModel
-import com.example.collectingdialect.ui.collecting.RecordAdapter
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.io.File
-import java.security.MessageDigest
 
 class ConversationViewModel: CollectingViewModel() {
-    var sharedViewModel: SharedViewModel? = null
     var regionText: String = ""
         @Bindable get
         set(value) {
@@ -61,8 +44,7 @@ class ConversationViewModel: CollectingViewModel() {
             if(field != value) {
                 field = value
                 onChangeUIState()
-                fileNamePrefix = "conversation_${index}"
-                fileName = "conversation_${index}_${adapter.itemCount}"
+                firstIndex = "$index"
                 notifyChange(BR.index)
                 notifyChange(BR.contentSequence)
             }
@@ -70,25 +52,23 @@ class ConversationViewModel: CollectingViewModel() {
     private val arraySize
         get() = imageArray.size
 
-    var adapter = RecordAdapter {this}
-    var fileNamePrefix: String = ""
-        set(value) {
-            field = value
-            adapter.requestRecordList(fileNamePrefix)
-        }
-
     init {
-        fileNamePrefix = "conversation_${index}"
-        fileName = "conversation_${index}_${adapter.itemCount}"
+        isConversationType = true
+        adapterEnabled = true
     }
 
-    fun initializeWithSharedViewModel(sharedViewModel: SharedViewModel?) {
-        this.sharedViewModel = sharedViewModel
-        val selectedRegion = sharedViewModel?.currentSpeakerInfo?.residenceProvince
-        val selectedSet = sharedViewModel?.selectedSet
+    override fun initializeWithSharedViewModel(sharedViewModel: SharedViewModel) {
+        val selectedRegion = sharedViewModel.currentSpeaker1Info?.residenceProvince
+        val selectedSet = sharedViewModel.selectedSet
         regionText = selectedRegion ?: ""
         imageArray = ContentData.getConversationImage(selectedSet)
-        scriptArray = ContentData.getConversationScriptText(selectedRegion, selectedSet)
+        scriptArray = ContentData.getConversationScriptText(selectedSet)
+
+        contentName = CONTENT_NAME_CONVERSATION
+        setName = "set${selectedSet ?: 0}"
+        firstIndex = "$index"
+
+        super.initializeWithSharedViewModel(sharedViewModel)
     }
 
     fun onClickImage(view: View) {
@@ -171,37 +151,9 @@ class ConversationViewModel: CollectingViewModel() {
 
     fun onClickNextButton(view: View) {
         index = if(index + 1 >= arraySize) {
-            sharedViewModel?.testUpload?.invoke(view)
             index
         } else {
             index + 1
         }
-    }
-
-    override fun onClickRecordButton(view: View) {
-        if(!isRecording) {
-            fileName = "conversation_${index}_${adapter.itemCount}"
-        }
-        val recordCallback = {adapter.requestRecordList(fileNamePrefix)}
-        super.onClickRecordButton(view, recordCallback)
-    }
-
-    fun onClickTempButton(view: View) {
-        /*RecordManager.integrateRecording {
-            MediaPlayer().apply {
-                try {
-                    val file = File(view.context.filesDir, "conversation_0.mp4")
-                    setDataSource(file.absolutePath)
-                    prepare()
-                    start()
-                } catch (e: Exception) {
-                    e.printStackTrace()
-                }
-            }
-            CoroutineScope(Dispatchers.Main).launch {
-                sharedViewModel?.testUpload?.invoke(view)
-            }
-        }*/
-        sharedViewModel?.testUpload?.invoke(view)
     }
 }

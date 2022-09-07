@@ -1,16 +1,14 @@
 package com.example.collectingdialect.ui.collecting.oneperson.repeat
 
 import android.view.View
-import android.widget.TextView
+import android.widget.Toast
 import androidx.databinding.Bindable
-import androidx.databinding.BindingAdapter
 import androidx.databinding.library.baseAdapters.BR
 import androidx.navigation.findNavController
 import com.example.collectingdialect.R
 import com.example.collectingdialect.data.ContentData
 import com.example.collectingdialect.ui.SharedViewModel
 import com.example.collectingdialect.ui.collecting.CollectingViewModel
-import com.example.collectingdialect.ui.content.region.RegionSelectionViewModel
 
 class RepeatViewModel: CollectingViewModel() {
     var regionText: String = ""
@@ -38,7 +36,7 @@ class RepeatViewModel: CollectingViewModel() {
             if(field != value) {
                 field = value
                 onChangeUIState()
-                fileName = "repeat_$scriptIndex"
+                firstIndex = "$scriptIndex"
                 notifyChange(BR.scriptIndex)
                 notifyChange(BR.contentSequence)
             }
@@ -46,17 +44,19 @@ class RepeatViewModel: CollectingViewModel() {
     private val scriptSize
         get() = dialectScriptArray.size
 
-    init {
-        fileName = "repeat_$scriptIndex"
-    }
-
-    fun initializeWithSharedViewModel(sharedViewModel: SharedViewModel?) {
-        val selectedRegion = sharedViewModel?.currentSpeakerInfo?.residenceProvince
-        val selectedSet = sharedViewModel?.selectedSet
+    override fun initializeWithSharedViewModel(sharedViewModel: SharedViewModel) {
+        val selectedRegion = sharedViewModel.currentSpeaker1Info?.residenceProvince
+        val selectedSet = sharedViewModel.selectedSet
         regionText = selectedRegion ?: ""
         dialectScriptArray = ContentData.getRepeatScriptTextDialect(selectedRegion, selectedSet)
         standardScriptArray = ContentData.getRepeatScriptTextStandard(selectedRegion, selectedSet)
         scriptVoiceArray = ContentData.getRepeatScriptVoice(selectedRegion, selectedSet)
+
+        contentName = CONTENT_NAME_REPEAT
+        setName = "set${selectedSet ?: 0}"
+        firstIndex = "$scriptIndex"
+
+        super.initializeWithSharedViewModel(sharedViewModel)
     }
 
     fun onClickPreviousButton(view: View) {
@@ -69,7 +69,7 @@ class RepeatViewModel: CollectingViewModel() {
 
     fun onClickNextButton(view: View) {
         scriptIndex = if(scriptIndex + 1 >= scriptSize) {
-            view.findNavController().navigate(R.id.qnAFragment)
+            onClickNextPartButton(view)
             scriptIndex
         } else {
             scriptIndex + 1
@@ -80,7 +80,7 @@ class RepeatViewModel: CollectingViewModel() {
         playScript(view.context, scriptVoiceArray[scriptIndex])
     }
 
-    fun onClickTempButton(view: View) {
+    fun onClickNextPartButton(view: View) {
         view.findNavController().navigate(R.id.qnAFragment)
     }
 }
