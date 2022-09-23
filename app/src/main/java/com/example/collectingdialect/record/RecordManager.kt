@@ -1,11 +1,11 @@
-package com.example.collectingdialect.data
+package com.example.collectingdialect.record
 
 import android.graphics.Color
 import android.media.MediaMetadataRetriever
+import android.os.Build
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.appcompat.app.AlertDialog
-import androidx.core.view.allViews
 import androidx.core.view.updateLayoutParams
 import com.example.collectingdialect.remote.ApiManager
 import com.example.collectingdialect.ui.MainActivity
@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
+import java.text.SimpleDateFormat
 
 object RecordManager {
     const val KEY_LAST_RECORD_CHECK_TIME_MILLIS = "last_check"
@@ -208,15 +209,27 @@ object RecordManager {
                 }
 
                 try {
+                    /*val baseRecordParams = mapOf(
+                        "recordDevice" to "ANDROID_${Build.VERSION.SDK_RELEASE}",
+                        "bitsPerSample" to "16",
+                        "samplingFrequency" to "16000",
+                        "channel" to "Mono",
+                    )*/
                     when (contentName) {
                         CollectingViewModel.CONTENT_NAME_REPEAT -> {
                             val repeatRecordList = directory.listFiles() ?: emptyArray()
                             if (repeatRecordList.isNotEmpty()) {
+                                addDurationToRecordName(directory)
                                 val repeatRecordParams = mapOf(
                                     "classNum" to 1.toString(),
                                     "collectorId" to collectorId,
                                     "speakerId1" to speakerId1,
                                     "className" to CollectingViewModel.CONTENT_NAME_REPEAT,
+                                    "recordDevice" to "ANDROID_${Build.VERSION.RELEASE}",
+                                    "bitsPerSample" to "16",
+                                    "samplingFrequency" to "16000",
+                                    "channel" to "Mono",
+                                    "recordDate" to SimpleDateFormat("yyyyMMdd").format(directory.lastModified())
                                 )
                                 val repeatRecordMultipart =
                                     createFilesMultiPart(repeatRecordParams, repeatRecordList)
@@ -231,17 +244,25 @@ object RecordManager {
                                         InfoViewModel.deleteInfo(speakerId1)
                                         directory.delete()
                                     }
+                                } else {
+                                    removeDurationFromRecordName(directory)
                                 }
                             }
                         }
                         CollectingViewModel.CONTENT_NAME_QNA -> {
                             val qnaRecordList = directory.listFiles() ?: emptyArray()
                             if (qnaRecordList.isNotEmpty()) {
+                                addDurationToRecordName(directory)
                                 val qnaRecordParams = mapOf(
                                     "classNum" to 1.toString(),
                                     "collectorId" to collectorId,
                                     "speakerId1" to speakerId1,
                                     "className" to CollectingViewModel.CONTENT_NAME_QNA,
+                                    "recordDevice" to "ANDROID_${Build.VERSION.RELEASE}",
+                                    "bitsPerSample" to "16",
+                                    "samplingFrequency" to "16000",
+                                    "channel" to "Mono",
+                                    "recordDate" to SimpleDateFormat("yyyyMMdd").format(directory.lastModified())
                                 )
                                 val qnaRecordMultipart =
                                     createFilesMultiPart(qnaRecordParams, qnaRecordList)
@@ -255,18 +276,26 @@ object RecordManager {
                                         InfoViewModel.deleteInfo(speakerId1)
                                         directory.delete()
                                     }
+                                } else {
+                                    removeDurationFromRecordName(directory)
                                 }
                             }
                         }
                         CollectingViewModel.CONTENT_NAME_CONVERSATION -> {
                             val conversationRecordList = directory.listFiles() ?: emptyArray()
                             if (conversationRecordList.isNotEmpty()) {
+                                addDurationToRecordName(directory)
                                 val conversationRecordParams = if (collectorId == speakerId2) {
                                     mapOf(
                                         "classNum" to 3.toString(),
                                         "collectorId" to collectorId,
                                         "speakerId1" to speakerId1,
                                         "className" to CollectingViewModel.CONTENT_NAME_CONVERSATION,
+                                        "recordDevice" to "ANDROID_${Build.VERSION.RELEASE}",
+                                        "bitsPerSample" to "16",
+                                        "samplingFrequency" to "16000",
+                                        "channel" to "Mono",
+                                        "recordDate" to SimpleDateFormat("yyyyMMdd").format(directory.lastModified())
                                     )
                                 } else {
                                     mapOf(
@@ -275,6 +304,11 @@ object RecordManager {
                                         "speakerId1" to speakerId1,
                                         "speakerId2" to speakerId2,
                                         "className" to CollectingViewModel.CONTENT_NAME_CONVERSATION,
+                                        "recordDevice" to "ANDROID_${Build.VERSION.RELEASE}",
+                                        "bitsPerSample" to "16",
+                                        "samplingFrequency" to "16000",
+                                        "channel" to "Mono",
+                                        "recordDate" to SimpleDateFormat("yyyyMMdd").format(directory.lastModified())
                                     )
                                 }
                                 val conversationRecordMultipart =
@@ -289,6 +323,8 @@ object RecordManager {
                                     if (directory.listFiles()?.size == 0) {
                                         directory.delete()
                                     }
+                                } else {
+                                    removeDurationFromRecordName(directory)
                                 }
                             }
                         }
@@ -297,6 +333,7 @@ object RecordManager {
                 } catch (e: Exception) {
                     e.printStackTrace()
                     FirebaseCrashlytics.getInstance().recordException(e)
+                    removeDurationFromRecordName(directory)
                     continue
                 }
             }
@@ -323,5 +360,31 @@ object RecordManager {
             tempList.add(MultipartBody.Part.createFormData("recfile", file.name, file.asRequestBody()))
         }
         return tempList.toList()
+    }
+
+    private fun addDurationToRecordName(directory: File) {
+        val recordList = directory.listFiles() ?: emptyArray()
+        val mediaMetadataRetriever = MediaMetadataRetriever()
+        recordList.forEach { record ->
+            mediaMetadataRetriever.setDataSource(record.absolutePath)
+            val duration = ((mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong() ?: 0) / 1000)
+            record.renameTo(File("${record.absolutePath}_$duration"))
+        }
+    }
+
+    private fun removeDurationFromRecordName(directory: File) {
+        val recordList = directory.listFiles() ?: emptyArray()
+        recordList.forEach { record ->
+            val durationIncludedName = record.absolutePath
+            val durationRemovedName = kotlin.run {
+                val split = durationIncludedName.split("_").dropLast(1)
+                var name = ""
+                for(i in split.indices) {
+                    name += split[i]
+                }
+                name
+            }
+            record.renameTo(File(durationRemovedName))
+        }
     }
 }

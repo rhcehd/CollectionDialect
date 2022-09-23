@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.example.collectingdialect.R
-import com.example.collectingdialect.data.RecordManager
 import com.example.collectingdialect.databinding.FragmentQnaBinding
 import com.example.collectingdialect.ui.SharedViewModel
 

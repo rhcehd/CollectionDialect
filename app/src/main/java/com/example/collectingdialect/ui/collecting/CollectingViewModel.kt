@@ -9,12 +9,13 @@ import androidx.annotation.RawRes
 import androidx.databinding.Bindable
 import com.example.collectingdialect.BR
 import com.example.collectingdialect.R
-import com.example.collectingdialect.data.RecordManager
+import com.example.collectingdialect.record.RecordManager
 import com.example.collectingdialect.ui.BaseViewModel
 import com.example.collectingdialect.ui.MainActivity.Companion.showToast
 import com.example.collectingdialect.ui.SharedViewModel
 import com.github.squti.androidwaverecorder.WaveRecorder
 import java.io.File
+import java.util.*
 
 open class CollectingViewModel: BaseViewModel() {
     companion object {
@@ -116,7 +117,9 @@ open class CollectingViewModel: BaseViewModel() {
         val speakerId2 = sharedViewModel.currentSpeaker2Info?.speakerId
         speakerId = if(isConversationType) {
             if(speakerId2.isNullOrEmpty()) {
-                "${speakerId1 ?: "unknownSpeaker"}_${collectorId ?: "unknownSpeaker"}"
+                val provinceResidence = InfoViewModel.residenceProvinceValueOf(sharedViewModel.currentSpeaker1Info?.residenceProvince ?: "")
+                val randomId = "speaker${provinceResidence}${Random().nextInt(9999)}"
+                "${speakerId1 ?: "unknownSpeaker"}_${randomId}"
             } else {
                 "${speakerId1 ?: "unknownSpeaker"}_${speakerId2}"
             }
@@ -127,20 +130,6 @@ open class CollectingViewModel: BaseViewModel() {
 
         recordDirectory = RecordManager.getRecordDirectory(contentName, this.collectorId, speakerId)
         recordTime = RecordManager.getRecordTime(recordDirectory, fileName)
-    }
-
-    private fun initializeMediaRecorder(context: Context) {
-        mediaRecorder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            MediaRecorder(context)
-        } else {
-            MediaRecorder()
-        }
-        mediaRecorder?.apply {
-            setAudioSource(MediaRecorder.AudioSource.MIC)
-            setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
-            setAudioEncoder(MediaRecorder.AudioEncoder.HE_AAC)
-        }
-
     }
 
     private fun initializeMediaPlayer(fileName: String?) {
@@ -155,55 +144,6 @@ open class CollectingViewModel: BaseViewModel() {
             }
         }
     }
-
-    /*@Throws(Exception::class)
-    private fun startRecord2(context: Context, fileName: String?) {
-        try {
-            val outputFile = File(recordDirectory, fileName ?: this.fileName)
-            if(outputFile.exists()) {
-                outputFile.delete()
-            }
-            initializeMediaRecorder(context)
-            mediaRecorder?.apply {
-                setOutputFile(outputFile.absolutePath)
-                prepare()
-                start()
-            }
-            isRecording = true
-            RecordManager.onStartRecording(recordDirectory, fileNamePrefix,  fileName ?: this.fileName, recordTimeCallback)
-        } catch (e: Exception) {
-            e.printStackTrace()
-            showToast("녹음 실패. 다시 시도해주세요")
-            isRecording = false
-            RecordManager.onStopRecording(recordDirectory, fileNamePrefix)
-            mediaRecorder = null
-        }
-    }
-
-    @Throws(Exception::class)
-    private fun stopRecord2() {
-        try {
-            mediaRecorder?.apply {
-                stop()
-                reset()
-                release()
-            }
-            RecordManager.onStopRecording(recordDirectory, fileNamePrefix)
-            initializeMediaPlayer(null)
-            if(adapterEnabled) {
-                adapter.refreshRecordList(recordDirectory, fileNamePrefix)
-            }
-            isRecording = false
-            mediaRecorder = null
-        } catch (e: Exception) {
-            e.printStackTrace()
-            showToast("녹음 실패. 다시 시도해주세요")
-            isRecording = false
-            RecordManager.onStopRecording(recordDirectory, fileNamePrefix)
-            mediaRecorder = null
-            throw e
-        }
-    }*/
 
     private fun startRecord(fileName: String?) {
         try {

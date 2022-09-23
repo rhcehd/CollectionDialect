@@ -16,8 +16,8 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.fragment.NavHostFragment
 import com.example.collectingdialect.R
 import com.example.collectingdialect.data.ContentData
-import com.example.collectingdialect.data.OnToolbarRecordTimeChangeListener
-import com.example.collectingdialect.data.RecordManager
+import com.example.collectingdialect.record.OnToolbarRecordTimeChangeListener
+import com.example.collectingdialect.record.RecordManager
 import com.example.collectingdialect.databinding.ActivityMainBinding
 import com.example.collectingdialect.ui.login.LoginViewModel
 import com.google.android.material.appbar.MaterialToolbar
@@ -95,7 +95,8 @@ class MainActivity : AppCompatActivity() {
     private fun setToolbar() {
         val toolbar = findViewById<MaterialToolbar>(R.id.toolbar)
         toolbar.isTitleCentered = true
-        RecordManager.onToolbarRecordTimeChangeListener = object: OnToolbarRecordTimeChangeListener {
+        RecordManager.onToolbarRecordTimeChangeListener = object:
+            OnToolbarRecordTimeChangeListener {
             override fun onChangeRecordTime(timeString: String) {
                 if(timeString.isNotEmpty()) {
                     toolbar.title = "녹음시간 $timeString / 25:00"

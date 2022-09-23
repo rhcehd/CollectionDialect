@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.collectingdialect.R
-import com.example.collectingdialect.data.RecordManager
+import com.example.collectingdialect.record.RecordManager
 import com.example.collectingdialect.databinding.ItemRecordAndPlayBinding
 import java.io.File
 
