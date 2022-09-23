@@ -217,9 +217,9 @@ object RecordManager {
                     )*/
                     when (contentName) {
                         CollectingViewModel.CONTENT_NAME_REPEAT -> {
+                            addDurationToRecordName(directory)
                             val repeatRecordList = directory.listFiles() ?: emptyArray()
                             if (repeatRecordList.isNotEmpty()) {
-                                addDurationToRecordName(directory)
                                 val repeatRecordParams = mapOf(
                                     "classNum" to 1.toString(),
                                     "collectorId" to collectorId,
@@ -250,9 +250,9 @@ object RecordManager {
                             }
                         }
                         CollectingViewModel.CONTENT_NAME_QNA -> {
+                            addDurationToRecordName(directory)
                             val qnaRecordList = directory.listFiles() ?: emptyArray()
                             if (qnaRecordList.isNotEmpty()) {
-                                addDurationToRecordName(directory)
                                 val qnaRecordParams = mapOf(
                                     "classNum" to 1.toString(),
                                     "collectorId" to collectorId,
@@ -282,9 +282,9 @@ object RecordManager {
                             }
                         }
                         CollectingViewModel.CONTENT_NAME_CONVERSATION -> {
+                            addDurationToRecordName(directory)
                             val conversationRecordList = directory.listFiles() ?: emptyArray()
                             if (conversationRecordList.isNotEmpty()) {
-                                addDurationToRecordName(directory)
                                 val conversationRecordParams = if (collectorId == speakerId2) {
                                     mapOf(
                                         "classNum" to 3.toString(),
@@ -368,23 +368,27 @@ object RecordManager {
         recordList.forEach { record ->
             mediaMetadataRetriever.setDataSource(record.absolutePath)
             val duration = ((mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)?.toLong() ?: 0) / 1000)
-            record.renameTo(File("${record.absolutePath}_$duration"))
+            record.renameTo(File(record.parentFile, "${record.nameWithoutExtension}_$duration.wav"))
         }
     }
 
     private fun removeDurationFromRecordName(directory: File) {
         val recordList = directory.listFiles() ?: emptyArray()
         recordList.forEach { record ->
-            val durationIncludedName = record.absolutePath
+            val durationIncludedName = record.nameWithoutExtension
             val durationRemovedName = kotlin.run {
                 val split = durationIncludedName.split("_").dropLast(1)
                 var name = ""
                 for(i in split.indices) {
-                    name += split[i]
+                    name += if(i != split.lastIndex) {
+                        split[i] + "_"
+                    } else {
+                        split[i]
+                    }
                 }
                 name
             }
-            record.renameTo(File(durationRemovedName))
+            record.renameTo(File(record.parentFile, "${durationRemovedName}.wav"))
         }
     }
 }
