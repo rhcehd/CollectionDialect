@@ -79,6 +79,7 @@ class LoginViewModel: BaseViewModel() {
             id,
             password
         )
+        val navController = view.findNavController()
         ApiManager.apiService.login(loginRequest).enqueue(object: Callback<LoginResponse>{
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if(response.isSuccessful) {
@@ -97,7 +98,6 @@ class LoginViewModel: BaseViewModel() {
                     }
                     showToast("로그인 성공")
                     MainActivity.loginCallback?.invoke()
-                    val navController = view.findNavController()
                     navController.navigate(R.id.contentFragment)
                     navController.backQueue.removeLast()
                 } else {

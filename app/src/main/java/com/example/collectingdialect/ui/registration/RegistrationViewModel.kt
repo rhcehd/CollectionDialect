@@ -313,6 +313,7 @@ class RegistrationViewModel: InfoViewModel() {
             collectingOrganization,
             ""
         )
+        val navController = view.findNavController()
         ApiManager.apiService.registerCollector(registerCollectorRequest).enqueue(object: Callback<RegisterCollectorResponse>{
             override fun onResponse(
                 call: Call<RegisterCollectorResponse>,
@@ -324,7 +325,7 @@ class RegistrationViewModel: InfoViewModel() {
                         MaterialAlertDialogBuilder(view.context)
                             .setMessage("등록된 아이디/패스워드는 다음과 같습니다\n\n아이디 : $collectorId\n패스워드 : $collectorId")
                             .setOnDismissListener {
-                                view.findNavController().navigateUp()
+                                navController.navigateUp()
                             }
                             .setPositiveButton("확인") { _, _ -> /*do nothing*/ }
                             .create()

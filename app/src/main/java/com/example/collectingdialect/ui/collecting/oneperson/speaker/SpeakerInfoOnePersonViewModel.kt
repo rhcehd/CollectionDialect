@@ -229,6 +229,7 @@ class SpeakerInfoOnePersonViewModel: InfoViewModel() {
     }
 
     fun onClickLoadInfoButton(view: View) {
+        val navController = view.findNavController()
         val idInputEditText = EditText(view.context)
         MaterialAlertDialogBuilder(view.context)
             .setTitle("아이디를 입력해주세요")
@@ -238,7 +239,7 @@ class SpeakerInfoOnePersonViewModel: InfoViewModel() {
                 val speakerInfo = loadInfo(view.context, speakerId)
                 if(speakerInfo != null) {
                     sharedViewModel?.currentSpeaker1Info = speakerInfo
-                    view.findNavController().apply {
+                    navController.apply {
                         popBackStack()
                         navigate(R.id.setSelectionFragment)
                     }
