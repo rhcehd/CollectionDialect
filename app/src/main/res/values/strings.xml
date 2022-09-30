@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CollectingDialect</string>
+    <string name="app_name">방언데이터수집</string>
     <string name="subtitle">대한민국 방언\n음성 데이터</string>
     <string name="main_title_english">Collecting Korean dialect\nvoice Data</string>
     <string name="menu_title">대한민국 방언 음성 데이터 수집</string>

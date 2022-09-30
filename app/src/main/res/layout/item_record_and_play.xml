@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
     <data>
-        <variable name="viewModel" type="com.example.collectingdialect.ui.collecting.CollectingViewModel" />
+        <variable name="viewModel" type="com.mtdata.aidev.collectingdialect.ui.collecting.CollectingViewModel" />
         <variable name="fileName" type="String" />
         <variable name="indexString" type="String"/>
         <variable name="recordTimeString" type="String" />

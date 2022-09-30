@@ -5,46 +5,46 @@
     app:startDestination="@id/mainFragment">
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.collectingdialect.ui.main.MainFragment"
+        android:name="com.mtdata.aidev.collectingdialect.ui.main.MainFragment"
         android:label="MainFragment" />
     <fragment
         android:id="@+id/contentFragment"
-        android:name="com.example.collectingdialect.ui.content.ContentFragment"
+        android:name="com.mtdata.aidev.collectingdialect.ui.content.ContentFragment"
         android:label="ContentFragment" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.collectingdialect.ui.login.LoginFragment"
+        android:name="com.mtdata.aidev.collectingdialect.ui.login.LoginFragment"
         android:label="LoginFragment" />
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="com.example.collectingdialect.ui.registration.RegistrationFragment"
+        android:name="com.mtdata.aidev.collectingdialect.ui.registration.RegistrationFragment"
         android:label="RegistrationFragment" />
     <fragment
         android:id="@+id/speakerInfoOnePersonFragment"
-        android:name="com.example.collectingdialect.ui.collecting.oneperson.speaker.SpeakerInfoOnePersonFragment"
+        android:name="com.mtdata.aidev.collectingdialect.ui.collecting.oneperson.speaker.SpeakerInfoOnePersonFragment"
         android:label="SpeakerInfoOnePersonFragment" />
     <fragment
         android:id="@+id/conversationTwoPersonFragment"
-        android:name="com.example.collectingdialect.ui.collecting.twoperson.conversation.ConversationFragment"
+        android:name="com.mtdata.aidev.collectingdialect.ui.collecting.twoperson.conversation.ConversationFragment"
         android:label="ConversationTwoPersonFragment" />
     <fragment
         android:id="@+id/qnAFragment"
-        android:name="com.example.collectingdialect.ui.collecting.oneperson.qna.QnAFragment"
+        android:name="com.mtdata.aidev.collectingdialect.ui.collecting.oneperson.qna.QnAFragment"
         android:label="QnAFragment" />
     <fragment
         android:id="@+id/repeatFragment"
-        android:name="com.example.collectingdialect.ui.collecting.oneperson.repeat.RepeatFragment"
+        android:name="com.mtdata.aidev.collectingdialect.ui.collecting.oneperson.repeat.RepeatFragment"
         android:label="RepeatFragment" />
     <fragment
         android:id="@+id/setSelectionFragment"
-        android:name="com.example.collectingdialect.ui.content.set.SetSelectionFragment"
+        android:name="com.mtdata.aidev.collectingdialect.ui.content.set.SetSelectionFragment"
         android:label="SetSelectionFragment" />
     <fragment
         android:id="@+id/speakerInfoTwoPersonFragment"
-        android:name="com.example.collectingdialect.ui.collecting.twoperson.speaker.SpeakerInfoTwoPersonFragment"
+        android:name="com.mtdata.aidev.collectingdialect.ui.collecting.twoperson.speaker.SpeakerInfoTwoPersonFragment"
         android:label="SpeakerInfoTwoPersonFragment" />
     <fragment
         android:id="@+id/conversationOnePersonFragment"
-        android:name="com.example.collectingdialect.ui.collecting.oneperson.conversation.ConversationOnePersonFragment"
+        android:name="com.mtdata.aidev.collectingdialect.ui.collecting.oneperson.conversation.ConversationOnePersonFragment"
         android:label="ConversationOnePersonFragment" />
 </navigation>

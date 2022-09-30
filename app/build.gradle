@@ -9,12 +9,21 @@ plugins {
 android {
     compileSdk 31
 
+    signingConfigs {
+        common {
+            storeFile file(getRootDir().absolutePath + "\\collectingDialect.jks")
+            storePassword "collectingDialect"
+            keyAlias "collectingDialect"
+            keyPassword "collectingDialect"
+        }
+    }
+
     defaultConfig {
-        applicationId "com.example.collectingdialect"
+        applicationId "com.mtdata.aidev.collectingdialect"
         minSdk 26
         targetSdk 31
-        versionCode 5
-        versionName "1.04"
+        versionCode 7
+        versionName "1.05-fix1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -26,9 +35,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            signingConfig signingConfigs.common
+        }
         release {
             minifyEnabled false
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.common
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

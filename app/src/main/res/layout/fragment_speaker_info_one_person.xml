@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable name="viewModel" type="com.example.collectingdialect.ui.collecting.oneperson.speaker.SpeakerInfoOnePersonViewModel" />
+        <variable name="viewModel" type="com.mtdata.aidev.collectingdialect.ui.collecting.oneperson.speaker.SpeakerInfoOnePersonViewModel" />
         <import type="android.text.InputType"/>
     </data>
     <ScrollView
