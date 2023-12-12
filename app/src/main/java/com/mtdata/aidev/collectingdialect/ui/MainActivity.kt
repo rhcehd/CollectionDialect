@@ -24,11 +24,6 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
 
-/*
-coldbaby12@naver.com
-* kmkwak@mtdata.co.kr
-* */
-
 class MainActivity : AppCompatActivity() {
     companion object {
         var contextRequester: (() -> Context)? = null
