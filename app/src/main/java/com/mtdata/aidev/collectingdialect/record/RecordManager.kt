@@ -13,7 +13,6 @@ import com.mtdata.aidev.collectingdialect.ui.MainActivity.Companion.showToast
 import com.mtdata.aidev.collectingdialect.ui.collecting.CollectingViewModel
 import com.mtdata.aidev.collectingdialect.ui.collecting.InfoViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -327,7 +326,6 @@ object RecordManager {
                     uploadCompletedDirectory += 1
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    FirebaseCrashlytics.getInstance().recordException(e)
                     removeDurationFromRecordName(directory)
                     continue
                 }

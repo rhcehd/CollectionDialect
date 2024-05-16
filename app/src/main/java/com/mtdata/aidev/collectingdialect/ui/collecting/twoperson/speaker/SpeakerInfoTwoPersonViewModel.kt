@@ -8,14 +8,9 @@ import com.mtdata.aidev.collectingdialect.BR
 import com.mtdata.aidev.collectingdialect.R
 import com.mtdata.aidev.collectingdialect.data.model.SpeakerInfo
 import com.mtdata.aidev.collectingdialect.data.remote.CollectingDialectNetwork
-import com.mtdata.aidev.collectingdialect.data.remote.request.RegisterSpeakerRequest
-import com.mtdata.aidev.collectingdialect.data.remote.response.RegisterSpeakerResponse
 import com.mtdata.aidev.collectingdialect.ui.SharedViewModel
 import com.mtdata.aidev.collectingdialect.ui.collecting.InfoViewModel
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class SpeakerInfoTwoPersonViewModel: InfoViewModel() {
     var sharedViewModel: SharedViewModel? = null

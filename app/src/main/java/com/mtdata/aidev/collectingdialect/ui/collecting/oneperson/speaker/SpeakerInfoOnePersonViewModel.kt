@@ -5,20 +5,15 @@ import android.widget.EditText
 import androidx.databinding.Bindable
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mtdata.aidev.collectingdialect.BR
 import com.mtdata.aidev.collectingdialect.R
 import com.mtdata.aidev.collectingdialect.data.model.SpeakerInfo
 import com.mtdata.aidev.collectingdialect.data.remote.CollectingDialectNetwork
-import com.mtdata.aidev.collectingdialect.data.remote.request.RegisterSpeakerRequest
-import com.mtdata.aidev.collectingdialect.data.remote.response.RegisterSpeakerResponse
 import com.mtdata.aidev.collectingdialect.ui.MainActivity.Companion.showToast
 import com.mtdata.aidev.collectingdialect.ui.SharedViewModel
 import com.mtdata.aidev.collectingdialect.ui.collecting.InfoViewModel
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class SpeakerInfoOnePersonViewModel: InfoViewModel() {
     var sharedViewModel: SharedViewModel? = null
