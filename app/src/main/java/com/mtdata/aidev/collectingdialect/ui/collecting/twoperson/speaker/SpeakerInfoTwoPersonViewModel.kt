@@ -2,15 +2,17 @@ package com.mtdata.aidev.collectingdialect.ui.collecting.twoperson.speaker
 
 import android.view.View
 import androidx.databinding.Bindable
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.mtdata.aidev.collectingdialect.BR
 import com.mtdata.aidev.collectingdialect.R
-import com.mtdata.aidev.collectingdialect.data.SpeakerInfo
-import com.mtdata.aidev.collectingdialect.remote.ApiManager
-import com.mtdata.aidev.collectingdialect.remote.request.RegisterSpeakerRequest
-import com.mtdata.aidev.collectingdialect.remote.response.RegisterSpeakerResponse
+import com.mtdata.aidev.collectingdialect.data.model.SpeakerInfo
+import com.mtdata.aidev.collectingdialect.data.remote.CollectingDialectNetwork
+import com.mtdata.aidev.collectingdialect.data.remote.request.RegisterSpeakerRequest
+import com.mtdata.aidev.collectingdialect.data.remote.response.RegisterSpeakerResponse
 import com.mtdata.aidev.collectingdialect.ui.SharedViewModel
 import com.mtdata.aidev.collectingdialect.ui.collecting.InfoViewModel
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -434,95 +436,65 @@ class SpeakerInfoTwoPersonViewModel: InfoViewModel() {
         if(!isValidInput) {
             return
         }
-        val registerSpeakerRequest1 = RegisterSpeakerRequest(
-            genderValueOf(gender1),
-            birthYear1,
-            residenceProvinceValueOf(residenceProvince1),
-            residenceCityValueOf(residenceCity1),
-            residencePeriod1,
-            job1,
-            academicBackgroundValueOf(academicBackground1),
-            healthConditionValueOf(healthCondition1),
-        )
-        val registerSpeakerRequest2 = RegisterSpeakerRequest(
-            genderValueOf(gender2),
-            birthYear2,
-            residenceProvinceValueOf(residenceProvince2),
-            residenceCityValueOf(residenceCity2),
-            residencePeriod2,
-            job2,
-            academicBackgroundValueOf(academicBackground2),
-            healthConditionValueOf(healthCondition2)
-        )
         var requestCount = 0
-        ApiManager.apiService.registerSpeaker(registerSpeakerRequest1).enqueue(object: Callback<RegisterSpeakerResponse>{
-            override fun onResponse(
-                call: Call<RegisterSpeakerResponse>,
-                response: Response<RegisterSpeakerResponse>
-            ) {
-                if(response.isSuccessful) {
-                    val speakerId1 = response.body()?.speakerId
-                    if(speakerId1 != null) {
-                        val speakerInfo1 = SpeakerInfo(
-                            speakerId1,
-                            gender1,
-                            birthYear1,
-                            residenceProvince1,
-                            residenceCity1,
-                            residencePeriod1,
-                            job1,
-                            academicBackground1,
-                            healthCondition1
-                        )
-                        sharedViewModel?.currentSpeaker1Info = speakerInfo1
-                        ApiManager.apiService.registerSpeaker(registerSpeakerRequest2).enqueue(object: Callback<RegisterSpeakerResponse>{
-                            override fun onResponse(
-                                call: Call<RegisterSpeakerResponse>,
-                                response: Response<RegisterSpeakerResponse>
-                            ) {
-                                if(response.isSuccessful) {
-                                    val speakerId2 = response.body()?.speakerId
-                                    if(speakerId2 != null) {
-                                        val speakerInfo2 = SpeakerInfo(
-                                            speakerId2,
-                                            gender1,
-                                            birthYear1,
-                                            residenceProvince1,
-                                            residenceCity1,
-                                            residencePeriod1,
-                                            job1,
-                                            academicBackground1,
-                                            healthCondition1
-                                        )
-                                        sharedViewModel?.currentSpeaker2Info = speakerInfo2
-                                        view.findNavController().apply {
-                                            popBackStack()
-                                            navigate(R.id.setSelectionFragment)
-                                        }
-                                    } else {
+        viewModelScope.launch {
+            try {
+                val speakerId1 = CollectingDialectNetwork.registerSpeaker(
+                    genderValueOf(gender1),
+                    birthYear1,
+                    residenceProvinceValueOf(residenceProvince1),
+                    residenceCityValueOf(residenceCity1),
+                    residencePeriod1,
+                    job1,
+                    academicBackgroundValueOf(academicBackground1),
+                    healthConditionValueOf(healthCondition1),
+                )
+                val speakerId2 = CollectingDialectNetwork.registerSpeaker(
+                    genderValueOf(gender2),
+                    birthYear2,
+                    residenceProvinceValueOf(residenceProvince2),
+                    residenceCityValueOf(residenceCity2),
+                    residencePeriod2,
+                    job2,
+                    academicBackgroundValueOf(academicBackground2),
+                    healthConditionValueOf(healthCondition2)
+                )
 
-                                    }
-                                } else {
+                val speakerInfo1 = SpeakerInfo(
+                    speakerId1,
+                    gender1,
+                    birthYear1,
+                    residenceProvince1,
+                    residenceCity1,
+                    residencePeriod1,
+                    job1,
+                    academicBackground1,
+                    healthCondition1
+                )
+                val speakerInfo2 = SpeakerInfo(
+                    speakerId2,
+                    gender1,
+                    birthYear1,
+                    residenceProvince1,
+                    residenceCity1,
+                    residencePeriod1,
+                    job1,
+                    academicBackground1,
+                    healthCondition1
+                )
 
-                                }
-                            }
+                sharedViewModel?.currentSpeaker1Info = speakerInfo1
+                sharedViewModel?.currentSpeaker2Info = speakerInfo2
 
-                            override fun onFailure(call: Call<RegisterSpeakerResponse>, t: Throwable) {
-
-                            }
-                        })
-                    } else {
-
-                    }
-                } else {
-
+                view.findNavController().apply {
+                    popBackStack()
+                    navigate(R.id.setSelectionFragment)
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
 
-            override fun onFailure(call: Call<RegisterSpeakerResponse>, t: Throwable) {
-
-            }
-        })
+        }
 
     }
 }

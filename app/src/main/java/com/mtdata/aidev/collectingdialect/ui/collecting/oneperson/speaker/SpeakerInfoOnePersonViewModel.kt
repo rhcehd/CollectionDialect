@@ -3,17 +3,19 @@ package com.mtdata.aidev.collectingdialect.ui.collecting.oneperson.speaker
 import android.view.View
 import android.widget.EditText
 import androidx.databinding.Bindable
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.mtdata.aidev.collectingdialect.BR
 import com.mtdata.aidev.collectingdialect.R
-import com.mtdata.aidev.collectingdialect.data.SpeakerInfo
-import com.mtdata.aidev.collectingdialect.remote.ApiManager
-import com.mtdata.aidev.collectingdialect.remote.request.RegisterSpeakerRequest
-import com.mtdata.aidev.collectingdialect.remote.response.RegisterSpeakerResponse
+import com.mtdata.aidev.collectingdialect.data.model.SpeakerInfo
+import com.mtdata.aidev.collectingdialect.data.remote.CollectingDialectNetwork
+import com.mtdata.aidev.collectingdialect.data.remote.request.RegisterSpeakerRequest
+import com.mtdata.aidev.collectingdialect.data.remote.response.RegisterSpeakerResponse
 import com.mtdata.aidev.collectingdialect.ui.MainActivity.Companion.showToast
 import com.mtdata.aidev.collectingdialect.ui.SharedViewModel
 import com.mtdata.aidev.collectingdialect.ui.collecting.InfoViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -256,58 +258,46 @@ class SpeakerInfoOnePersonViewModel: InfoViewModel() {
         if(!isValidInput) {
             return
         }
-        val registerSpeakerRequest = RegisterSpeakerRequest(
-            genderValueOf(gender),
-            birthYear,
-            residenceProvinceValueOf(residenceProvince),
-            residenceCityValueOf(residenceCity),
-            residencePeriod,
-            job,
-            academicBackgroundValueOf(academicBackground),
-            healthConditionValueOf(healthCondition)
-        )
-        ApiManager.apiService.registerSpeaker(registerSpeakerRequest).enqueue(object:
-            Callback<RegisterSpeakerResponse> {
-            override fun onResponse(call: Call<RegisterSpeakerResponse>, response: Response<RegisterSpeakerResponse>) {
-                if(response.isSuccessful) {
-
-                    val speakerId = response.body()?.speakerId
-                    if(speakerId != null) {
-                        MaterialAlertDialogBuilder(view.context)
-                            .setMessage("발화자 아이디는 $speakerId 입니다")
-                            .setOnDismissListener {
-                                val speakerInfo = SpeakerInfo(
-                                    speakerId,
-                                    gender,
-                                    birthYear,
-                                    residenceProvince,
-                                    residenceCity,
-                                    residencePeriod,
-                                    job,
-                                    academicBackground,
-                                    healthCondition
-                                )
-                                sharedViewModel?.currentSpeaker1Info = speakerInfo
-                                saveInfo(view.context, speakerInfo)
-                                view.findNavController().apply {
-                                    popBackStack()
-                                    navigate(R.id.setSelectionFragment)
-                                }
-                            }
-                            .setPositiveButton("확인") { _, _ -> /*do nothing*/ }
-                            .create()
-                            .show()
-                    } else {
-
+        viewModelScope.launch {
+            try {
+                val speakerId = CollectingDialectNetwork.registerSpeaker(
+                    genderValueOf(gender),
+                    birthYear,
+                    residenceProvinceValueOf(residenceProvince),
+                    residenceCityValueOf(residenceCity),
+                    residencePeriod,
+                    job,
+                    academicBackgroundValueOf(academicBackground),
+                    healthConditionValueOf(healthCondition)
+                )
+                MaterialAlertDialogBuilder(view.context)
+                    .setMessage("발화자 아이디는 $speakerId 입니다")
+                    .setOnDismissListener {
+                        val speakerInfo = SpeakerInfo(
+                            speakerId,
+                            gender,
+                            birthYear,
+                            residenceProvince,
+                            residenceCity,
+                            residencePeriod,
+                            job,
+                            academicBackground,
+                            healthCondition
+                        )
+                        sharedViewModel?.currentSpeaker1Info = speakerInfo
+                        saveInfo(view.context, speakerInfo)
+                        view.findNavController().apply {
+                            popBackStack()
+                            navigate(R.id.setSelectionFragment)
+                        }
                     }
-                } else {
-
-                }
+                    .setPositiveButton("확인") { _, _ -> /*do nothing*/ }
+                    .create()
+                    .show()
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
 
-            override fun onFailure(call: Call<RegisterSpeakerResponse>, t: Throwable) {
-                t.printStackTrace()
-            }
-        })
+        }
     }
 }

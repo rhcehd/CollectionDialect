@@ -1,19 +1,21 @@
-package com.mtdata.aidev.collectingdialect.ui.registration
+package com.mtdata.aidev.collectingdialect.ui.signin
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.mtdata.aidev.collectingdialect.R
-import com.mtdata.aidev.collectingdialect.databinding.FragmentRegistrationBinding
+import com.mtdata.aidev.collectingdialect.databinding.FragmentLoginBinding
+import com.mtdata.aidev.collectingdialect.ui.SharedViewModel
 
-class RegistrationFragment: Fragment(R.layout.fragment_registration) {
-    private val viewModel: RegistrationViewModel by viewModels()
-    private var binding: FragmentRegistrationBinding? = null
+class SignInFragment: Fragment(R.layout.fragment_login) {
+    private val viewModel: SignInViewModel by viewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private var binding: FragmentLoginBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,16 +30,8 @@ class RegistrationFragment: Fragment(R.layout.fragment_registration) {
         if(binding == null) {
             binding = DataBindingUtil.bind(view)
             binding?.viewModel = viewModel
+            binding?.lifecycleOwner = this
+            viewModel.sharedViewModel = sharedViewModel
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
     }
 }

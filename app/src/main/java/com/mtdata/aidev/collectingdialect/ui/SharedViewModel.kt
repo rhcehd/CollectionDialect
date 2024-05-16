@@ -2,7 +2,7 @@ package com.mtdata.aidev.collectingdialect.ui
 
 import androidx.databinding.Bindable
 import com.mtdata.aidev.collectingdialect.BR
-import com.mtdata.aidev.collectingdialect.data.SpeakerInfo
+import com.mtdata.aidev.collectingdialect.data.model.SpeakerInfo
 
 class SharedViewModel: BaseViewModel() {
     var collectorId: String? = null

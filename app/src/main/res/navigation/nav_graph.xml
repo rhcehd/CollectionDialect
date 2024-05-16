@@ -13,11 +13,11 @@
         android:label="ContentFragment" />
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.mtdata.aidev.collectingdialect.ui.login.LoginFragment"
+        android:name="com.mtdata.aidev.collectingdialect.ui.signin.SignInFragment"
         android:label="LoginFragment" />
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="com.mtdata.aidev.collectingdialect.ui.registration.RegistrationFragment"
+        android:name="com.mtdata.aidev.collectingdialect.ui.signup.RegistrationFragment"
         android:label="RegistrationFragment" />
     <fragment
         android:id="@+id/speakerInfoOnePersonFragment"

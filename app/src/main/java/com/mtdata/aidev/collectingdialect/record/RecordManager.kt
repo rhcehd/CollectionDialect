@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.updateLayoutParams
-import com.mtdata.aidev.collectingdialect.remote.ApiManager
+import com.mtdata.aidev.collectingdialect.data.remote.CollectingDialectNetwork
 import com.mtdata.aidev.collectingdialect.ui.MainActivity
 import com.mtdata.aidev.collectingdialect.ui.MainActivity.Companion.showToast
 import com.mtdata.aidev.collectingdialect.ui.collecting.CollectingViewModel
@@ -231,12 +231,9 @@ object RecordManager {
                                     "channel" to "Mono",
                                     "recordDate" to SimpleDateFormat("yyyyMMdd").format(directory.lastModified())
                                 )
-                                val repeatRecordMultipart =
-                                    createFilesMultiPart(repeatRecordParams, repeatRecordList)
-                                val response =
-                                    ApiManager.apiService.sendRecordData(repeatRecordMultipart)
-                                        .execute()
-                                if (response.isSuccessful) {
+                                val repeatRecordMultipart = createFilesMultiPart(repeatRecordParams, repeatRecordList)
+                                val isSuccessful = CollectingDialectNetwork.sendRecordData(repeatRecordMultipart)
+                                if (isSuccessful) {
                                     repeatRecordList.forEach { file ->
                                         file.delete()
                                     }
@@ -266,9 +263,9 @@ object RecordManager {
                                 )
                                 val qnaRecordMultipart =
                                     createFilesMultiPart(qnaRecordParams, qnaRecordList)
-                                val response =
-                                    ApiManager.apiService.sendRecordData(qnaRecordMultipart).execute()
-                                if (response.isSuccessful) {
+                                val isSuccessful =
+                                    CollectingDialectNetwork.sendRecordData(qnaRecordMultipart)
+                                if (isSuccessful) {
                                     qnaRecordList.forEach { file ->
                                         file.delete()
                                     }
@@ -313,10 +310,8 @@ object RecordManager {
                                 }
                                 val conversationRecordMultipart =
                                     createFilesMultiPart(conversationRecordParams, conversationRecordList)
-                                val response =
-                                    ApiManager.apiService.sendRecordData(conversationRecordMultipart)
-                                        .execute()
-                                if (response.isSuccessful) {
+                                val isSuccessful = CollectingDialectNetwork.sendRecordData(conversationRecordMultipart)
+                                if (isSuccessful) {
                                     conversationRecordList.forEach { file ->
                                         file.delete()
                                     }

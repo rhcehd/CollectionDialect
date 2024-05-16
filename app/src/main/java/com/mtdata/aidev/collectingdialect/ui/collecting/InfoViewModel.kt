@@ -2,7 +2,7 @@ package com.mtdata.aidev.collectingdialect.ui.collecting
 
 import android.content.Context
 import androidx.databinding.Bindable
-import com.mtdata.aidev.collectingdialect.data.SpeakerInfo
+import com.mtdata.aidev.collectingdialect.data.model.SpeakerInfo
 import com.mtdata.aidev.collectingdialect.ui.BaseViewModel
 import com.mtdata.aidev.collectingdialect.ui.MainActivity
 

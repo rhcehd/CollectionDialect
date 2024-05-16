@@ -1,19 +1,16 @@
-package com.mtdata.aidev.collectingdialect.ui.registration
+package com.mtdata.aidev.collectingdialect.ui.signup
 
 import android.view.View
 import androidx.databinding.Bindable
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.mtdata.aidev.collectingdialect.BR
-import com.mtdata.aidev.collectingdialect.remote.ApiManager
-import com.mtdata.aidev.collectingdialect.remote.request.RegisterCollectorRequest
-import com.mtdata.aidev.collectingdialect.remote.response.RegisterCollectorResponse
+import com.mtdata.aidev.collectingdialect.data.remote.CollectingDialectNetwork
 import com.mtdata.aidev.collectingdialect.ui.MainActivity.Companion.showToast
 import com.mtdata.aidev.collectingdialect.ui.SharedViewModel
 import com.mtdata.aidev.collectingdialect.ui.collecting.InfoViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.launch
 
 class RegistrationViewModel: InfoViewModel() {
     companion object {
@@ -301,47 +298,34 @@ class RegistrationViewModel: InfoViewModel() {
         val academicBackground = academicBackgroundValueOf(academicBackground)
         val healthCondition = healthConditionValueOf(healthCondition)
         val collectingOrganization = collectingOrganizationValueOf(collectingOrganization)
-        val registerCollectorRequest = RegisterCollectorRequest(
-            gender,
-            birthYear,
-            residenceProvince,
-            residenceCity,
-            residencePeriod,
-            job,
-            academicBackground,
-            healthCondition,
-            collectingOrganization,
-            ""
-        )
         val navController = view.findNavController()
-        ApiManager.apiService.registerCollector(registerCollectorRequest).enqueue(object: Callback<RegisterCollectorResponse>{
-            override fun onResponse(
-                call: Call<RegisterCollectorResponse>,
-                response: Response<RegisterCollectorResponse>
-            ) {
-                if(response.isSuccessful) {
-                    val collectorId = response.body()?.collectorId
-                    if(collectorId != null) {
-                        MaterialAlertDialogBuilder(view.context)
-                            .setMessage("등록된 아이디/패스워드는 다음과 같습니다\n\n아이디 : $collectorId\n패스워드 : $collectorId")
-                            .setOnDismissListener {
-                                navController.navigateUp()
-                            }
-                            .setPositiveButton("확인") { _, _ -> /*do nothing*/ }
-                            .create()
-                            .show()
-                    } else {
-                        showToast("수집자 등록 실패")
+        viewModelScope.launch {
+            try {
+                val collectorId = CollectingDialectNetwork.signUp(
+                    gender,
+                    birthYear,
+                    residenceProvince,
+                    residenceCity,
+                    residencePeriod,
+                    job,
+                    academicBackground,
+                    healthCondition,
+                    collectingOrganization,
+                    ""
+                )
+                MaterialAlertDialogBuilder(view.context)
+                    .setMessage("등록된 아이디/패스워드는 다음과 같습니다\n\n아이디 : $collectorId\n패스워드 : $collectorId")
+                    .setOnDismissListener {
+                        navController.navigateUp()
                     }
-                } else {
-                    showToast("수집자 등록 실패")
-                }
-            }
-
-            override fun onFailure(call: Call<RegisterCollectorResponse>, t: Throwable) {
+                    .setPositiveButton("확인") { _, _ -> /*do nothing*/ }
+                    .create()
+                    .show()
+            } catch (e:Exception) {
                 showToast("수집자 등록 실패")
+                e.printStackTrace()
             }
-        })
+        }
     }
 
     fun onClickCancelButton(view: View) {

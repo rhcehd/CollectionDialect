@@ -19,7 +19,7 @@ import com.mtdata.aidev.collectingdialect.data.ContentData
 import com.mtdata.aidev.collectingdialect.record.OnToolbarRecordTimeChangeListener
 import com.mtdata.aidev.collectingdialect.record.RecordManager
 import com.mtdata.aidev.collectingdialect.databinding.ActivityMainBinding
-import com.mtdata.aidev.collectingdialect.ui.login.LoginViewModel
+import com.mtdata.aidev.collectingdialect.ui.signin.SignInViewModel
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
@@ -45,9 +45,9 @@ class MainActivity : AppCompatActivity() {
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         binding.viewModel = sharedViewModel
 
-        val preference = getSharedPreferences(LoginViewModel.PREFERENCE_COLLECTOR, Context.MODE_PRIVATE)
-        val collectorId = preference.getString(LoginViewModel.KEY_ID, "")
-        val collectorBirthYear = preference.getInt(LoginViewModel.KEY_BIRTH_YEAR, 9999)
+        val preference = getSharedPreferences(SignInViewModel.PREFERENCE_COLLECTOR, Context.MODE_PRIVATE)
+        val collectorId = preference.getString(SignInViewModel.KEY_ID, "")
+        val collectorBirthYear = preference.getInt(SignInViewModel.KEY_BIRTH_YEAR, 9999)
         sharedViewModel.collectorId = collectorId
         sharedViewModel.collectorBirthYear = collectorBirthYear
 
@@ -136,7 +136,7 @@ class MainActivity : AppCompatActivity() {
         }
         val logoutMenu = navigationViewMenu.add("로그아웃").apply {
             setOnMenuItemClickListener {
-                val preference = getSharedPreferences(LoginViewModel.PREFERENCE_COLLECTOR, Context.MODE_PRIVATE)
+                val preference = getSharedPreferences(SignInViewModel.PREFERENCE_COLLECTOR, Context.MODE_PRIVATE)
                 preference.edit().clear().apply()
                 sharedViewModel.collectorId = null
                 sharedViewModel.collectorBirthYear = null
@@ -149,8 +149,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
         loginCallback = {
-            val preference = getSharedPreferences(LoginViewModel.PREFERENCE_COLLECTOR, Context.MODE_PRIVATE)
-            val isLoggedIn = preference.contains(LoginViewModel.KEY_ID)
+            val preference = getSharedPreferences(SignInViewModel.PREFERENCE_COLLECTOR, Context.MODE_PRIVATE)
+            val isLoggedIn = preference.contains(SignInViewModel.KEY_ID)
             logoutMenu.isVisible = isLoggedIn
         }
         loginCallback?.invoke()

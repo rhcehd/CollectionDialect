@@ -1,8 +1,8 @@
-package com.mtdata.aidev.collectingdialect.remote.request
+package com.mtdata.aidev.collectingdialect.data.remote.request
 
 import com.google.gson.annotations.SerializedName
 
-data class RegisterSpeakerRequest(
+data class SignUpRequest(
     val gender: String,
     val birthYear: Int,
     val residenceProvince: String,
@@ -10,5 +10,7 @@ data class RegisterSpeakerRequest(
     val residencePeriod: Int,
     val job: String?,
     val academicBackground: Int?,
-    val healthCondition: Int?
+    val healthCondition: Int?,
+    @SerializedName("collectionAgency") val collectingOrganization: String,
+    val password: String
 )

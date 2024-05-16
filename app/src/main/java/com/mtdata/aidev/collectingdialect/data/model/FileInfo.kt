@@ -1,4 +1,4 @@
-package com.mtdata.aidev.collectingdialect.data
+package com.mtdata.aidev.collectingdialect.data.model
 
 data class FileInfo(
     val fieldname: String,

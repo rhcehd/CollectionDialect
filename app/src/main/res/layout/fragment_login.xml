@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable name="viewModel" type="com.mtdata.aidev.collectingdialect.ui.login.LoginViewModel" />
+        <variable name="viewModel" type="com.mtdata.aidev.collectingdialect.ui.signin.SignInViewModel" />
         <import type="android.text.InputType"/>
     </data>
     <ScrollView
@@ -32,7 +32,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="@{InputType.TYPE_CLASS_TEXT}"
                     android:hint="아이디"
-                    android:text="@={viewModel.id}"/>
+                    android:text="@={viewModel.id2}"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

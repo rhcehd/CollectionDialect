@@ -1,24 +1,22 @@
-package com.mtdata.aidev.collectingdialect.ui.login
+package com.mtdata.aidev.collectingdialect.ui.signin
 
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.databinding.Bindable
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.mtdata.aidev.collectingdialect.BR
 import com.mtdata.aidev.collectingdialect.R
-import com.mtdata.aidev.collectingdialect.remote.ApiManager
-import com.mtdata.aidev.collectingdialect.remote.request.LoginRequest
-import com.mtdata.aidev.collectingdialect.remote.response.LoginResponse
+import com.mtdata.aidev.collectingdialect.data.remote.CollectingDialectNetwork
+import com.mtdata.aidev.collectingdialect.data.remote.request.SignInRequest
 import com.mtdata.aidev.collectingdialect.ui.BaseViewModel
 import com.mtdata.aidev.collectingdialect.ui.MainActivity
 import com.mtdata.aidev.collectingdialect.ui.MainActivity.Companion.showToast
 import com.mtdata.aidev.collectingdialect.ui.SharedViewModel
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.launch
 
-class LoginViewModel: BaseViewModel() {
+class SignInViewModel: BaseViewModel() {
     companion object {
         const val PREFERENCE_COLLECTOR = "collector"
         const val KEY_ID = "collector"
@@ -70,49 +68,38 @@ class LoginViewModel: BaseViewModel() {
     }
 
     fun onClickLoginButton(view: View) {
+        "hello"
         view.context.getSystemService(InputMethodManager::class.java).hideSoftInputFromWindow(view.windowToken, 0)
         val isValidInput = validateInput()
         if(!isValidInput) {
             return
         }
-        val loginRequest = LoginRequest(
+        val loginRequest = SignInRequest(
             id,
             password
         )
         val navController = view.findNavController()
-        ApiManager.apiService.login(loginRequest).enqueue(object: Callback<LoginResponse>{
-            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-                if(response.isSuccessful) {
-                    val collectorInfo = response.body()?.collector
-                    val collectorId = collectorInfo?.collectorId
-                    val collectorBirthYear = collectorInfo?.birthYear
-                    val preference = view.context.getSharedPreferences(PREFERENCE_COLLECTOR, Context.MODE_PRIVATE)
-                    preference.edit().apply {
-                        putString(KEY_ID, collectorId)
-                        putInt(KEY_BIRTH_YEAR, collectorBirthYear ?: 9999)
-                        apply()
-                    }
-                    sharedViewModel?.apply {
-                        this.collectorId = collectorId
-                        this.collectorBirthYear = collectorBirthYear
-                    }
-                    showToast("로그인 성공")
-                    MainActivity.loginCallback?.invoke()
-                    navController.navigate(R.id.contentFragment)
-                    navController.backQueue.removeLast()
-                } else {
-                    if(response.code() == 401) {
-                        showToast("등록되지 않은 수집자 입니다")
-                    } else {
-                        showToast("로그인 실패. 잠시 후 다시 시도해주세요")
-                    }
+        viewModelScope.launch {
+            try {
+                val collectorInfo = CollectingDialectNetwork.signIn(id, password)
+                val preference = view.context.getSharedPreferences(PREFERENCE_COLLECTOR, Context.MODE_PRIVATE)
+                preference.edit().apply {
+                    putString(KEY_ID, collectorInfo.collectorId)
+                    putInt(KEY_BIRTH_YEAR, collectorInfo.birthYear)
+                    apply()
                 }
+                sharedViewModel?.apply {
+                    this.collectorId = collectorInfo.collectorId
+                    this.collectorBirthYear = collectorInfo.birthYear
+                }
+                showToast("로그인 성공")
+                MainActivity.loginCallback?.invoke()
+                navController.navigate(R.id.contentFragment)
+                navController.backQueue.removeLast()
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                showToast("로그인 실패. 잠시 후 다시 시도해주세요")
-            }
-        })
+        }
     }
 
     fun onClickRegistrationButton(view: View) {
