@@ -1,65 +1,85 @@
 package com.mtdata.aidev.collectingdialect.ui.signin
 
+import android.content.Context
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.mtdata.aidev.collectingdialect.R
+import com.mtdata.aidev.collectingdialect.data.datastore.KEY_COLLECTOR_BIRTH_YEAR
+import com.mtdata.aidev.collectingdialect.data.datastore.KEY_COLLECTOR_ID
+import com.mtdata.aidev.collectingdialect.data.datastore.dataStore
 import com.mtdata.aidev.collectingdialect.data.remote.CollectingDialectNetwork
-import com.mtdata.aidev.collectingdialect.data.remote.request.SignInRequest
-import com.mtdata.aidev.collectingdialect.ui.BaseViewModel
-import com.mtdata.aidev.collectingdialect.ui.SharedViewModel
+import com.mtdata.aidev.collectingdialect.utils.NavigateEvent
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class SignInViewModel: BaseViewModel() {
-    companion object {
-        const val PREFERENCE_COLLECTOR = "collector"
-        const val KEY_ID = "collector"
-        const val KEY_BIRTH_YEAR = "birth_year"
-    }
+interface ContextProvider {
+    fun provideContext(): Context
+}
 
-    var sharedViewModel: SharedViewModel? = null
-
-    private fun validateInput(id: String, password: String): Boolean {
-        val idError = if(id.isEmpty()) "아이디를 입력해주세요" else null
-        val passwordError = if(password.isEmpty()) "비밀번호를 입력해주세요" else null
-        return idError.isNullOrEmpty() && passwordError.isNullOrEmpty()
+@Suppress("UNCHECKED_CAST")
+class SignInViewModelFactory(
+    private val contextProvider: ContextProvider,
+): ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if(modelClass.isAssignableFrom(SignInViewModel::class.java)) {
+            return SignInViewModel(contextProvider) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
+}
+
+class SignInViewModel(
+    private val contextProvider: ContextProvider,
+): ViewModel() {
+    private val _snackbarStateFlow: MutableStateFlow<SnackbarState> = MutableStateFlow(SnackbarState.Hide)
+    val snackbarStateFlow: StateFlow<SnackbarState> = _snackbarStateFlow.asStateFlow()
+
+    private val _navigateToContent: MutableStateFlow<NavigateEvent?> = MutableStateFlow(null)
+    val navigateToContent: StateFlow<NavigateEvent?> = _navigateToContent.asStateFlow()
 
     fun onClickSignInButton(id: String, password: String) {
-        //view.context.getSystemService(InputMethodManager::class.java).hideSoftInputFromWindow(view.windowToken, 0)
-        val isValidInput = validateInput(id, password)
-        if(!isValidInput) {
+        if(id.isEmpty()) {
+            _snackbarStateFlow.update { SnackbarState.Show("아이디를 입력해주세요") }
             return
         }
-        val loginRequest = SignInRequest(
-            id,
-            password
-        )
-        //val navController = view.findNavController()
+        if(password.isEmpty()) {
+            _snackbarStateFlow.update { SnackbarState.Show("비밀번호를 입력해주세요") }
+            return
+        }
         viewModelScope.launch {
             try {
                 val collectorInfo = CollectingDialectNetwork.signIn(id, password)
-
-                // save preference, navigate content fragment
-
-                /*val preference = view.context.getSharedPreferences(PREFERENCE_COLLECTOR, Context.MODE_PRIVATE)
-                preference.edit().apply {
-                    putString(KEY_ID, collectorInfo.collectorId)
-                    putInt(KEY_BIRTH_YEAR, collectorInfo.birthYear)
-                    apply()
+                val context = contextProvider.provideContext()
+                context.dataStore.edit { preference ->
+                    preference[stringPreferencesKey(KEY_COLLECTOR_ID)] = collectorInfo.collectorId
+                    preference[intPreferencesKey(KEY_COLLECTOR_BIRTH_YEAR)] = collectorInfo.birthYear
                 }
-                sharedViewModel?.apply {
-                    this.collectorId = collectorInfo.collectorId
-                    this.collectorBirthYear = collectorInfo.birthYear
-                }
-                showToast("로그인 성공")
-                MainActivity.loginCallback?.invoke()
-                navController.navigate(R.id.contentFragment)
-                navController.backQueue.removeLast()*/
+                _snackbarStateFlow.update { SnackbarState.Show("로그인 성공") }
+                _navigateToContent.update { NavigateEvent(R.id.contentFragment) }
             } catch (e: Exception) {
+                _snackbarStateFlow.update { SnackbarState.Show("로그인 실패") }
                 e.printStackTrace()
             }
         }
     }
 
     fun onClickSignUpButton() {
-        //view.findNavController().navigate(R.id.registrationFragment)
+        _navigateToContent.update { NavigateEvent(R.id.registrationFragment) }
     }
+
+    fun onAfterShowSnackbar() {
+        _snackbarStateFlow.update { SnackbarState.Hide }
+    }
+}
+
+sealed interface SnackbarState {
+    data object Hide : SnackbarState
+    class Show(val msg: String): SnackbarState
 }

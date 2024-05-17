@@ -12,17 +12,26 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
-import com.mtdata.aidev.collectingdialect.R
-import com.mtdata.aidev.collectingdialect.data.ContentData
-import com.mtdata.aidev.collectingdialect.record.OnToolbarRecordTimeChangeListener
-import com.mtdata.aidev.collectingdialect.record.RecordManager
-import com.mtdata.aidev.collectingdialect.databinding.ActivityMainBinding
-import com.mtdata.aidev.collectingdialect.ui.signin.SignInViewModel
 import com.google.android.material.appbar.MaterialToolbar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
+import com.mtdata.aidev.collectingdialect.R
+import com.mtdata.aidev.collectingdialect.data.ContentData
+import com.mtdata.aidev.collectingdialect.data.datastore.KEY_COLLECTOR_BIRTH_YEAR
+import com.mtdata.aidev.collectingdialect.data.datastore.KEY_COLLECTOR_ID
+import com.mtdata.aidev.collectingdialect.data.datastore.dataStore
+import com.mtdata.aidev.collectingdialect.databinding.ActivityMainBinding
+import com.mtdata.aidev.collectingdialect.record.OnToolbarRecordTimeChangeListener
+import com.mtdata.aidev.collectingdialect.record.RecordManager
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     companion object {
@@ -45,11 +54,24 @@ class MainActivity : AppCompatActivity() {
         val binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
         binding.viewModel = sharedViewModel
 
-        val preference = getSharedPreferences(SignInViewModel.PREFERENCE_COLLECTOR, Context.MODE_PRIVATE)
+        lifecycleScope.launch {
+            dataStore.data.map { preference ->
+                preference[stringPreferencesKey(KEY_COLLECTOR_ID)] ?: ""
+            }.collectLatest { value ->
+                sharedViewModel.collectorId = value
+            }
+            dataStore.data.map { preference ->
+                preference[intPreferencesKey(KEY_COLLECTOR_BIRTH_YEAR)] ?: 9999
+            }.collectLatest { value ->
+                sharedViewModel.collectorBirthYear = value
+            }
+        }
+
+        /*val preference = getSharedPreferences(SignInViewModel.PREFERENCE_COLLECTOR, Context.MODE_PRIVATE)
         val collectorId = preference.getString(SignInViewModel.KEY_ID, "")
         val collectorBirthYear = preference.getInt(SignInViewModel.KEY_BIRTH_YEAR, 9999)
         sharedViewModel.collectorId = collectorId
-        sharedViewModel.collectorBirthYear = collectorBirthYear
+        sharedViewModel.collectorBirthYear = collectorBirthYear*/
 
         contextRequester = {this}
         val inputMethodManager = getSystemService(InputMethodManager::class.java)
@@ -136,10 +158,15 @@ class MainActivity : AppCompatActivity() {
         }
         val logoutMenu = navigationViewMenu.add("로그아웃").apply {
             setOnMenuItemClickListener {
-                val preference = getSharedPreferences(SignInViewModel.PREFERENCE_COLLECTOR, Context.MODE_PRIVATE)
+                lifecycleScope.launch {
+                    dataStore.edit { preference ->
+                        preference.clear()
+                    }
+                }
+                /*val preference = getSharedPreferences(SignInViewModel.PREFERENCE_COLLECTOR, Context.MODE_PRIVATE)
                 preference.edit().clear().apply()
                 sharedViewModel.collectorId = null
-                sharedViewModel.collectorBirthYear = null
+                sharedViewModel.collectorBirthYear = null*/
                 showToast("로그아웃 성공")
                 loginCallback?.invoke()
                 navController.navigate(R.id.mainFragment)
@@ -149,9 +176,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
         loginCallback = {
-            val preference = getSharedPreferences(SignInViewModel.PREFERENCE_COLLECTOR, Context.MODE_PRIVATE)
+            lifecycleScope.launch {
+                baseContext.dataStore.data.map { preference ->
+                    preference[stringPreferencesKey(KEY_COLLECTOR_ID)] ?: ""
+                }.collectLatest { value ->
+                    logoutMenu.isVisible = value.isNotEmpty()
+                }
+            }
+
+            /*val preference = getSharedPreferences(SignInViewModel.PREFERENCE_COLLECTOR, Context.MODE_PRIVATE)
             val isLoggedIn = preference.contains(SignInViewModel.KEY_ID)
-            logoutMenu.isVisible = isLoggedIn
+            logoutMenu.isVisible = isLoggedIn*/
         }
         loginCallback?.invoke()
     }

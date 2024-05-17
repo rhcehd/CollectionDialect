@@ -15,7 +15,7 @@ class MainViewModel: BaseViewModel() {
         if(isLoggedIn) {
             view.findNavController().navigate(R.id.contentFragment)
         } else {
-            view.findNavController().navigate(R.id.loginFragment)
+            view.findNavController().navigate(R.id.signInFragment)
         }
     }
 }

@@ -12,9 +12,9 @@
         android:name="com.mtdata.aidev.collectingdialect.ui.content.ContentFragment"
         android:label="ContentFragment" />
     <fragment
-        android:id="@+id/loginFragment"
+        android:id="@+id/signInFragment"
         android:name="com.mtdata.aidev.collectingdialect.ui.signin.SignInFragment"
-        android:label="LoginFragment" />
+        android:label="SignInFragment" />
     <fragment
         android:id="@+id/registrationFragment"
         android:name="com.mtdata.aidev.collectingdialect.ui.signup.RegistrationFragment"

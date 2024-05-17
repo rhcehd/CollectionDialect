@@ -17,23 +17,27 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 fun SignInScreen(
-    viewModel: SignInViewModel = viewModel()
+    viewModel: SignInViewModel = viewModel(),
+    onShowSnackbar: (String) -> Unit,
 ) {
-    val uiState = 0
+    val snackbarState by viewModel.snackbarStateFlow.collectAsStateWithLifecycle()
     SignInScreen(
-        uiState = uiState,
         onClickSignIn = viewModel::onClickSignInButton,
-        onClickSingUp = viewModel::onClickSignUpButton
+        onClickSingUp = viewModel::onClickSignUpButton,
     )
+    if(snackbarState is SnackbarState.Show) {
+        onShowSnackbar((snackbarState as SnackbarState.Show).msg)
+        viewModel.onAfterShowSnackbar()
+    }
 }
 
 @Composable
 private fun SignInScreen(
-    uiState: Int,
     onClickSignIn: (String, String) -> Unit,
     onClickSingUp: () -> Unit,
 ) {
@@ -97,7 +101,6 @@ fun CollectingDialectTextField(
             Text(text = label)
         },
         isError = error.isNotEmpty(),
-
     )
 }
 
@@ -122,7 +125,6 @@ fun CollectingDialectButton(
 fun SignInScreenPreview() {
     MaterialTheme {
         SignInScreen(
-            uiState = 0,
             onClickSignIn = {_,_->},
             onClickSingUp = {},
         )

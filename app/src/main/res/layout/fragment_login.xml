@@ -2,89 +2,13 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <data>
-        <variable name="viewModel" type="com.mtdata.aidev.collectingdialect.ui.signin.SignInViewModel" />
-        <import type="android.text.InputType"/>
-    </data>
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <androidx.compose.ui.platform.ComposeView
             android:id="@+id/compose_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <!--<androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/collecting_organization_layout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintWidth_percent="0.8"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/password_layout"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                app:boxBackgroundColor="@android:color/transparent"
-                app:errorEnabled="true"
-                error="@{viewModel.idError}">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/collecting_organization_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="@{InputType.TYPE_CLASS_TEXT}"
-                    android:hint="아이디"
-                    android:text="@={viewModel.id2}"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/password_layout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintWidth_percent="0.8"
-                app:layout_constraintTop_toBottomOf="@id/collecting_organization_layout"
-                app:layout_constraintBottom_toTopOf="@id/login_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
-                app:boxBackgroundColor="@android:color/transparent"
-                app:errorEnabled="true"
-                error="@{viewModel.passwordError}">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/password_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="@{InputType.TYPE_CLASS_TEXT}"
-                    android:hint="비밀번호"
-                    android:text="@={viewModel.password}"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/login_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintWidth_percent="0.8"
-                app:layout_constraintTop_toBottomOf="@id/password_layout"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="로그인"
-                android:onClick="@{viewModel::onClickLoginButton}"/>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/registration_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintWidth_percent="0.8"
-                app:layout_constraintTop_toBottomOf="@id/login_button"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:text="수집자 등록"
-                android:onClick="@{viewModel::onClickRegistrationButton}"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>-->
-    </ScrollView>
+            android:layout_height="match_parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
