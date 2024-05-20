@@ -17,7 +17,7 @@
         android:label="SignInFragment" />
     <fragment
         android:id="@+id/registrationFragment"
-        android:name="com.mtdata.aidev.collectingdialect.ui.signup.RegistrationFragment"
+        android:name="com.mtdata.aidev.collectingdialect.ui.signup.SignUpFragment"
         android:label="RegistrationFragment" />
     <fragment
         android:id="@+id/speakerInfoOnePersonFragment"

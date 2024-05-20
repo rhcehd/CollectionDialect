@@ -3,10 +3,19 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
-        <variable name="viewModel" type="com.mtdata.aidev.collectingdialect.ui.signup.RegistrationViewModel" />
+        <variable name="viewModel" type="com.mtdata.aidev.collectingdialect.ui.signup.SignUpViewModel" />
         <import type="android.text.InputType"/>
     </data>
-    <ScrollView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/compose_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--<ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -233,5 +242,5 @@
                 android:onClick="@{viewModel::onClickCancelButton}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </ScrollView>-->
 </layout>

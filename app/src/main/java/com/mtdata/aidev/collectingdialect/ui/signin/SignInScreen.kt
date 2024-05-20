@@ -1,13 +1,8 @@
 package com.mtdata.aidev.collectingdialect.ui.signin
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,6 +14,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.mtdata.aidev.collectingdialect.ui.component.CollectingDialectButton
+import com.mtdata.aidev.collectingdialect.ui.component.CollectingDialectTextField
 
 @Composable
 fun SignInScreen(
@@ -81,42 +78,6 @@ private fun SignInScreen(
             },
             text = "수집자 등록"
         )
-    }
-}
-
-@Composable
-fun CollectingDialectTextField(
-    modifier: Modifier = Modifier,
-    value: String,
-    onValueChange: (String) -> Unit,
-    label: String,
-    error: String = "",
-) {
-    OutlinedTextField(
-        modifier = modifier,
-        value = value,
-        onValueChange = onValueChange,
-        singleLine = true,
-        label = {
-            Text(text = label)
-        },
-        isError = error.isNotEmpty(),
-    )
-}
-
-@Composable
-fun CollectingDialectButton(
-    modifier: Modifier = Modifier,
-    onClick: () -> Unit,
-    text: String = "",
-) {
-    Button(
-        modifier = modifier
-            .fillMaxWidth(0.8f)
-            .height(60.dp),
-        onClick = onClick
-    ) {
-        Text(text = text)
     }
 }
 

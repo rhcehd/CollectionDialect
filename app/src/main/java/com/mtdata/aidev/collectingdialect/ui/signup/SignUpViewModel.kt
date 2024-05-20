@@ -12,7 +12,7 @@ import com.mtdata.aidev.collectingdialect.ui.collecting.InfoViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import kotlinx.coroutines.launch
 
-class RegistrationViewModel: InfoViewModel() {
+class SignUpViewModel: InfoViewModel() {
     companion object {
         const val COLLECTING_ORGANIZATION_MTDATA_STRING = "엠티데이타"
         const val COLLECTING_ORGANIZATION_OLLIMCOMMUNICATIONS_STRING = "올림커뮤니케이션즈"
