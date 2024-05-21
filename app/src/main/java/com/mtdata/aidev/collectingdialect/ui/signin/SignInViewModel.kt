@@ -12,6 +12,8 @@ import com.mtdata.aidev.collectingdialect.data.datastore.KEY_COLLECTOR_BIRTH_YEA
 import com.mtdata.aidev.collectingdialect.data.datastore.KEY_COLLECTOR_ID
 import com.mtdata.aidev.collectingdialect.data.datastore.dataStore
 import com.mtdata.aidev.collectingdialect.data.remote.CollectingDialectNetwork
+import com.mtdata.aidev.collectingdialect.state.SnackbarVisibleState
+import com.mtdata.aidev.collectingdialect.utils.ContextProvider
 import com.mtdata.aidev.collectingdialect.utils.NavigateEvent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,9 +21,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-interface ContextProvider {
-    fun provideContext(): Context
-}
+
 
 @Suppress("UNCHECKED_CAST")
 class SignInViewModelFactory(
@@ -38,19 +38,19 @@ class SignInViewModelFactory(
 class SignInViewModel(
     private val contextProvider: ContextProvider,
 ): ViewModel() {
-    private val _snackbarStateFlow: MutableStateFlow<SnackbarState> = MutableStateFlow(SnackbarState.Hide)
-    val snackbarStateFlow: StateFlow<SnackbarState> = _snackbarStateFlow.asStateFlow()
+    private val _snackbarVisibleState: MutableStateFlow<SnackbarVisibleState> = MutableStateFlow(SnackbarVisibleState.Hide)
+    val snackbarVisibleState: StateFlow<SnackbarVisibleState> = _snackbarVisibleState.asStateFlow()
 
     private val _navigateToContent: MutableStateFlow<NavigateEvent?> = MutableStateFlow(null)
     val navigateToContent: StateFlow<NavigateEvent?> = _navigateToContent.asStateFlow()
 
     fun onClickSignInButton(id: String, password: String) {
         if(id.isEmpty()) {
-            _snackbarStateFlow.update { SnackbarState.Show("아이디를 입력해주세요") }
+            _snackbarVisibleState.update { SnackbarVisibleState.Show("아이디를 입력해주세요") }
             return
         }
         if(password.isEmpty()) {
-            _snackbarStateFlow.update { SnackbarState.Show("비밀번호를 입력해주세요") }
+            _snackbarVisibleState.update { SnackbarVisibleState.Show("비밀번호를 입력해주세요") }
             return
         }
         viewModelScope.launch {
@@ -61,10 +61,10 @@ class SignInViewModel(
                     preference[stringPreferencesKey(KEY_COLLECTOR_ID)] = collectorInfo.collectorId
                     preference[intPreferencesKey(KEY_COLLECTOR_BIRTH_YEAR)] = collectorInfo.birthYear
                 }
-                _snackbarStateFlow.update { SnackbarState.Show("로그인 성공") }
+                _snackbarVisibleState.update { SnackbarVisibleState.Show("로그인 성공") }
                 _navigateToContent.update { NavigateEvent(R.id.contentFragment) }
             } catch (e: Exception) {
-                _snackbarStateFlow.update { SnackbarState.Show("로그인 실패") }
+                _snackbarVisibleState.update { SnackbarVisibleState.Show("로그인 실패") }
                 e.printStackTrace()
             }
         }
@@ -75,11 +75,6 @@ class SignInViewModel(
     }
 
     fun onAfterShowSnackbar() {
-        _snackbarStateFlow.update { SnackbarState.Hide }
+        _snackbarVisibleState.update { SnackbarVisibleState.Hide }
     }
-}
-
-sealed interface SnackbarState {
-    data object Hide : SnackbarState
-    class Show(val msg: String): SnackbarState
 }

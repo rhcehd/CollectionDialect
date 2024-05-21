@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.mtdata.aidev.collectingdialect.state.SnackbarVisibleState
 import com.mtdata.aidev.collectingdialect.ui.component.CollectingDialectButton
 import com.mtdata.aidev.collectingdialect.ui.component.CollectingDialectTextField
 
@@ -22,13 +23,13 @@ fun SignInScreen(
     viewModel: SignInViewModel = viewModel(),
     onShowSnackbar: (String) -> Unit,
 ) {
-    val snackbarState by viewModel.snackbarStateFlow.collectAsStateWithLifecycle()
+    val snackbarState by viewModel.snackbarVisibleState.collectAsStateWithLifecycle()
     SignInScreen(
         onClickSignIn = viewModel::onClickSignInButton,
         onClickSingUp = viewModel::onClickSignUpButton,
     )
-    if(snackbarState is SnackbarState.Show) {
-        onShowSnackbar((snackbarState as SnackbarState.Show).msg)
+    if(snackbarState is SnackbarVisibleState.Show) {
+        onShowSnackbar((snackbarState as SnackbarVisibleState.Show).msg)
         viewModel.onAfterShowSnackbar()
     }
 }

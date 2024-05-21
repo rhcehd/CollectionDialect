@@ -13,6 +13,7 @@ import com.mtdata.aidev.collectingdialect.ui.BaseViewModel
 import com.mtdata.aidev.collectingdialect.ui.MainActivity.Companion.showToast
 import com.mtdata.aidev.collectingdialect.ui.SharedViewModel
 import com.github.squti.androidwaverecorder.WaveRecorder
+import com.mtdata.aidev.collectingdialect.data.PersonalData.residenceProvinceValueOf
 import java.io.File
 import java.util.*
 
@@ -116,7 +117,7 @@ open class CollectingViewModel: BaseViewModel() {
         val speakerId2 = sharedViewModel.currentSpeaker2Info?.speakerId
         speakerId = if(isConversationType) {
             if(speakerId2.isNullOrEmpty()) {
-                val provinceResidence = InfoViewModel.residenceProvinceValueOf(
+                val provinceResidence = residenceProvinceValueOf(
                     sharedViewModel.currentSpeaker1Info?.residenceProvince ?: ""
                 )
                 val randomId = "speaker${provinceResidence}${Random().nextInt(9999)}"

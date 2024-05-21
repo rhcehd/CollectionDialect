@@ -3,7 +3,12 @@ package com.mtdata.aidev.collectingdialect.data
 import android.content.Context
 import androidx.annotation.RawRes
 import com.mtdata.aidev.collectingdialect.R
-import com.mtdata.aidev.collectingdialect.ui.collecting.InfoViewModel
+import com.mtdata.aidev.collectingdialect.data.PersonalData
+import com.mtdata.aidev.collectingdialect.data.PersonalData.RESIDENCE_PROVINCE_CHUNGCHEONG_STRING
+import com.mtdata.aidev.collectingdialect.data.PersonalData.RESIDENCE_PROVINCE_GANGWON_STRING
+import com.mtdata.aidev.collectingdialect.data.PersonalData.RESIDENCE_PROVINCE_GYEONGSANG_STRING
+import com.mtdata.aidev.collectingdialect.data.PersonalData.RESIDENCE_PROVINCE_JEJU_STRING
+import com.mtdata.aidev.collectingdialect.data.PersonalData.RESIDENCE_PROVINCE_JEONRA_STRING
 import java.io.InputStreamReader
 
 object ContentData {
@@ -249,7 +254,7 @@ object ContentData {
 
     fun getRepeatScriptTextDialect(region: String?, set: Int?): Array<String> {
         return when(region) {
-            InfoViewModel.RESIDENCE_PROVINCE_GANGWON_STRING -> {
+            RESIDENCE_PROVINCE_GANGWON_STRING -> {
                 when(set) {
                     1 -> repeatScriptTextGangwonSet1Dialect
                     2 -> repeatScriptTextGangwonSet2Dialect
@@ -257,7 +262,7 @@ object ContentData {
                     else -> arrayOf()
                 }
             }
-            InfoViewModel.RESIDENCE_PROVINCE_CHUNGCHEONG_STRING -> {
+            RESIDENCE_PROVINCE_CHUNGCHEONG_STRING -> {
                 when(set) {
                     1 -> repeatScriptTextChungcheongSet1Dialect
                     2 -> repeatScriptTextChungcheongSet2Dialect
@@ -265,7 +270,7 @@ object ContentData {
                     else -> arrayOf()
                 }
             }
-            InfoViewModel.RESIDENCE_PROVINCE_GYEONGSANG_STRING -> {
+            RESIDENCE_PROVINCE_GYEONGSANG_STRING -> {
                 when(set) {
                     1 -> repeatScriptTextGyeongsangSet1Dialect
                     2 -> repeatScriptTextGyeongsangSet2Dialect
@@ -273,7 +278,7 @@ object ContentData {
                     else -> arrayOf()
                 }
             }
-            InfoViewModel.RESIDENCE_PROVINCE_JEONRA_STRING -> {
+            RESIDENCE_PROVINCE_JEONRA_STRING -> {
                 when(set) {
                     1 -> repeatScriptTextJeonraSet1Dialect
                     2 -> repeatScriptTextJeonraSet2Dialect
@@ -281,7 +286,7 @@ object ContentData {
                     else -> arrayOf()
                 }
             }
-            InfoViewModel.RESIDENCE_PROVINCE_JEJU_STRING -> {
+            RESIDENCE_PROVINCE_JEJU_STRING -> {
                 when(set) {
                     1 -> repeatScriptTextJejuSet1Dialect
                     2 -> repeatScriptTextJejuSet2Dialect
@@ -295,7 +300,7 @@ object ContentData {
 
     fun getRepeatScriptTextStandard(region: String?, set: Int?): Array<String> {
         return when(region) {
-            InfoViewModel.RESIDENCE_PROVINCE_GANGWON_STRING -> {
+            RESIDENCE_PROVINCE_GANGWON_STRING -> {
                 when(set) {
                     1 -> repeatScriptTextGangwonSet1Standard
                     2 -> repeatScriptTextGangwonSet2Standard
@@ -303,7 +308,7 @@ object ContentData {
                     else -> arrayOf()
                 }
             }
-            InfoViewModel.RESIDENCE_PROVINCE_CHUNGCHEONG_STRING -> {
+            RESIDENCE_PROVINCE_CHUNGCHEONG_STRING -> {
                 when(set) {
                     1 -> repeatScriptTextChungcheongSet1Standard
                     2 -> repeatScriptTextChungcheongSet2Standard
@@ -311,7 +316,7 @@ object ContentData {
                     else -> arrayOf()
                 }
             }
-            InfoViewModel.RESIDENCE_PROVINCE_GYEONGSANG_STRING -> {
+            RESIDENCE_PROVINCE_GYEONGSANG_STRING -> {
                 when(set) {
                     1 -> repeatScriptTextGyeongsangSet1Standard
                     2 -> repeatScriptTextGyeongsangSet2Standard
@@ -319,7 +324,7 @@ object ContentData {
                     else -> arrayOf()
                 }
             }
-            InfoViewModel.RESIDENCE_PROVINCE_JEONRA_STRING -> {
+            RESIDENCE_PROVINCE_JEONRA_STRING -> {
                 when(set) {
                     1 -> repeatScriptTextJeonraSet1Standard
                     2 -> repeatScriptTextJeonraSet2Standard
@@ -327,7 +332,7 @@ object ContentData {
                     else -> arrayOf()
                 }
             }
-            InfoViewModel.RESIDENCE_PROVINCE_JEJU_STRING -> {
+            RESIDENCE_PROVINCE_JEJU_STRING -> {
                 when(set) {
                     1 -> repeatScriptTextJejuSet1Standard
                     2 -> repeatScriptTextJejuSet2Standard
@@ -341,7 +346,7 @@ object ContentData {
 
     fun getRepeatScriptVoice(region: String?, set: Int?): Array<Int> {
         return when(region) {
-            InfoViewModel.RESIDENCE_PROVINCE_GANGWON_STRING -> {
+            RESIDENCE_PROVINCE_GANGWON_STRING -> {
                 when(set) {
                     1 -> repeatScriptVoiceGangwonSet1
                     2 -> repeatScriptVoiceGangwonSet2
@@ -349,7 +354,7 @@ object ContentData {
                     else -> arrayOf()
                 }
             }
-            InfoViewModel.RESIDENCE_PROVINCE_CHUNGCHEONG_STRING -> {
+            RESIDENCE_PROVINCE_CHUNGCHEONG_STRING -> {
                 when(set) {
                     1 -> repeatScriptVoiceChungcheongSet1
                     2 -> repeatScriptVoiceChungcheongSet2
@@ -357,7 +362,7 @@ object ContentData {
                     else -> arrayOf()
                 }
             }
-            InfoViewModel.RESIDENCE_PROVINCE_GYEONGSANG_STRING -> {
+            RESIDENCE_PROVINCE_GYEONGSANG_STRING -> {
                 when(set) {
                     1 -> repeatScriptVoiceGyeongsangSet1
                     2 -> repeatScriptVoiceGyeongsangSet2
@@ -365,7 +370,7 @@ object ContentData {
                     else -> arrayOf()
                 }
             }
-            InfoViewModel.RESIDENCE_PROVINCE_JEONRA_STRING -> {
+            RESIDENCE_PROVINCE_JEONRA_STRING -> {
                 when(set) {
                     1 -> repeatScriptVoiceJeonraSet1
                     2 -> repeatScriptVoiceJeonraSet2
@@ -373,7 +378,7 @@ object ContentData {
                     else -> arrayOf()
                 }
             }
-            InfoViewModel.RESIDENCE_PROVINCE_JEJU_STRING -> {
+            RESIDENCE_PROVINCE_JEJU_STRING -> {
                 when(set) {
                     1 -> repeatScriptVoiceJejuSet1
                     2 -> repeatScriptVoiceJejuSet2

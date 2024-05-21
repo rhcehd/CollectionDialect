@@ -48,8 +48,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="@{InputType.TYPE_NULL}"
                     android:hint="@string/gender"
-                    android:text="@={viewModel.gender1}"
-                    dropdown="@{viewModel.genderList}"/>
+                    android:text="@={viewModel.gender1}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -89,8 +88,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="@{InputType.TYPE_NULL}"
                     android:hint="@string/residence_province"
-                    android:text="@={viewModel.residenceProvince1}"
-                    dropdown="@{viewModel.residenceProvinceList}"/>
+                    android:text="@={viewModel.residenceProvince1}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -171,8 +169,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="@{InputType.TYPE_NULL}"
                     android:hint="@string/academic_background"
-                    android:text="@={viewModel.academicBackground1}"
-                    dropdown="@{viewModel.academicBackgroundList}"/>
+                    android:text="@={viewModel.academicBackground1}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -192,8 +189,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="@{InputType.TYPE_NULL}"
                     android:hint="@string/health_condition"
-                    android:text="@={viewModel.healthCondition1}"
-                    dropdown="@{viewModel.healthConditionList}"/>
+                    android:text="@={viewModel.healthCondition1}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <!--2-->
@@ -225,8 +221,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="@{InputType.TYPE_NULL}"
                     android:hint="@string/gender"
-                    android:text="@={viewModel.gender2}"
-                    dropdown="@{viewModel.genderList}"/>
+                    android:text="@={viewModel.gender2}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -266,8 +261,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="@{InputType.TYPE_NULL}"
                     android:hint="@string/residence_province"
-                    android:text="@={viewModel.residenceProvince2}"
-                    dropdown="@{viewModel.residenceProvinceList}"/>
+                    android:text="@={viewModel.residenceProvince2}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -348,8 +342,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="@{InputType.TYPE_NULL}"
                     android:hint="@string/academic_background"
-                    android:text="@={viewModel.academicBackground2}"
-                    dropdown="@{viewModel.academicBackgroundList}"/>
+                    android:text="@={viewModel.academicBackground2}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -369,8 +362,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="@{InputType.TYPE_NULL}"
                     android:hint="@string/health_condition"
-                    android:text="@={viewModel.healthCondition2}"
-                    dropdown="@{viewModel.healthConditionList}"/>
+                    android:text="@={viewModel.healthCondition2}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.appcompat.widget.AppCompatButton

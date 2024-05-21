@@ -12,5 +12,4 @@ data class SignUpRequest(
     val academicBackground: Int?,
     val healthCondition: Int?,
     @SerializedName("collectionAgency") val collectingOrganization: String,
-    val password: String
 )

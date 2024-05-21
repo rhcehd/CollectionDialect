@@ -3,17 +3,26 @@ package com.mtdata.aidev.collectingdialect.ui.signup
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.mtdata.aidev.collectingdialect.data.PersonalData
+import com.mtdata.aidev.collectingdialect.state.SnackbarVisibleState
 import com.mtdata.aidev.collectingdialect.ui.component.CollectingDialectButton
 import com.mtdata.aidev.collectingdialect.ui.component.CollectingDialectDropdownTextField
 import com.mtdata.aidev.collectingdialect.ui.component.CollectingDialectTextField
@@ -23,12 +32,48 @@ fun SignUpScreen(
     viewModel: SignUpViewModel = viewModel(),
     onShowSnackbar: (String) -> Unit,
 ) {
-    SignUpScreen(a = 1)
+    val snackbarVisibleState by viewModel.snackbarVisibleState.collectAsStateWithLifecycle()
+    val alertDialogVisibleState by viewModel.alertDialogVisibleState.collectAsStateWithLifecycle()
+    SignUpScreen(
+        onClickSignUp = viewModel::onClickSignUp,
+        onClickCancel = viewModel::onClickCancel
+    )
+    when(val state = snackbarVisibleState) {
+        is SnackbarVisibleState.Show -> {
+            onShowSnackbar(state.msg)
+            viewModel.onAfterShowSnackbar()
+        }
+        is SnackbarVisibleState.Hide -> {}
+    }
+    when(val state = alertDialogVisibleState) {
+        is AlertDialogVisibleState.Show -> {
+            AlertDialog(
+                text = {
+                    Text(text = state.msg)
+                },
+                onDismissRequest = {
+                    viewModel.onDismissAlertDialog()
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            viewModel.onDismissAlertDialog()
+                        }
+                    ) {
+                        Text(text = "확인")
+                    }
+                }
+            )
+        }
+        is AlertDialogVisibleState.Hide -> {}
+    }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun SignUpScreen(
-    a: Int
+    onClickSignUp: (String, String, String, String, String, String, String, String, String) -> Unit,
+    onClickCancel: () -> Unit,
 ) {
     var gender by remember{ mutableStateOf("") }
     var birthYear by remember { mutableStateOf("") }
@@ -39,6 +84,8 @@ private fun SignUpScreen(
     var academicBackground by remember { mutableStateOf("") }
     var healthCondition by remember { mutableStateOf("") }
     var collectingOrganization by remember { mutableStateOf("") }
+
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
@@ -51,22 +98,25 @@ private fun SignUpScreen(
                     value = gender,
                     onValueChange = { gender = it },
                     label = "성별",
-                    items = listOf("a", "b"),
+                    items = PersonalData.genderList.toList(),
                 )
                 CollectingDialectDropdownTextField(
                     value = residenceProvince,
                     onValueChange = { residenceProvince = it },
                     label = "거주 도",
+                    items = PersonalData.residenceProvinceList.toList()
                 )
                 CollectingDialectTextField(
                     value = residencePeriod,
                     onValueChange = { residencePeriod = it },
-                    label = "거주 기간"
+                    label = "거주 기간",
+                    keyboardType = KeyboardType.Number
                 )
                 CollectingDialectDropdownTextField(
                     value = academicBackground,
                     onValueChange = { academicBackground = it },
-                    label = "학력"
+                    label = "학력",
+                    items = PersonalData.academicBackgroundList.toList()
                 )
             }
             Column(
@@ -75,12 +125,14 @@ private fun SignUpScreen(
                 CollectingDialectTextField(
                     value = birthYear,
                     onValueChange = { birthYear = it },
-                    label = "출생년도"
+                    label = "출생년도",
+                    keyboardType = KeyboardType.Number
                 )
                 CollectingDialectDropdownTextField(
                     value = residenceCity,
                     onValueChange = { residenceCity = it },
-                    label = "거주 시"
+                    label = "거주 시",
+                    items = PersonalData.getResidenceCityByProvince(province = residenceProvince)
                 )
                 CollectingDialectTextField(
                     value = job,
@@ -90,28 +142,42 @@ private fun SignUpScreen(
                 CollectingDialectDropdownTextField(
                     value = healthCondition,
                     onValueChange = { healthCondition = it },
-                    label = "건강상태"
+                    label = "건강상태",
+                    items = PersonalData.healthConditionList.toList()
                 )
             }
         }
         CollectingDialectDropdownTextField(
             value = collectingOrganization,
             onValueChange = { collectingOrganization = it },
-            label = "수집기관"
+            label = "수집기관",
+            items = PersonalData.collectingOrganizationList.toList()
         )
 
         CollectingDialectButton(
             modifier = Modifier.padding(top = 16.dp),
             text = "등록",
             onClick = {
-
+                keyboardController?.hide()
+                onClickSignUp(
+                    gender,
+                    birthYear,
+                    residenceProvince,
+                    residenceCity,
+                    residencePeriod,
+                    job,
+                    academicBackground,
+                    healthCondition,
+                    collectingOrganization
+                )
             }
         )
         CollectingDialectButton(
             modifier = Modifier.padding(top = 16.dp),
             text = "취소",
             onClick = {
-
+                keyboardController?.hide()
+                onClickCancel()
             }
         )
     }
@@ -121,7 +187,10 @@ private fun SignUpScreen(
 @Preview
 private fun SignUpScreenPreview() {
     MaterialTheme {
-        SignUpScreen(a = 1)
+        SignUpScreen(
+            onClickSignUp = {_,_,_,_,_,_,_,_,_->},
+            onClickCancel = {}
+        )
     }
 }
 

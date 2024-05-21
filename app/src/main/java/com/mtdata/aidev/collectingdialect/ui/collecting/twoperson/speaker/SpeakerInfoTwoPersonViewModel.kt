@@ -6,13 +6,28 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.mtdata.aidev.collectingdialect.BR
 import com.mtdata.aidev.collectingdialect.R
+import com.mtdata.aidev.collectingdialect.data.PersonalData.RESIDENCE_PROVINCE_CHUNGCHEONG_STRING
+import com.mtdata.aidev.collectingdialect.data.PersonalData.RESIDENCE_PROVINCE_GANGWON_STRING
+import com.mtdata.aidev.collectingdialect.data.PersonalData.RESIDENCE_PROVINCE_GYEONGSANG_STRING
+import com.mtdata.aidev.collectingdialect.data.PersonalData.RESIDENCE_PROVINCE_JEJU_STRING
+import com.mtdata.aidev.collectingdialect.data.PersonalData.RESIDENCE_PROVINCE_JEONRA_STRING
+import com.mtdata.aidev.collectingdialect.data.PersonalData.academicBackgroundValueOf
+import com.mtdata.aidev.collectingdialect.data.PersonalData.cityListChungcheong
+import com.mtdata.aidev.collectingdialect.data.PersonalData.cityListGangwon
+import com.mtdata.aidev.collectingdialect.data.PersonalData.cityListGyeongsang
+import com.mtdata.aidev.collectingdialect.data.PersonalData.cityListJeju
+import com.mtdata.aidev.collectingdialect.data.PersonalData.cityListJeonra
+import com.mtdata.aidev.collectingdialect.data.PersonalData.genderValueOf
+import com.mtdata.aidev.collectingdialect.data.PersonalData.healthConditionValueOf
+import com.mtdata.aidev.collectingdialect.data.PersonalData.residenceCityValueOf
+import com.mtdata.aidev.collectingdialect.data.PersonalData.residenceProvinceValueOf
 import com.mtdata.aidev.collectingdialect.data.model.SpeakerInfo
 import com.mtdata.aidev.collectingdialect.data.remote.CollectingDialectNetwork
+import com.mtdata.aidev.collectingdialect.ui.BaseViewModel
 import com.mtdata.aidev.collectingdialect.ui.SharedViewModel
-import com.mtdata.aidev.collectingdialect.ui.collecting.InfoViewModel
 import kotlinx.coroutines.launch
 
-class SpeakerInfoTwoPersonViewModel: InfoViewModel() {
+class SpeakerInfoTwoPersonViewModel: BaseViewModel() {
     var sharedViewModel: SharedViewModel? = null
 
     var gender1: String = ""
@@ -22,7 +37,6 @@ class SpeakerInfoTwoPersonViewModel: InfoViewModel() {
                 field = value
                 gender1Error = null
                 notifyChange(BR.gender1)
-                notifyChange(BR.genderList)
             }
         }
     var gender1Error: String? = null
@@ -65,7 +79,6 @@ class SpeakerInfoTwoPersonViewModel: InfoViewModel() {
                 residenceProvince1Error = null
                 residenceCity1 = ""
                 notifyChange(BR.residenceProvince1)
-                notifyChange(BR.residenceProvinceList)
                 notifyChange(BR.residenceCity1List)
             }
         }
@@ -153,7 +166,6 @@ class SpeakerInfoTwoPersonViewModel: InfoViewModel() {
                 field = value
                 academicBackground1Error = null
                 notifyChange(BR.academicBackground1)
-                notifyChange(BR.academicBackgroundList)
             }
         }
     var academicBackground1Error: String? = null
@@ -172,7 +184,6 @@ class SpeakerInfoTwoPersonViewModel: InfoViewModel() {
                 field = value
                 healthCondition1Error = null
                 notifyChange(BR.healthCondition1)
-                notifyChange(BR.healthConditionList)
             }
         }
     var healthCondition1Error: String? = null
@@ -192,7 +203,6 @@ class SpeakerInfoTwoPersonViewModel: InfoViewModel() {
                 field = value
                 gender2Error = null
                 notifyChange(BR.gender2)
-                notifyChange(BR.genderList)
             }
         }
     var gender2Error: String? = null
@@ -235,7 +245,6 @@ class SpeakerInfoTwoPersonViewModel: InfoViewModel() {
                 residenceProvince2Error = null
                 residenceCity2 = ""
                 notifyChange(BR.residenceProvince2)
-                notifyChange(BR.residenceProvinceList)
                 notifyChange(BR.residenceCity2List)
             }
         }
@@ -323,7 +332,6 @@ class SpeakerInfoTwoPersonViewModel: InfoViewModel() {
                 field = value
                 academicBackground2Error = null
                 notifyChange(BR.academicBackground2)
-                notifyChange(BR.academicBackgroundList)
             }
         }
     var academicBackground2Error: String? = null
@@ -342,7 +350,6 @@ class SpeakerInfoTwoPersonViewModel: InfoViewModel() {
                 field = value
                 healthCondition2Error = null
                 notifyChange(BR.healthCondition2)
-                notifyChange(BR.healthConditionList)
             }
         }
     var healthCondition2Error: String? = null

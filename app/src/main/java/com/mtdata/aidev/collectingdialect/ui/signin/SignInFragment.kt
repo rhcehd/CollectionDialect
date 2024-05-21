@@ -14,6 +14,8 @@ import androidx.navigation.fragment.findNavController
 import com.mtdata.aidev.collectingdialect.R
 import com.mtdata.aidev.collectingdialect.databinding.FragmentSignInBinding
 import com.mtdata.aidev.collectingdialect.ui.theme.MaterialSnackbarTheme
+import com.mtdata.aidev.collectingdialect.utils.ContextProvider
+import com.mtdata.aidev.collectingdialect.utils.NavigateEvent
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -27,13 +29,6 @@ class SignInFragment: Fragment(R.layout.fragment_sign_in), ContextProvider {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = DataBindingUtil.bind(view)
-        lifecycleScope.launch {
-            viewModel.navigateToContent.collectLatest { event ->
-                event?.getContentIfNotHandled()?.let { navigateResId ->
-                    findNavController().navigate(navigateResId)
-                }
-            }
-        }
         binding?.composeView?.setContent {
             val snackbarHostState = remember {
                 SnackbarHostState()
@@ -51,6 +46,17 @@ class SignInFragment: Fragment(R.layout.fragment_sign_in), ContextProvider {
                         }
                     }
                 )
+            }
+        }
+        lifecycleScope.launch {
+            viewModel.navigateToContent.collectLatest { navigateEvent ->
+                navigateEvent?.getContentIfNotHandled()?.let { navigateResId ->
+                    if(navigateResId == NavigateEvent.ID_NAVIGATE_UP) {
+                        findNavController().navigateUp()
+                    } else {
+                        findNavController().navigate(navigateResId)
+                    }
+                }
             }
         }
     }

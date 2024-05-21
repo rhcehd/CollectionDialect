@@ -11,8 +11,8 @@ import com.mtdata.aidev.collectingdialect.data.remote.CollectingDialectNetwork
 import com.mtdata.aidev.collectingdialect.ui.MainActivity
 import com.mtdata.aidev.collectingdialect.ui.MainActivity.Companion.showToast
 import com.mtdata.aidev.collectingdialect.ui.collecting.CollectingViewModel
-import com.mtdata.aidev.collectingdialect.ui.collecting.InfoViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.mtdata.aidev.collectingdialect.data.PersonalData.deleteInfo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -237,7 +237,7 @@ object RecordManager {
                                         file.delete()
                                     }
                                     if (directory.listFiles()?.size == 0) {
-                                        InfoViewModel.deleteInfo(speakerId1)
+                                        deleteInfo(speakerId1)
                                         directory.delete()
                                     }
                                 } else {
@@ -269,7 +269,7 @@ object RecordManager {
                                         file.delete()
                                     }
                                     if (directory.listFiles()?.size == 0) {
-                                        InfoViewModel.deleteInfo(speakerId1)
+                                        deleteInfo(speakerId1)
                                         directory.delete()
                                     }
                                 } else {

@@ -8,9 +8,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.mtdata.aidev.collectingdialect.R
 import com.mtdata.aidev.collectingdialect.databinding.FragmentSignUpBinding
 import com.mtdata.aidev.collectingdialect.ui.theme.MaterialSnackbarTheme
+import com.mtdata.aidev.collectingdialect.utils.NavigateEvent
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class SignUpFragment: Fragment(R.layout.fragment_sign_up) {
@@ -37,15 +41,16 @@ class SignUpFragment: Fragment(R.layout.fragment_sign_up) {
                 )
             }
         }
+        lifecycleScope.launch {
+            viewModel.navigateToContent.collectLatest { navigateEvent ->
+                navigateEvent?.getContentIfNotHandled()?.let { navigateResId ->
+                    if(navigateResId == NavigateEvent.ID_NAVIGATE_UP) {
+                        findNavController().navigateUp()
+                    } else {
+                        findNavController().navigate(navigateResId)
+                    }
+                }
+            }
+        }
     }
-
-    /*override fun onResume() {
-        super.onResume()
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
-    }
-
-    override fun onPause() {
-        super.onPause()
-        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
-    }*/
 }

@@ -1,334 +1,133 @@
 package com.mtdata.aidev.collectingdialect.ui.signup
 
-import android.view.View
-import androidx.databinding.Bindable
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.findNavController
-import com.mtdata.aidev.collectingdialect.BR
+import com.mtdata.aidev.collectingdialect.data.PersonalData.academicBackgroundValueOf
+import com.mtdata.aidev.collectingdialect.data.PersonalData.collectingOrganizationValueOf
+import com.mtdata.aidev.collectingdialect.data.PersonalData.genderValueOf
+import com.mtdata.aidev.collectingdialect.data.PersonalData.healthConditionValueOf
+import com.mtdata.aidev.collectingdialect.data.PersonalData.residenceCityValueOf
+import com.mtdata.aidev.collectingdialect.data.PersonalData.residenceProvinceValueOf
 import com.mtdata.aidev.collectingdialect.data.remote.CollectingDialectNetwork
-import com.mtdata.aidev.collectingdialect.ui.MainActivity.Companion.showToast
+import com.mtdata.aidev.collectingdialect.state.SnackbarVisibleState
 import com.mtdata.aidev.collectingdialect.ui.SharedViewModel
-import com.mtdata.aidev.collectingdialect.ui.collecting.InfoViewModel
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.mtdata.aidev.collectingdialect.utils.NavigateEvent
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class SignUpViewModel: InfoViewModel() {
-    companion object {
-        const val COLLECTING_ORGANIZATION_MTDATA_STRING = "엠티데이타"
-        const val COLLECTING_ORGANIZATION_OLLIMCOMMUNICATIONS_STRING = "올림커뮤니케이션즈"
-        const val COLLECTING_ORGANIZATION_CONSUMERINSIGHT_STRING = "컨슈머인사이트"
-        const val COLLECTING_ORGANIZATION_HYEOKSINMIRAE_STRING = "혁신과미래"
-
-        const val COLLECTING_ORGANIZATION_UNKNOWN = "un"
-        const val COLLECTING_ORGANIZATION_MTDATA = "mt"
-        const val COLLECTING_ORGANIZATION_OLLIMCOMMUNICATIONS = "ol"
-        const val COLLECTING_ORGANIZATION_CONSUMERINSIGHT = "cs"
-        const val COLLECTING_ORGANIZATION_HYEOKSINMIRAE = "hm"
-    }
-
+class SignUpViewModel: ViewModel() {
     var sharedViewModel: SharedViewModel? = null
 
-    var gender: String = ""
-        @Bindable get
-        set(value) {
-            if(field != value) {
-                field = value
-                genderError = null
-                notifyChange(BR.gender)
-            }
-        }
-    var genderError: String? = null
-        @Bindable get
-        set(value) {
-            if(field != value) {
-                field = value
-                notifyChange(BR.genderError)
-            }
-        }
+    private val _snackbarVisibleState =
+        MutableStateFlow<SnackbarVisibleState>(SnackbarVisibleState.Hide)
+    val snackbarVisibleState = _snackbarVisibleState.asStateFlow()
 
-    private val birthYear: Int
-        get() = try {
-            birthYearString.toInt()
-        } catch (e: NumberFormatException) {
-            9999
-        }
-    var birthYearError: String? = null
-        @Bindable get
-        set(value) {
-            if(field != value) {
-                field = value
-                notifyChange(BR.birthYearError)
-            }
-        }
-    var birthYearString: String = ""
-        @Bindable get
-        set(value) {
-            if(field != value) {
-                field = value
-                birthYearError = null
-            }
-        }
+    private val _alertDialogVisibleState =
+        MutableStateFlow<AlertDialogVisibleState>(AlertDialogVisibleState.Hide)
+    val alertDialogVisibleState = _alertDialogVisibleState.asStateFlow()
 
-    var residenceProvince: String = ""
-        @Bindable get
-        set(value) {
-            if(field != value) {
-                field = value
-                residenceProvinceError = null
-                residenceCity = ""
-                notifyChange(BR.residenceProvince)
-                notifyChange(BR.residenceProvinceList)
-                notifyChange(BR.residenceCityList)
-            }
-        }
-    var residenceProvinceError: String? = null
-        @Bindable get
-        set(value) {
-            if(field != value) {
-                field = value
-                notifyChange(BR.residenceProvinceError)
-            }
-        }
+    private val _navigateToContent: MutableStateFlow<NavigateEvent?> = MutableStateFlow(null)
+    val navigateToContent: StateFlow<NavigateEvent?> = _navigateToContent.asStateFlow()
 
-    var residenceCity: String = ""
-        @Bindable get
-        set(value) {
-            if(field != value) {
-                field = value
-                residenceCityError = null
-                notifyChange(BR.residenceCity)
-                notifyChange(BR.residenceCityList)
-            }
+    private fun validateInput(
+        gender: String,
+        birthYear: String,
+        residenceProvince: String,
+        residenceCity: String,
+        residencePeriod: String,
+        collectingOrganization: String
+    ): String {
+        if (gender.isEmpty()) {
+            return "올바른 성별을 입력해주세요"
         }
-    var residenceCityError: String? = null
-        @Bindable get
-        set(value) {
-            if(field != value) {
-                field = value
-                notifyChange(BR.residenceCityError)
-            }
+        if (birthYear.isEmpty()) {
+            return "올바른 출생년도를 입력해주세요"
         }
-    val residenceCityList: Array<String>
-        @Bindable get() = when(residenceProvince) {
-            RESIDENCE_PROVINCE_GANGWON_STRING -> cityListGangwon
-            RESIDENCE_PROVINCE_GYEONGSANG_STRING -> cityListGyeongsang
-            RESIDENCE_PROVINCE_JEONRA_STRING -> cityListJeonra
-            RESIDENCE_PROVINCE_CHUNGCHEONG_STRING -> cityListChungcheong
-            RESIDENCE_PROVINCE_JEJU_STRING -> cityListJeju
-            else -> emptyArray()
+        if (residenceProvince.isEmpty()) {
+            return "올바른 거주 도를 입력해주세요"
         }
-
-    private val residencePeriod: Int
-        get() = try {
-            residencePeriodString.toInt()
-        } catch (e: NumberFormatException) {
-            0
+        if (residenceCity.isEmpty()) {
+            return "올바른 거주 시를 입력해주세요"
         }
-    var residencePeriodError: String? = null
-        @Bindable get
-        set(value) {
-            if(field != value) {
-                field = value
-                notifyChange(BR.residencePeriodError)
-            }
+        if (residencePeriod.isEmpty()) {
+            return "올바른 거주 기간을 입력해주세요"
         }
-    var residencePeriodString: String = ""
-        @Bindable get
-        set(value) {
-            if(field != value) {
-                field = value
-                residencePeriodError = null
-            }
+        if (collectingOrganization.isEmpty()) {
+            return "올바른 수집 기관을 입력해주세요"
         }
-
-    var job: String = ""
-        @Bindable get
-        set(value) {
-            if(field != value) {
-                field = value
-                jobError = null
-            }
-        }
-    var jobError: String? = null
-        @Bindable get
-        set(value) {
-            if(field != value) {
-                field = value
-                notifyChange(BR.jobError)
-            }
-        }
-
-    var academicBackground: String = ""
-        @Bindable get
-        set(value) {
-            if(field != value) {
-                field = value
-                academicBackgroundError = null
-                notifyChange(BR.academicBackground)
-                notifyChange(BR.academicBackgroundList)
-            }
-        }
-    var academicBackgroundError: String? = null
-        @Bindable get
-        set(value) {
-            if(field != value) {
-                field = value
-                notifyChange(BR.academicBackgroundError)
-            }
-        }
-
-    var healthCondition: String = ""
-        @Bindable get
-        set(value) {
-            if(field != value) {
-                field = value
-                healthConditionError = null
-                notifyChange(BR.healthCondition)
-                notifyChange(BR.healthConditionList)
-            }
-        }
-    var healthConditionError: String? = null
-        @Bindable get
-        set(value) {
-            if(field != value) {
-                field = value
-                notifyChange(BR.healthConditionError)
-            }
-        }
-
-    var collectingOrganization: String = ""
-        @Bindable get
-        set(value) {
-            if(field != value) {
-                field = value
-                collectingOrganizationError = null
-                notifyChange(BR.collectingOrganization)
-            }
-        }
-    var collectingOrganizationError: String? = null
-        @Bindable get
-        set(value) {
-            if(field != value) {
-                field = value
-                notifyChange(BR.collectingOrganizationError)
-            }
-        }
-    val collectingOrganizationList: Array<String> = arrayOf(
-        COLLECTING_ORGANIZATION_MTDATA_STRING,
-        COLLECTING_ORGANIZATION_OLLIMCOMMUNICATIONS_STRING,
-        COLLECTING_ORGANIZATION_CONSUMERINSIGHT_STRING,
-        COLLECTING_ORGANIZATION_HYEOKSINMIRAE_STRING
-    )
-
-    private fun validateInput(): Boolean {
-        genderError = if(gender.isEmpty()) {
-            "필수입력"
-        } else {
-            null
-        }
-        birthYearError = if(birthYearString.isEmpty()) {
-            "필수입력"
-        } else {
-            if(birthYearString.length != 4) {
-                "4자리 숫자 입력"
-            } else {
-                null
-            }
-        }
-        residenceProvinceError = if(residenceProvince.isEmpty()) {
-            "필수입력"
-        } else {
-            null
-        }
-        residenceCityError = if(residenceCity.isEmpty()) {
-            "필수입력"
-        } else {
-            null
-        }
-        residencePeriodError = if(residencePeriodString.isEmpty()) {
-            "필수입력"
-        } else {
-            null
-        }
-        /*jobError = if(job.isEmpty()) {
-            "필수입력"
-        } else {
-            null
-        }
-        academicBackgroundError = if(academicBackground.isEmpty()) {
-            "필수입력"
-        } else {
-            null
-        }
-        healthConditionError = if(healthCondition.isEmpty()) {
-            "필수입력"
-        } else {
-            null
-        }*/
-        collectingOrganizationError = if(collectingOrganization.isEmpty()) "필수입력" else null
-        return genderError.isNullOrEmpty()
-                && birthYearError.isNullOrEmpty()
-                && residenceProvinceError.isNullOrEmpty()
-                && residenceCityError.isNullOrEmpty()
-                && residencePeriodError.isNullOrEmpty()
-                /*&& jobError.isNullOrEmpty()
-                && academicBackgroundError.isNullOrEmpty()
-                && healthConditionError.isNullOrEmpty()*/
-                && collectingOrganizationError.isNullOrEmpty()
+        return ""
     }
 
-    private fun collectingOrganizationValueOf(collectingOrganization: String): String {
-        return when(collectingOrganization) {
-            COLLECTING_ORGANIZATION_MTDATA_STRING -> COLLECTING_ORGANIZATION_MTDATA
-            COLLECTING_ORGANIZATION_OLLIMCOMMUNICATIONS_STRING -> COLLECTING_ORGANIZATION_OLLIMCOMMUNICATIONS
-            COLLECTING_ORGANIZATION_CONSUMERINSIGHT_STRING -> COLLECTING_ORGANIZATION_CONSUMERINSIGHT
-            COLLECTING_ORGANIZATION_HYEOKSINMIRAE_STRING -> COLLECTING_ORGANIZATION_HYEOKSINMIRAE
-            else -> COLLECTING_ORGANIZATION_UNKNOWN
-        }
-    }
-
-    fun onClickRegistrationButton(view: View) {
-        val isValidInput = validateInput()
-        if(!isValidInput) {
+    fun onClickSignUp(
+        gender: String,
+        birthYear: String,
+        residenceProvince: String,
+        residenceCity: String,
+        residencePeriod: String,
+        job: String,
+        academicBackground: String,
+        healthCondition: String,
+        collectingOrganization: String
+    ) {
+        val errorMsg = validateInput(
+            gender,
+            birthYear,
+            residenceProvince,
+            residenceCity,
+            residencePeriod,
+            collectingOrganization
+        )
+        if (errorMsg.isNotEmpty()) {
+            _snackbarVisibleState.update { SnackbarVisibleState.Show(errorMsg) }
             return
         }
-        val gender = genderValueOf(gender)
-        val residenceProvince = residenceProvinceValueOf(residenceProvince)
-        val residenceCity = residenceCityValueOf(residenceCity)
-        val academicBackground = academicBackgroundValueOf(academicBackground)
-        val healthCondition = healthConditionValueOf(healthCondition)
-        val collectingOrganization = collectingOrganizationValueOf(collectingOrganization)
-        val navController = view.findNavController()
         viewModelScope.launch {
             try {
                 val collectorId = CollectingDialectNetwork.signUp(
-                    gender,
-                    birthYear,
-                    residenceProvince,
-                    residenceCity,
-                    residencePeriod,
+                    genderValueOf(gender),
+                    birthYear.toInt(),
+                    residenceProvinceValueOf(residenceProvince),
+                    residenceCityValueOf(residenceCity),
+                    residencePeriod.toInt(),
                     job,
-                    academicBackground,
-                    healthCondition,
-                    collectingOrganization,
-                    ""
+                    academicBackgroundValueOf(academicBackground),
+                    healthConditionValueOf(healthCondition),
+                    collectingOrganizationValueOf(collectingOrganization),
                 )
-                MaterialAlertDialogBuilder(view.context)
-                    .setMessage("등록된 아이디/패스워드는 다음과 같습니다\n\n아이디 : $collectorId\n패스워드 : $collectorId")
-                    .setOnDismissListener {
-                        navController.navigateUp()
-                    }
-                    .setPositiveButton("확인") { _, _ -> /*do nothing*/ }
-                    .create()
-                    .show()
-            } catch (e:Exception) {
-                showToast("수집자 등록 실패")
+                _alertDialogVisibleState.update {
+                    AlertDialogVisibleState.Show(
+                        msg = "등록된 아이디/패스워드는 다음과 같습니다\n\n아이디 : $collectorId\n패스워드 : $collectorId",
+                    )
+                }
+            } catch (e: Exception) {
+                _snackbarVisibleState.update { SnackbarVisibleState.Show("수집자 등록 실패") }
                 e.printStackTrace()
             }
         }
     }
 
-    fun onClickCancelButton(view: View) {
-        view.findNavController().popBackStack()
+    fun onClickCancel() {
+        _navigateToContent.update { NavigateEvent(NavigateEvent.ID_NAVIGATE_UP) }
     }
+
+    fun onAfterShowSnackbar() {
+        _snackbarVisibleState.update { SnackbarVisibleState.Hide }
+    }
+
+    fun onDismissAlertDialog() {
+        _alertDialogVisibleState.update { AlertDialogVisibleState.Hide }
+        _navigateToContent.update {
+            NavigateEvent(NavigateEvent.ID_NAVIGATE_UP)
+        }
+    }
+}
+
+sealed interface AlertDialogVisibleState {
+    object Hide: AlertDialogVisibleState
+    class Show(
+        val msg: String,
+    ): AlertDialogVisibleState
 }

@@ -8,14 +8,31 @@ import androidx.navigation.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mtdata.aidev.collectingdialect.BR
 import com.mtdata.aidev.collectingdialect.R
+import com.mtdata.aidev.collectingdialect.data.PersonalData.RESIDENCE_PROVINCE_CHUNGCHEONG_STRING
+import com.mtdata.aidev.collectingdialect.data.PersonalData.RESIDENCE_PROVINCE_GANGWON_STRING
+import com.mtdata.aidev.collectingdialect.data.PersonalData.RESIDENCE_PROVINCE_GYEONGSANG_STRING
+import com.mtdata.aidev.collectingdialect.data.PersonalData.RESIDENCE_PROVINCE_JEJU_STRING
+import com.mtdata.aidev.collectingdialect.data.PersonalData.RESIDENCE_PROVINCE_JEONRA_STRING
+import com.mtdata.aidev.collectingdialect.data.PersonalData.academicBackgroundValueOf
+import com.mtdata.aidev.collectingdialect.data.PersonalData.cityListChungcheong
+import com.mtdata.aidev.collectingdialect.data.PersonalData.cityListGangwon
+import com.mtdata.aidev.collectingdialect.data.PersonalData.cityListGyeongsang
+import com.mtdata.aidev.collectingdialect.data.PersonalData.cityListJeju
+import com.mtdata.aidev.collectingdialect.data.PersonalData.cityListJeonra
+import com.mtdata.aidev.collectingdialect.data.PersonalData.genderValueOf
+import com.mtdata.aidev.collectingdialect.data.PersonalData.healthConditionValueOf
+import com.mtdata.aidev.collectingdialect.data.PersonalData.loadInfo
+import com.mtdata.aidev.collectingdialect.data.PersonalData.residenceCityValueOf
+import com.mtdata.aidev.collectingdialect.data.PersonalData.residenceProvinceValueOf
+import com.mtdata.aidev.collectingdialect.data.PersonalData.saveInfo
 import com.mtdata.aidev.collectingdialect.data.model.SpeakerInfo
 import com.mtdata.aidev.collectingdialect.data.remote.CollectingDialectNetwork
+import com.mtdata.aidev.collectingdialect.ui.BaseViewModel
 import com.mtdata.aidev.collectingdialect.ui.MainActivity.Companion.showToast
 import com.mtdata.aidev.collectingdialect.ui.SharedViewModel
-import com.mtdata.aidev.collectingdialect.ui.collecting.InfoViewModel
 import kotlinx.coroutines.launch
 
-class SpeakerInfoOnePersonViewModel: InfoViewModel() {
+class SpeakerInfoOnePersonViewModel: BaseViewModel() {
     var sharedViewModel: SharedViewModel? = null
 
     var gender: String = ""
@@ -25,7 +42,6 @@ class SpeakerInfoOnePersonViewModel: InfoViewModel() {
                 field = value
                 genderError = null
                 notifyChange(BR.gender)
-                notifyChange(BR.genderList)
             }
         }
     var genderError: String? = null
@@ -68,7 +84,6 @@ class SpeakerInfoOnePersonViewModel: InfoViewModel() {
                 residenceProvinceError = null
                 residenceCity = ""
                 notifyChange(BR.residenceProvince)
-                notifyChange(BR.residenceProvinceList)
                 notifyChange(BR.residenceCityList)
             }
         }
@@ -156,7 +171,6 @@ class SpeakerInfoOnePersonViewModel: InfoViewModel() {
                 field = value
                 academicBackgroundError = null
                 notifyChange(BR.academicBackground)
-                notifyChange(BR.academicBackgroundList)
             }
         }
     var academicBackgroundError: String? = null
@@ -175,7 +189,6 @@ class SpeakerInfoOnePersonViewModel: InfoViewModel() {
                 field = value
                 healthConditionError = null
                 notifyChange(BR.healthCondition)
-                notifyChange(BR.healthConditionList)
             }
         }
     var healthConditionError: String? = null

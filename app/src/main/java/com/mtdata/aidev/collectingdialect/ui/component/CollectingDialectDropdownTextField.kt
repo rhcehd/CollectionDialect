@@ -22,6 +22,7 @@ fun CollectingDialectDropdownTextField(
     var expanded by remember {
         mutableStateOf(false)
     }
+    val filteredItems = items.filter { it.contains(value) }
     ExposedDropdownMenuBox(
         expanded = expanded,
         onExpandedChange = {
@@ -30,7 +31,10 @@ fun CollectingDialectDropdownTextField(
     ) {
         CollectingDialectTextField(
             value = value,
-            onValueChange = onValueChange,
+            onValueChange = {
+                onValueChange(it)
+                expanded = true
+            },
             label = label,
             trailingIcon = {
                 ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
@@ -42,7 +46,8 @@ fun CollectingDialectDropdownTextField(
                 expanded = false
             }
         ) {
-            items.forEach { item ->
+            //items.forEach { item ->
+            filteredItems.forEach { item ->
                 DropdownMenuItem(
                     onClick = {
                         onValueChange(item)

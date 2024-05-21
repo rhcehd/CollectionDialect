@@ -66,7 +66,6 @@ object CollectingDialectNetwork {
         academicBackground: Int?,
         healthCondition: Int?,
         collectingOrganization: String,
-        password: String
     ): String = networkApi.signUp(
         SignUpRequest(
             gender,
@@ -78,7 +77,6 @@ object CollectingDialectNetwork {
             academicBackground,
             healthCondition,
             collectingOrganization,
-            password
         )
     ).data
 
