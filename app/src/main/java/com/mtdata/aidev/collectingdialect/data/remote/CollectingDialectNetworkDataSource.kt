@@ -1,8 +1,9 @@
-package com.mtdata.aidev.collectingdialect.data.repository
+package com.mtdata.aidev.collectingdialect.data.remote
 
 import com.mtdata.aidev.collectingdialect.data.model.CollectorInfo
+import okhttp3.MultipartBody
 
-interface UserRepository {
+interface CollectingDialectNetworkDataSource {
     suspend fun signIn(collectorId: String, password: String): CollectorInfo
     suspend fun signUp(
         gender: String,
@@ -25,4 +26,5 @@ interface UserRepository {
         academicBackground: Int?,
         healthCondition: Int?
     ): String
+    suspend fun uploadRecord(records: List<MultipartBody.Part>): Boolean
 }

@@ -3,10 +3,13 @@ package com.mtdata.aidev.collectingdialect.ui.collecting.oneperson.speaker
 import android.view.View
 import android.widget.EditText
 import androidx.databinding.Bindable
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.mtdata.aidev.collectingdialect.BR
+import com.mtdata.aidev.collectingdialect.CollectingDialectContainer
 import com.mtdata.aidev.collectingdialect.R
 import com.mtdata.aidev.collectingdialect.data.PersonalData.RESIDENCE_PROVINCE_CHUNGCHEONG_STRING
 import com.mtdata.aidev.collectingdialect.data.PersonalData.RESIDENCE_PROVINCE_GANGWON_STRING
@@ -27,12 +30,29 @@ import com.mtdata.aidev.collectingdialect.data.PersonalData.residenceProvinceVal
 import com.mtdata.aidev.collectingdialect.data.PersonalData.saveInfo
 import com.mtdata.aidev.collectingdialect.data.model.SpeakerInfo
 import com.mtdata.aidev.collectingdialect.data.remote.CollectingDialectNetwork
+import com.mtdata.aidev.collectingdialect.data.repository.UserRepository
 import com.mtdata.aidev.collectingdialect.ui.BaseViewModel
 import com.mtdata.aidev.collectingdialect.ui.MainActivity.Companion.showToast
 import com.mtdata.aidev.collectingdialect.ui.SharedViewModel
 import kotlinx.coroutines.launch
 
-class SpeakerInfoOnePersonViewModel: BaseViewModel() {
+class SpeakerInfoOnePersonViewModelFactory: ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        try {
+            if(modelClass.isAssignableFrom(SpeakerInfoOnePersonViewModel::class.java)) {
+                return modelClass
+                    .getConstructor(UserRepository::class.java)
+                    .newInstance(CollectingDialectContainer.userRepository)
+            }
+            throw IllegalArgumentException("Unknown ViewModel class")
+        } catch (e: Exception) {
+            throw e
+        }
+    }
+}
+class SpeakerInfoOnePersonViewModel(
+    private val userRepository: UserRepository
+): BaseViewModel() {
     var sharedViewModel: SharedViewModel? = null
 
     var gender: String = ""
@@ -268,7 +288,7 @@ class SpeakerInfoOnePersonViewModel: BaseViewModel() {
         }
         viewModelScope.launch {
             try {
-                val speakerId = CollectingDialectNetwork.registerSpeaker(
+                val speakerId = userRepository.registerSpeaker(
                     genderValueOf(gender),
                     birthYear,
                     residenceProvinceValueOf(residenceProvince),

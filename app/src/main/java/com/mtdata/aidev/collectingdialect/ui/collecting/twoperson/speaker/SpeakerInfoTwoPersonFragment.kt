@@ -14,7 +14,7 @@ import com.mtdata.aidev.collectingdialect.databinding.FragmentSpeakerInfoTwoPers
 import com.mtdata.aidev.collectingdialect.ui.SharedViewModel
 
 class SpeakerInfoTwoPersonFragment: Fragment(R.layout.fragment_speaker_info_two_person) {
-    val viewModel: SpeakerInfoTwoPersonViewModel by viewModels()
+    val viewModel: SpeakerInfoTwoPersonViewModel by viewModels { SpeakerInfoTwoPersonViewModelFactory() }
     val sharedViewModel: SharedViewModel by activityViewModels()
     var binding: FragmentSpeakerInfoTwoPersonBinding? = null
 

@@ -34,7 +34,7 @@ private data class NetworkResponse<T>(
     val data: T,
 )
 
-object CollectingDialectNetwork {
+class CollectingDialectNetwork: CollectingDialectNetworkDataSource {
     private val okHttpClient = OkHttpClient.Builder()
         .addInterceptor(HttpLoggingInterceptor()
             .setLevel(
@@ -53,10 +53,10 @@ object CollectingDialectNetwork {
         .build()
         .create(CollectingDialectNetworkApi::class.java)
 
-    suspend fun signIn(collectorId: String, password: String): CollectorInfo =
+    override suspend fun signIn(collectorId: String, password: String): CollectorInfo =
         networkApi.signIn(SignInRequest(collectorId, password)).data
 
-    suspend fun signUp(
+    override suspend fun signUp(
         gender: String,
         birthYear: Int,
         residenceProvince: String,
@@ -80,7 +80,7 @@ object CollectingDialectNetwork {
         )
     ).data
 
-    suspend fun registerSpeaker(
+    override suspend fun registerSpeaker(
         gender: String,
         birthYear: Int,
         residenceProvince: String,
@@ -102,5 +102,5 @@ object CollectingDialectNetwork {
         )
     ).data
 
-    suspend fun sendRecordData(records: List<MultipartBody.Part>): Boolean = networkApi.sendRecordData(records).data
+    override suspend fun uploadRecord(records: List<MultipartBody.Part>): Boolean = networkApi.sendRecordData(records).data
 }
